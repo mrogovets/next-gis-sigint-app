@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
-import PropTypes from "prop-types";
+
 function Map({ setMapObject }) {
   const googlemap = useRef(null);
   useEffect(() => {
@@ -31,12 +31,38 @@ function Map({ setMapObject }) {
             streetViewControl: false,
             zoomControl: false,
           };
+
           // Embedding Google Maps
           const google = window.google;
+
+          const marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+          });
+
           map = new google.maps.Map(googlemap.current, {
             ...initialView,
             ...buttonsDisabled,
           });
+
+          marker.setMap(map);
+
+          //----- Add accuracyCircle on map --------
+          const errorRange = position.coords.accuracy;
+          if (errorRange) {
+            const accuracyCircle = new google.maps.Circle({
+              center: pos,
+              fillColor: "red",
+              fillOpacity: 0.4,
+              radius: errorRange,
+              strokeColor: "red",
+              strokeOpacity: 0.4,
+              strokeWeight: 1,
+              zIndex: 1,
+            });
+            // accuracyCircle.setMap(map);
+          }
+          //----- accuracyCircle on map --------
 
           setMapObject(map); // NOTE
         });

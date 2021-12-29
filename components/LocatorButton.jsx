@@ -15,6 +15,7 @@ const LocatorButton = ({ mapObject }) => {
       // code for legacy browsers
     }
   };
+
   return (
     <button type="button" onClick={getUserLocation}>
       <FontAwesomeIcon icon={faLocationArrow} />
