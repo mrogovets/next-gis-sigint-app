@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
-import { faBus } from "@fortawesome/free-solid-svg-icons";
+import MarkerPNG from "../components/29528.png";
 function Map({ setMapObject }) {
   const googlemap = useRef(null);
   useEffect(() => {
@@ -47,18 +47,7 @@ function Map({ setMapObject }) {
 
           const marker = new google.maps.Marker({
             position: pos,
-            icon: {
-              path: faBus.icon[4],
-              fillColor: "#0000ff",
-              fillOpacity: 1,
-              anchor: new google.maps.Point(
-                faBus.icon[0] / 2, // width
-                faBus.icon[1] // height
-              ),
-              strokeWeight: 1,
-              strokeColor: "#ffffff",
-              scale: 0.075,
-            },
+            icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
             map: map,
             label: "This is your position",
             title: "You are there",
