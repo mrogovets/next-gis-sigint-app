@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import LocatorButton from "../components/LocatorButton";
 import { MapComponent } from "../components/MapComponent";
+import { Marker } from "../components/Marker";
 function HomePage() {
   // const [mapObject, setMapObject] = useState(null); // this is fro LocatorButton component
 
@@ -32,14 +32,12 @@ function HomePage() {
     getUserLocation();
   }, []);
 
-  const position = center;
-
   return (
     <React.Fragment>
-      {/* <LocatorButton mapObject={mapObject} /> */}
-      {/* <Map setMapObject={setMapObject} /> */}
       <Wrapper apiKey={apiKey}>
-        <MapComponent center={center} zoom={zoom} />
+        <MapComponent center={center} zoom={zoom}>
+          <Marker position={center} />
+        </MapComponent>
       </Wrapper>
     </React.Fragment>
   );
