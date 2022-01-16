@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
 function HomePage() {
-  // const [mapObject, setMapObject] = useState(null); // this is fro LocatorButton component
-
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
+
+  const [markerArr, setMarkerArr] = useState([]);
 
   const center = { lat, lng };
   const zoom = 10;
@@ -45,7 +45,10 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
+    setMarkerArr([...markerArr, clickLatLngTmp]);
   };
+
+  console.log("markerArr", markerArr);
 
   return (
     <React.Fragment>
@@ -56,7 +59,10 @@ function HomePage() {
           zoom={zoom}
           onClick={onMapClick}>
           <Marker onLoad={onLoad} position={center} />
-          <MarkerElement position={clickLatLng} />
+          {markerArr.map((elem, i) => (
+            <MarkerElement key={i} position={elem} />
+          ))}
+          {/* <MarkerElement position={clickLatLng} />; */}
         </GoogleMap>
       </LoadScript>
     </React.Fragment>
