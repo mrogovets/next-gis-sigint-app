@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { MarkerElement } from "../components/MarkerElement";
 function HomePage() {
   // const [mapObject, setMapObject] = useState(null); // this is fro LocatorButton component
 
@@ -55,7 +56,7 @@ function HomePage() {
           zoom={zoom}
           onClick={onMapClick}>
           <Marker onLoad={onLoad} position={center} />
-          <Marker position={clickLatLng} />
+          <MarkerElement position={clickLatLng} />
         </GoogleMap>
       </LoadScript>
     </React.Fragment>
