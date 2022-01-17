@@ -19,6 +19,15 @@ function HomePage() {
     height: "800px",
   };
 
+  const enemyBrg = {
+    path: "M76,44l72,72-72,72L4,116L76,44Z M46,156c0-25,60-25,60,0 M88.5,34L63.5,9m0,25l25-25-25,25Z",
+    fillColor: "red",
+    fillOpacity: 0.9,
+    scale: 0.3,
+    strokeColor: "blue",
+    strokeWeight: 2,
+  };
+
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -58,7 +67,12 @@ function HomePage() {
           center={center}
           zoom={zoom}
           onClick={onMapClick}>
-          <Marker onLoad={onLoad} position={center} />
+          <Marker
+            onLoad={onLoad}
+            position={center}
+            title="You are here"
+            icon={enemyBrg}
+          />
           {markerArr.map((elem, i) => (
             <MarkerElement key={i} position={elem} />
           ))}
