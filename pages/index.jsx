@@ -22,7 +22,16 @@ function HomePage() {
   const enemyBrg = {
     path: "M76,44l72,72-72,72L4,116L76,44Z M46,156c0-25,60-25,60,0 M88.5,34L63.5,9m0,25l25-25-25,25Z",
     fillColor: "red",
-    fillOpacity: 0.9,
+    fillOpacity: 1,
+    scale: 0.3,
+    strokeColor: "blue",
+    strokeWeight: 2,
+  };
+
+  const enemyBrgSRD = {
+    path: "M 100,28 L172,100 100,172 28,100 100,28 Z M70,140 C70,115 130,115 130,140 M87.5,18 l25,-25 m0,25 l-25,-25",
+    fillColor: "red",
+    fillOpacity: 1,
     scale: 0.3,
     strokeColor: "blue",
     strokeWeight: 2,
@@ -71,10 +80,12 @@ function HomePage() {
             onLoad={onLoad}
             position={center}
             title="You are here"
-            icon={enemyBrg}
+            icon={
+              "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMiIgYmFzZVByb2ZpbGU9InRpbnkiIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMjQgLTE2IDE1MiAxOTIiPjxwYXRoIGQ9Ik0xMDAgMjhsNzIgNzItNzIgNzItNzItNzIgNzItNzJ6IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZT0iIzAwMCIgZmlsbD0iI0ZGODA4MCIvPjxwYXRoIGQ9Ik03MCAxNDBjMC0yNSA2MC0yNSA2MCAwIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZT0iIzAwMCIgZmlsbD0ibm9uZSIvPjx0ZXh0IHg9IjEwMCIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjM1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSJib2xkIiBzdHJva2Utd2lkdGg9IjQiPlNSRDwvdGV4dD48cGF0aCBkPSJNODcuNSAxOGwyNS0yNW0wIDI1bC0yNS0yNSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2U9IiMwMDAiIGZpbGw9Im5vbmUiLz48L3N2Zz4="
+            }
           />
           {markerArr.map((elem, i) => (
-            <MarkerElement key={i} position={elem} />
+            <MarkerElement key={i} position={elem} icon={enemyBrg} />
           ))}
           {/* <MarkerElement position={clickLatLng} />; */}
         </GoogleMap>
