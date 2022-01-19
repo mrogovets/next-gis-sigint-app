@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
 import svgImg from "../components/1AK.svg";
-import { svgImgTxt } from "../components/svgImg.jsx";
+import { svgImgTxt } from "../components/svgImg.js";
 function HomePage() {
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
@@ -21,10 +21,14 @@ function HomePage() {
     height: "800px",
   };
 
-  const tmpSybmol = svgImg.src;
-  console.log(tmpSybmol);
+  // const tmpSybmol = svgImg.src;
+  // console.log(tmpSybmol);
 
-  console.log(svgImgTxt);
+  const tmpSybmol =
+    "data:image/svg+xml;base64," +
+    Buffer.from(svgImgTxt(1, 8)).toString("base64");
+
+  console.log(tmpSybmol);
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -46,7 +50,7 @@ function HomePage() {
   }, []);
 
   const onLoad = (marker) => {
-    console.log("marker: ", marker);
+    // console.log("marker: ", marker);
   };
 
   const onMapClick = (mapsMouseEvent) => {
@@ -55,7 +59,7 @@ function HomePage() {
     setMarkerArr([...markerArr, clickLatLngTmp]);
   };
 
-  console.log("markerArr", markerArr);
+  // console.log("markerArr", markerArr);
 
   return (
     <React.Fragment>
