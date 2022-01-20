@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
-import svgImg from "../components/1AK.svg";
 import { svgImgTxt } from "../components/svgImg.js";
 function HomePage() {
   const [lat, setLat] = useState(0);
@@ -14,7 +13,8 @@ function HomePage() {
 
   const [clickLatLng, setClickLatLng] = useState(center);
 
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const apiKey = null; // for devProc only
 
   const containerStyle = {
     width: "1200px",
@@ -26,9 +26,7 @@ function HomePage() {
 
   const tmpSybmol =
     "data:image/svg+xml;base64," +
-    Buffer.from(svgImgTxt(1, 8)).toString("base64");
-
-  console.log(tmpSybmol);
+    Buffer.from(svgImgTxt("hostileBr", 2, 5)).toString("base64");
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
