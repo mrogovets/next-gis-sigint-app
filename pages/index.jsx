@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
-import { svgImgTxt } from "../components/svgImg.js";
+import { getSvgImgSymbol } from "../components/svgImgBase.js";
+
 function HomePage() {
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
@@ -21,12 +22,9 @@ function HomePage() {
     height: "800px",
   };
 
-  // const tmpSybmol = svgImg.src;
-  // console.log(tmpSybmol);
-
-  const tmpSybmol =
+  const svgSybmol =
     "data:image/svg+xml;base64," +
-    Buffer.from(svgImgTxt("hostileBr", 2, 5)).toString("base64");
+    Buffer.from(getSvgImgSymbol("hostileArmourCoy", 2, 5)).toString("base64");
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -76,7 +74,7 @@ function HomePage() {
             }
           />
           {markerArr.map((elem, i) => (
-            <MarkerElement key={i} position={elem} icon={tmpSybmol} />
+            <MarkerElement key={i} position={elem} icon={svgSybmol} />
           ))}
           {/* <MarkerElement position={clickLatLng} />; */}
         </GoogleMap>
