@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
 import { getSvgImgSymbol } from "../components/svgImgBase.js";
+import { SigintLineElement } from "../components/SigintLineElement";
 
 function HomePage() {
   const [lat, setLat] = useState(0);
@@ -77,6 +78,7 @@ function HomePage() {
             <MarkerElement key={i} position={elem} icon={svgSybmol} />
           ))}
           {/* <MarkerElement position={clickLatLng} />; */}
+          <SigintLineElement />
         </GoogleMap>
       </LoadScript>
     </React.Fragment>
