@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
+import { getSvgImgSymbol } from "../components/svgImgBase.js";
+import { SigintLineElement } from "../components/SigintLineElement";
+
 function HomePage() {
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
@@ -12,30 +15,17 @@ function HomePage() {
 
   const [clickLatLng, setClickLatLng] = useState(center);
 
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const apiKey = null; // for devProc only
 
   const containerStyle = {
     width: "1200px",
     height: "800px",
   };
 
-  const enemyBrg = {
-    path: "M76,44l72,72-72,72L4,116L76,44Z M46,156c0-25,60-25,60,0 M88.5,34L63.5,9m0,25l25-25-25,25Z",
-    fillColor: "red",
-    fillOpacity: 1,
-    scale: 0.3,
-    strokeColor: "blue",
-    strokeWeight: 2,
-  };
-
-  const enemyBrgSRD = {
-    path: "M 100,28 L172,100 100,172 28,100 100,28 Z M70,140 C70,115 130,115 130,140 M87.5,18 l25,-25 m0,25 l-25,-25",
-    fillColor: "red",
-    fillOpacity: 1,
-    scale: 0.3,
-    strokeColor: "blue",
-    strokeWeight: 2,
-  };
+  const svgSybmol =
+    "data:image/svg+xml;base64," +
+    Buffer.from(getSvgImgSymbol("hostileArmourCoy", 2, 5)).toString("base64");
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -57,7 +47,7 @@ function HomePage() {
   }, []);
 
   const onLoad = (marker) => {
-    console.log("marker: ", marker);
+    // console.log("marker: ", marker);
   };
 
   const onMapClick = (mapsMouseEvent) => {
@@ -66,7 +56,7 @@ function HomePage() {
     setMarkerArr([...markerArr, clickLatLngTmp]);
   };
 
-  console.log("markerArr", markerArr);
+  // console.log("markerArr", markerArr);
 
   return (
     <React.Fragment>
@@ -85,9 +75,10 @@ function HomePage() {
             }
           />
           {markerArr.map((elem, i) => (
-            <MarkerElement key={i} position={elem} icon={enemyBrg} />
+            <MarkerElement key={i} position={elem} icon={svgSybmol} />
           ))}
           {/* <MarkerElement position={clickLatLng} />; */}
+          <SigintLineElement />
         </GoogleMap>
       </LoadScript>
     </React.Fragment>
