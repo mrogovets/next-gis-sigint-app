@@ -3,10 +3,14 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
 import { getSvgImgSymbol } from "../components/svgImgBase.js";
 import { SigintLineElement } from "../components/SigintLineElement";
+import Layout from "../components/Layout";
+import { SideBarMenu } from "../components/SideBarMenu";
 
 function HomePage() {
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
+
+  const [SBMenuOpen, setSBMenuOpen] = useState(false);
 
   const [markerArr, setMarkerArr] = useState([]);
 
@@ -19,8 +23,8 @@ function HomePage() {
   const apiKey = null; // for devProc only
 
   const containerStyle = {
-    width: "1200px",
-    height: "800px",
+    width: "100%",
+    height: "100vh",
   };
 
   const svgSybmol =
@@ -56,10 +60,17 @@ function HomePage() {
     setMarkerArr([...markerArr, clickLatLngTmp]);
   };
 
+  const isSBMenuOpen = () => {
+    if (SBMenuOpen) {
+      setSBMenuOpen(false);
+    } else setSBMenuOpen(true);
+  };
+
   // console.log("markerArr", markerArr);
 
   return (
-    <React.Fragment>
+    <Layout isSBMenuOpen={() => isSBMenuOpen()}>
+      <SideBarMenu SBMenuOpen={SBMenuOpen} />
       <LoadScript googleMapsApiKey={apiKey}>
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -81,7 +92,7 @@ function HomePage() {
           <SigintLineElement />
         </GoogleMap>
       </LoadScript>
-    </React.Fragment>
+    </Layout>
   );
 }
 export default HomePage;

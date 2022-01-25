@@ -8,6 +8,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
@@ -17,6 +19,10 @@
     "@googlemaps/react-wrapper": "^1.1.19",
     "@googlemaps/three": "^1.0.12",
     "@googlemaps/typescript-guards": "^1.0.4",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@mui/icons-material": "^5.3.1",
+    "@mui/material": "^5.3.1",
     "@react-google-maps/api": "^2.7.0",
     "dotenv": "^10.0.0",
     "next": "12.0.7",
