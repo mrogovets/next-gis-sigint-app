@@ -25,11 +25,18 @@ export default function Navbar({ isSBMenuOpen }) {
             onClick={onClickHandler}>
             <MenuIcon />
           </IconButton>
-          <Avatar sx={{ width: 60, height: 60, marginRight: 1 }}>
+          <Avatar
+            sx={{
+              width: 60,
+              height: 60,
+            }}>
             <Image src="/gerbTCSigint.png" alt="emblem" layout="fill" />
           </Avatar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, textAlign: "center" }}>
+            GIS SigInt System
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
