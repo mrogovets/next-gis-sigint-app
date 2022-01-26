@@ -82,6 +82,7 @@ export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
       sx={{
         width: 300,
         height: 450,
+        marginTop: "64px",
         color: "primary.dark",
         backgroundColor: "white",
         opacity: [0.9, 0.8, 0.7],

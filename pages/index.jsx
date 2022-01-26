@@ -26,7 +26,6 @@ function HomePage() {
   const apiKey = null; // for devProc only
 
   const containerStyle = {
-    marginTop: "64px",
     width: "100%",
     height: "100vh",
   };
