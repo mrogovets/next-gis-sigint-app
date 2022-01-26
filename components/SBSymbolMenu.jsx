@@ -27,7 +27,7 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
         },
         zIndex: 999,
         position: "fixed",
-        left: "81%",
+        right: "0%",
         display: `${SymbolMenuOpen ? "block" : "none"}`,
       }}>
       <CloseIcon
