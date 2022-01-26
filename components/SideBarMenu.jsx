@@ -5,35 +5,75 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { ContextSBMenu } from "../Context/ContextSBMenu";
 
-export const SideBarMenu = ({ SBMenuOpen }) => {
+export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
   const { isSBMenuOpen } = useContext(ContextSBMenu);
+
+  const OneHandleClick = () => {
+    isSBMenuOpen();
+    getMenuNumber("One");
+  };
+
+  const TwoHandleClick = () => {
+    isSBMenuOpen();
+    getMenuNumber("Two");
+  };
+
+  const ThreeHandleClick = () => {
+    isSBMenuOpen();
+    getMenuNumber("Three");
+  };
+
+  const FourHandleClick = () => {
+    isSBMenuOpen();
+    getMenuNumber("Four");
+  };
+
+  const FiveHandleClick = () => {
+    isSBMenuOpen();
+    getMenuNumber("Five");
+  };
+
+  const SixHandleClick = () => {
+    isSBMenuOpen();
+    getMenuNumber("Six");
+  };
+
+  const SevenHandleClick = () => {
+    isSBMenuOpen();
+    getMenuNumber("Seven");
+  };
+
+  const EightHandleClick = () => {
+    isSBMenuOpen();
+    getMenuNumber("Eight");
+  };
 
   const handleClick = () => {
     isSBMenuOpen();
   };
   const buttons = [
-    <Button key="one" onClick={handleClick}>
+    <Button key="one" onClick={OneHandleClick}>
       Нанести обстановку вручну
     </Button>,
-    <Button key="two" onClick={handleClick}>
+    <Button key="two" onClick={TwoHandleClick}>
       Завантажити обстановку з файлу
     </Button>,
-    <Button key="three" onClick={handleClick}>
+    <Button key="three" onClick={ThreeHandleClick}>
       Записати обстановку у файл
     </Button>,
-    <Button key="four" onClick={handleClick}>
+    <Button key="four" onClick={FourHandleClick}>
       Зберегти обстановку в базу даних
     </Button>,
-    <Button key="five" onClick={handleClick}>
+    <Button key="five" onClick={FiveHandleClick}>
       Розрахувати марш
     </Button>,
-    <Button key="six" onClick={handleClick}>
+    <Button key="six" onClick={SixHandleClick}>
       Сформувати бойове розпорядження
     </Button>,
-    <Button key="seven" onClick={handleClick}>
+    <Button key="seven" onClick={SevenHandleClick}>
       Здійснити розрахунок сил та засобів РЕР
     </Button>,
-    <Button key="eight" onClick={handleClick}>
+    <Button key="eight" onClick={EightHandleClick}>
       Довідкова система
     </Button>,
   ];
@@ -42,7 +82,6 @@ export const SideBarMenu = ({ SBMenuOpen }) => {
       sx={{
         width: 300,
         height: 450,
-        marginTop: 8,
         color: "primary.dark",
         backgroundColor: "white",
         opacity: [0.9, 0.8, 0.7],
