@@ -14,6 +14,22 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
 export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
+  const [formControlState, setFormControlState] = useState("Hostile");
+
+  const getRadioGroupValue = (event) => {
+    setFormControlState(event.target.value);
+  };
+  const setAccordionColor = (state) => {
+    switch (state) {
+      case "Hostile":
+        return "tomato";
+      case "Friendly":
+        return "blue";
+      case "Neutral":
+        return "green";
+    }
+  };
+
   const handleClick = () => {
     closeSymbolMenuOpen();
   };
@@ -58,7 +74,8 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-          }}>
+          }}
+          onChange={getRadioGroupValue}>
           <FormControlLabel
             value="Friendly"
             control={<Radio size="small" color="primary" />}
@@ -88,7 +105,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки РЕР
             </Typography>
           </AccordionSummary>
@@ -105,7 +124,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки пунктів управління
             </Typography>
           </AccordionSummary>
@@ -122,7 +143,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки СВ
             </Typography>
           </AccordionSummary>
@@ -139,7 +162,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки РВіА
             </Typography>
           </AccordionSummary>
@@ -156,7 +181,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки ОіВТ
             </Typography>
           </AccordionSummary>
@@ -173,7 +200,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки військ зв`язку
             </Typography>
           </AccordionSummary>
@@ -190,7 +219,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки ПС
             </Typography>
           </AccordionSummary>
@@ -207,7 +238,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки РТВ, АСУ, ІС
             </Typography>
           </AccordionSummary>
@@ -224,7 +257,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки ВМС
             </Typography>
           </AccordionSummary>
@@ -241,7 +276,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки ДШВ
             </Typography>
           </AccordionSummary>
@@ -258,7 +295,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки ССпО
             </Typography>
           </AccordionSummary>
@@ -275,7 +314,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки опер. забезпечення
             </Typography>
           </AccordionSummary>
@@ -292,7 +333,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки РЕБ
             </Typography>
           </AccordionSummary>
@@ -309,7 +352,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки РХБ
             </Typography>
           </AccordionSummary>
@@ -326,7 +371,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки топогеодез та навігації
             </Typography>
           </AccordionSummary>
@@ -343,7 +390,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки ТхЗ
             </Typography>
           </AccordionSummary>
@@ -360,7 +409,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки ТлЗ
             </Typography>
           </AccordionSummary>
@@ -377,7 +428,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки мед.З
             </Typography>
           </AccordionSummary>
@@ -394,7 +447,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки МПЗ
             </Typography>
           </AccordionSummary>
@@ -411,7 +466,9 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography variant="caption" color="primary.dark">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки космічних систем
             </Typography>
           </AccordionSummary>
