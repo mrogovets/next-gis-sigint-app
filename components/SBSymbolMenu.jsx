@@ -12,6 +12,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { SymbolsList } from "./SymbolsList";
 
 export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
   const [formControlState, setFormControlState] = useState("Hostile");
@@ -112,6 +113,7 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
+            <SymbolsList />
             <Typography>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
