@@ -114,11 +114,6 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
           </AccordionSummary>
           <AccordionDetails>
             <SymbolsList />
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
           </AccordionDetails>
         </Accordion>
         <Accordion>

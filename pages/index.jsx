@@ -32,7 +32,9 @@ function HomePage() {
 
   const svgSybmol =
     "data:image/svg+xml;base64," +
-    Buffer.from(getSvgImgSymbol("hostileArmourCoy", 2, 5)).toString("base64");
+    Buffer.from(getSvgImgSymbol("infantryMechanizedRgmnt", "2", "5")).toString(
+      "base64"
+    );
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
