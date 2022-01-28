@@ -131,6 +131,21 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
             <Typography
               variant="caption"
               color={setAccordionColor(formControlState)}>
+              Просторові можливості (завдання)
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <SymbolsList />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header">
+            <Typography
+              variant="caption"
+              color={setAccordionColor(formControlState)}>
               Умовні знаки пунктів управління
             </Typography>
           </AccordionSummary>

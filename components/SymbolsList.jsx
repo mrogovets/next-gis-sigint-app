@@ -31,11 +31,13 @@ export const SymbolsList = () => {
 
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      <ListItem id="infantryMechanizedCoy" onClick={handlerClickListItem}>
+      <ListItem
+        id="hostileInfantryMechanizedCoy"
+        onClick={handlerClickListItem}>
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white", width: 60, height: 60 }}>
             <Image
-              src={convertSvgToBase64("infantryMechanizedCoy")}
+              src={convertSvgToBase64("hostileInfantryMechanizedCoy")}
               layout="fill"
             />
           </Avatar>
@@ -43,11 +45,13 @@ export const SymbolsList = () => {
         <ListItemText primary="Механізована рота" />
       </ListItem>
       <Divider />
-      <ListItem id="infantryMechanizedBtn" onClick={handlerClickListItem}>
+      <ListItem
+        id="hostileInfantryMechanizedBtn"
+        onClick={handlerClickListItem}>
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white", width: 60, height: 60 }}>
             <Image
-              src={convertSvgToBase64("infantryMechanizedBtn")}
+              src={convertSvgToBase64("hostileInfantryMechanizedBtn")}
               layout="fill"
             />
           </Avatar>
@@ -55,11 +59,13 @@ export const SymbolsList = () => {
         <ListItemText primary="Механізований батальйон" />
       </ListItem>
       <Divider />
-      <ListItem id="infantryMechanizedRgmnt" onClick={handlerClickListItem}>
+      <ListItem
+        id="hostileInfantryMechanizedRgmnt"
+        onClick={handlerClickListItem}>
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white", width: 60, height: 60 }}>
             <Image
-              src={convertSvgToBase64("infantryMechanizedRgmnt")}
+              src={convertSvgToBase64("hostileInfantryMechanizedRgmnt")}
               layout="fill"
             />
           </Avatar>
