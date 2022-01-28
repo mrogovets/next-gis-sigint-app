@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -7,8 +7,11 @@ import Avatar from "@mui/material/Avatar";
 import Image from "next/image";
 import { getSvgImgSymbol } from "./svgImgBase";
 import { Divider } from "@mui/material";
+import { ContextUnitId } from "../Context/ContextUnitId";
 
 export const SymbolsList = () => {
+  const { getUnitId } = useContext(ContextUnitId);
+
   const convertSvgToBase64 = (unit) => {
     return (
       "data:image/svg+xml;base64," +
@@ -23,11 +26,12 @@ export const SymbolsList = () => {
       event.target.closest("li").style.backgroundColor = "white";
     }, 30);
     //---------------------
+    getUnitId(event.target.closest("li").id); // select unitSymbol & set it in STATE
   };
 
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      <ListItem onClick={handlerClickListItem}>
+      <ListItem id="infantryMechanizedCoy" onClick={handlerClickListItem}>
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white", width: 60, height: 60 }}>
             <Image
@@ -39,7 +43,7 @@ export const SymbolsList = () => {
         <ListItemText primary="Механізована рота" />
       </ListItem>
       <Divider />
-      <ListItem onClick={handlerClickListItem}>
+      <ListItem id="infantryMechanizedBtn" onClick={handlerClickListItem}>
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white", width: 60, height: 60 }}>
             <Image
@@ -51,7 +55,7 @@ export const SymbolsList = () => {
         <ListItemText primary="Механізований батальйон" />
       </ListItem>
       <Divider />
-      <ListItem onClick={handlerClickListItem}>
+      <ListItem id="infantryMechanizedRgmnt" onClick={handlerClickListItem}>
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white", width: 60, height: 60 }}>
             <Image

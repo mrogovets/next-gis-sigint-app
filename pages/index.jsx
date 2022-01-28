@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import { SideBarMenu } from "../components/SideBarMenu";
 import { ContextSBMenu } from "../Context/ContextSBMenu";
 import { SBSymbolMenu } from "../components/SBSymbolMenu";
+import { ContextUnitId } from "../Context/ContextUnitId";
 
 function HomePage() {
   const [lat, setLat] = useState(0);
@@ -22,6 +23,9 @@ function HomePage() {
 
   const [clickLatLng, setClickLatLng] = useState(center);
 
+  const [unitId, setUnitId] = useState("");
+  const [svgSybmol, setSvgSymbol] = useState("");
+
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
 
@@ -30,11 +34,9 @@ function HomePage() {
     height: "100vh",
   };
 
-  const svgSybmol =
-    "data:image/svg+xml;base64," +
-    Buffer.from(getSvgImgSymbol("infantryMechanizedRgmnt", "2", "5")).toString(
-      "base64"
-    );
+  const getUnitId = (id) => {
+    setUnitId(id);
+  };
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -63,6 +65,11 @@ function HomePage() {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
     setMarkerArr([...markerArr, clickLatLngTmp]);
+    console.log(unitId);
+    setSvgSymbol(
+      "data:image/svg+xml;base64," +
+        Buffer.from(getSvgImgSymbol(unitId, "2", "5")).toString("base64")
+    );
   };
 
   const isSBMenuOpen = () => {
@@ -115,37 +122,31 @@ function HomePage() {
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
-      <Layout isSBMenuOpen={() => isSBMenuOpen()}>
-        <SideBarMenu
-          SBMenuOpen={SBMenuOpen}
-          getMenuNumber={(number) => getMenuNumber(number)}
-        />
-        <SBSymbolMenu
-          SymbolMenuOpen={symbolMenuOpen}
-          closeSymbolMenuOpen={() => closeSymbolMenuOpen()}
-        />
-        <LoadScript googleMapsApiKey={apiKey}>
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={zoom}
-            onClick={onMapClick}>
-            <Marker
-              onLoad={onLoad}
-              position={center}
-              title="You are here"
-              // icon={
-              //   "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMiIgYmFzZVByb2ZpbGU9InRpbnkiIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMjQgLTE2IDE1MiAxOTIiPjxwYXRoIGQ9Ik0xMDAgMjhsNzIgNzItNzIgNzItNzItNzIgNzItNzJ6IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZT0iIzAwMCIgZmlsbD0iI0ZGODA4MCIvPjxwYXRoIGQ9Ik03MCAxNDBjMC0yNSA2MC0yNSA2MCAwIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZT0iIzAwMCIgZmlsbD0ibm9uZSIvPjx0ZXh0IHg9IjEwMCIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjM1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSJib2xkIiBzdHJva2Utd2lkdGg9IjQiPlNSRDwvdGV4dD48cGF0aCBkPSJNODcuNSAxOGwyNS0yNW0wIDI1bC0yNS0yNSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2U9IiMwMDAiIGZpbGw9Im5vbmUiLz48L3N2Zz4="
-              // }
-            />
-            {markerArr.map((elem, i) => (
-              <MarkerElement key={i} position={elem} icon={svgSybmol} />
-            ))}
-            {/* <MarkerElement position={clickLatLng} />; */}
-            <SigintLineElement />
-          </GoogleMap>
-        </LoadScript>
-      </Layout>
+      <ContextUnitId.Provider value={{ getUnitId }}>
+        <Layout isSBMenuOpen={() => isSBMenuOpen()}>
+          <SideBarMenu
+            SBMenuOpen={SBMenuOpen}
+            getMenuNumber={(number) => getMenuNumber(number)}
+          />
+          <SBSymbolMenu
+            SymbolMenuOpen={symbolMenuOpen}
+            closeSymbolMenuOpen={() => closeSymbolMenuOpen()}
+          />
+          <LoadScript googleMapsApiKey={apiKey}>
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={zoom}
+              onClick={onMapClick}>
+              <Marker onLoad={onLoad} position={center} title="You are here" />
+              {markerArr.map((elem, i) => (
+                <MarkerElement key={i} position={elem} icon={svgSybmol} />
+              ))}
+              <SigintLineElement />
+            </GoogleMap>
+          </LoadScript>
+        </Layout>
+      </ContextUnitId.Provider>
     </ContextSBMenu.Provider>
   );
 }

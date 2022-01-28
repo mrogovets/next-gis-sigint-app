@@ -13,6 +13,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { SymbolsList } from "./SymbolsList";
+import { Divider } from "@mui/material";
 
 export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
   const [formControlState, setFormControlState] = useState("Hostile");
@@ -31,8 +32,14 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
     }
   };
 
-  const handleClick = () => {
-    closeSymbolMenuOpen();
+  const handleClick = (event) => {
+    event.target.closest("svg").style.backgroundColor = "Gainsboro";
+    setTimeout(() => {
+      event.target.closest("svg").style.backgroundColor = "white";
+    }, 50);
+    setTimeout(() => {
+      closeSymbolMenuOpen();
+    }, 10);
   };
 
   return (
@@ -60,22 +67,21 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
         onClick={handleClick}
         sx={{ marginLeft: 31 }}
       />
+      <Divider />
       <FormControl sx={{ alignItems: "center" }}>
-        <FormLabel id="demo-row-radio-buttons-group-label">
-          <Typography variant="h6" color="primary.dark">
+        <FormLabel id="demo-radio-buttons-group-label">
+          <Typography
+            variant="h6"
+            color="primary.dark"
+            sx={{ marginLeft: "20px" }}>
             Оберіть війська
           </Typography>
         </FormLabel>
         <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          column="true"
+          aria-labelledby="demo-radio-buttons-group-label"
+          name="radio-buttons-group"
           defaultValue="Hostile"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
           onChange={getRadioGroupValue}>
           <FormControlLabel
             value="Friendly"
@@ -97,6 +103,7 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
           />
         </RadioGroup>
       </FormControl>
+      <Divider />
       <Typography variant="h6" sx={{ flexGrow: 1, textAlign: "center" }}>
         Оберіть умовне позначення:
       </Typography>
