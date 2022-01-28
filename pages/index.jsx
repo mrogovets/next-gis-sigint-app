@@ -16,8 +16,6 @@ function HomePage() {
   const [SBMenuOpen, setSBMenuOpen] = useState(false);
   const [symbolMenuOpen, setSymbolMenuOpen] = useState(false);
 
-  const [markerArr, setMarkerArr] = useState([]);
-
   const center = { lat, lng };
   const zoom = 10;
 
@@ -25,6 +23,12 @@ function HomePage() {
 
   const [unitId, setUnitId] = useState("");
   const [svgSybmol, setSvgSymbol] = useState("");
+
+  const markerObjTmp = {
+    coords: center,
+    unitId,
+  };
+  const [markerArr, setMarkerArr] = useState([markerObjTmp]);
 
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
@@ -64,11 +68,18 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
-    setMarkerArr([...markerArr, clickLatLngTmp]);
-    console.log(unitId);
-    setSvgSymbol(
+    setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
+    // console.log(unitId);
+    // setSvgSymbol(
+    //   "data:image/svg+xml;base64," +
+    //     Buffer.from(getSvgImgSymbol(unitId, "2", "5")).toString("base64")
+    // );
+  };
+
+  const createIcon = (id) => {
+    return (
       "data:image/svg+xml;base64," +
-        Buffer.from(getSvgImgSymbol(unitId, "2", "5")).toString("base64")
+      Buffer.from(getSvgImgSymbol(id)).toString("base64")
     );
   };
 
@@ -140,7 +151,11 @@ function HomePage() {
               onClick={onMapClick}>
               <Marker onLoad={onLoad} position={center} title="You are here" />
               {markerArr.map((elem, i) => (
-                <MarkerElement key={i} position={elem} icon={svgSybmol} />
+                <MarkerElement
+                  key={i}
+                  position={elem.coords}
+                  icon={createIcon(elem.unitId)}
+                />
               ))}
               <SigintLineElement />
             </GoogleMap>
