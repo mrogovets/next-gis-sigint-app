@@ -15,7 +15,7 @@ import FormLabel from "@mui/material/FormLabel";
 import { SymbolsList } from "./SymbolsList";
 import { Divider } from "@mui/material";
 
-export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
+export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
   const [formControlState, setFormControlState] = useState("Hostile");
 
   const getRadioGroupValue = (event) => {
@@ -25,7 +25,7 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
     switch (state) {
       case "Hostile":
         return "tomato";
-      case "Friendly":
+      case "Friend":
         return "blue";
       case "Neutral":
         return "green";
@@ -41,6 +41,8 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
       closeSymbolMenuOpen();
     }, 10);
   };
+
+  console.log(data);
 
   return (
     <Box
@@ -84,7 +86,7 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen }) => {
           defaultValue="Hostile"
           onChange={getRadioGroupValue}>
           <FormControlLabel
-            value="Friendly"
+            value="Friend"
             control={<Radio size="small" color="primary" />}
             label="Дружні"
             sx={{ color: "blue" }}

@@ -12,6 +12,8 @@ import { ContextUnitId } from "../Context/ContextUnitId";
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
 
+  const [data, setData] = useState([]);
+
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
 
@@ -46,7 +48,7 @@ function HomePage() {
         const res = await fetch(URL);
         if (res.ok) {
           const resData = await res.json(); // this is result of fetching
-          console.log(resData);
+          setData(resData);
         } else {
           throw new Error(`Failed to get address data ${URL}`);
         }
@@ -158,6 +160,7 @@ function HomePage() {
           <SBSymbolMenu
             SymbolMenuOpen={symbolMenuOpen}
             closeSymbolMenuOpen={() => closeSymbolMenuOpen()}
+            data={data}
           />
           <LoadScript googleMapsApiKey={apiKey}>
             <GoogleMap

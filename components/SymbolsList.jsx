@@ -24,7 +24,7 @@ export const SymbolsList = () => {
     event.target.closest("li").style.backgroundColor = "Gainsboro";
     setTimeout(() => {
       event.target.closest("li").style.backgroundColor = "white";
-    }, 30);
+    }, 150);
     //---------------------
     getUnitId(event.target.closest("li").id); // select unitSymbol & set it in STATE
   };
