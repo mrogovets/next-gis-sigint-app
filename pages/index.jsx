@@ -22,7 +22,6 @@ function HomePage() {
   const [clickLatLng, setClickLatLng] = useState(center);
 
   const [unitId, setUnitId] = useState("");
-  const [svgSybmol, setSvgSymbol] = useState("");
 
   const markerObjTmp = {
     coords: center,
@@ -51,6 +50,7 @@ function HomePage() {
         };
         setLat(userLocation.lat);
         setLng(userLocation.lng);
+        setClickLatLng(userLocation); // define start marker position
       });
     } else {
       // code for legacy browsers
@@ -69,11 +69,6 @@ function HomePage() {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
     setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
-    // console.log(unitId);
-    // setSvgSymbol(
-    //   "data:image/svg+xml;base64," +
-    //     Buffer.from(getSvgImgSymbol(unitId, "2", "5")).toString("base64")
-    // );
   };
 
   const createIcon = (id) => {
@@ -146,7 +141,7 @@ function HomePage() {
           <LoadScript googleMapsApiKey={apiKey}>
             <GoogleMap
               mapContainerStyle={containerStyle}
-              center={center}
+              center={clickLatLng}
               zoom={zoom}
               onClick={onMapClick}>
               <Marker onLoad={onLoad} position={center} title="You are here" />
