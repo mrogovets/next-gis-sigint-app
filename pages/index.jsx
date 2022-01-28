@@ -10,6 +10,8 @@ import { SBSymbolMenu } from "../components/SBSymbolMenu";
 import { ContextUnitId } from "../Context/ContextUnitId";
 
 function HomePage() {
+  const URL = "/svgSymbolsBase.json";
+
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
 
@@ -36,6 +38,25 @@ function HomePage() {
     width: "100%",
     height: "100vh",
   };
+
+  // GET data from db.json
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch(URL);
+        if (res.ok) {
+          const resData = await res.json(); // this is result of fetching
+          console.log(resData);
+        } else {
+          throw new Error(`Failed to get address data ${URL}`);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getData();
+  }, []);
+  // -------\GET data from db.json------------------
 
   const getUnitId = (id) => {
     setUnitId(id);
