@@ -3,29 +3,66 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
 import { getSvgImgSymbol } from "../components/svgImgBase.js";
 import { SigintLineElement } from "../components/SigintLineElement";
+import Layout from "../components/Layout";
+import { SideBarMenu } from "../components/SideBarMenu";
+import { ContextSBMenu } from "../Context/ContextSBMenu";
+import { SBSymbolMenu } from "../components/SBSymbolMenu";
+import { ContextUnitId } from "../Context/ContextUnitId";
 
 function HomePage() {
+  const URL = "/svgSymbolsBase.json";
+
+  const [data, setData] = useState([]);
+
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
 
-  const [markerArr, setMarkerArr] = useState([]);
+  const [SBMenuOpen, setSBMenuOpen] = useState(false);
+  const [symbolMenuOpen, setSymbolMenuOpen] = useState(false);
 
   const center = { lat, lng };
   const zoom = 10;
 
   const [clickLatLng, setClickLatLng] = useState(center);
 
+  const [unitId, setUnitId] = useState("");
+
+  const markerObjTmp = {
+    coords: center,
+    unitId,
+  };
+  const [markerArr, setMarkerArr] = useState([markerObjTmp]);
+
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
 
   const containerStyle = {
-    width: "1200px",
-    height: "800px",
+    width: "100%",
+    height: "100vh",
   };
 
-  const svgSybmol =
-    "data:image/svg+xml;base64," +
-    Buffer.from(getSvgImgSymbol("hostileArmourCoy", 2, 5)).toString("base64");
+  // GET data from db.json
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch(URL);
+        if (res.ok) {
+          const resData = await res.json(); // this is result of fetching
+          setData(resData);
+        } else {
+          throw new Error(`Failed to get address data ${URL}`);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getData();
+  }, []);
+  // -------\GET data from db.json------------------
+
+  const getUnitId = (id) => {
+    setUnitId(id);
+  };
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -36,6 +73,7 @@ function HomePage() {
         };
         setLat(userLocation.lat);
         setLng(userLocation.lng);
+        setClickLatLng(userLocation); // define start marker position
       });
     } else {
       // code for legacy browsers
@@ -53,35 +91,97 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
-    setMarkerArr([...markerArr, clickLatLngTmp]);
+    setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
   };
 
-  // console.log("markerArr", markerArr);
+  const createIcon = (id) => {
+    return (
+      "data:image/svg+xml;base64," +
+      Buffer.from(getSvgImgSymbol(id)).toString("base64")
+    );
+  };
+
+  const isSBMenuOpen = () => {
+    if (SBMenuOpen) {
+      setSBMenuOpen(false);
+    } else setSBMenuOpen(true);
+  };
+
+  const getMenuNumber = (number) => {
+    switch (number) {
+      case "One":
+        setSymbolMenuOpen(true);
+        break;
+      case "Two":
+        // setSymbolMenuOpen(true);
+        setSymbolMenuOpen(false);
+        break;
+      case "Three":
+        // setSymbolMenuOpen(true);
+        setSymbolMenuOpen(false);
+        break;
+      case "Four":
+        // setSymbolMenuOpen(true);
+        setSymbolMenuOpen(false);
+        break;
+      case "Five":
+        // setSymbolMenuOpen(true);
+        setSymbolMenuOpen(false);
+        break;
+      case "Six":
+        // setSymbolMenuOpen(true);
+        setSymbolMenuOpen(false);
+        break;
+      case "Seven":
+        // setSymbolMenuOpen(true);
+        setSymbolMenuOpen(false);
+        break;
+      case "Eight":
+        // setSymbolMenuOpen(true);
+        setSymbolMenuOpen(false);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const closeSymbolMenuOpen = () => {
+    setSymbolMenuOpen(false);
+  };
 
   return (
-    <React.Fragment>
-      <LoadScript googleMapsApiKey={apiKey}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={zoom}
-          onClick={onMapClick}>
-          <Marker
-            onLoad={onLoad}
-            position={center}
-            title="You are here"
-            icon={
-              "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMiIgYmFzZVByb2ZpbGU9InRpbnkiIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMjQgLTE2IDE1MiAxOTIiPjxwYXRoIGQ9Ik0xMDAgMjhsNzIgNzItNzIgNzItNzItNzIgNzItNzJ6IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZT0iIzAwMCIgZmlsbD0iI0ZGODA4MCIvPjxwYXRoIGQ9Ik03MCAxNDBjMC0yNSA2MC0yNSA2MCAwIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZT0iIzAwMCIgZmlsbD0ibm9uZSIvPjx0ZXh0IHg9IjEwMCIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjM1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSJib2xkIiBzdHJva2Utd2lkdGg9IjQiPlNSRDwvdGV4dD48cGF0aCBkPSJNODcuNSAxOGwyNS0yNW0wIDI1bC0yNS0yNSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2U9IiMwMDAiIGZpbGw9Im5vbmUiLz48L3N2Zz4="
-            }
+    <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
+      <ContextUnitId.Provider value={{ getUnitId }}>
+        <Layout isSBMenuOpen={() => isSBMenuOpen()}>
+          <SideBarMenu
+            SBMenuOpen={SBMenuOpen}
+            getMenuNumber={(number) => getMenuNumber(number)}
           />
-          {markerArr.map((elem, i) => (
-            <MarkerElement key={i} position={elem} icon={svgSybmol} />
-          ))}
-          {/* <MarkerElement position={clickLatLng} />; */}
-          <SigintLineElement />
-        </GoogleMap>
-      </LoadScript>
-    </React.Fragment>
+          <SBSymbolMenu
+            SymbolMenuOpen={symbolMenuOpen}
+            closeSymbolMenuOpen={() => closeSymbolMenuOpen()}
+            data={data}
+          />
+          <LoadScript googleMapsApiKey={apiKey}>
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={clickLatLng}
+              zoom={zoom}
+              onClick={onMapClick}>
+              <Marker onLoad={onLoad} position={center} title="You are here" />
+              {markerArr.map((elem, i) => (
+                <MarkerElement
+                  key={i}
+                  position={elem.coords}
+                  icon={createIcon(elem.unitId)}
+                />
+              ))}
+              <SigintLineElement />
+            </GoogleMap>
+          </LoadScript>
+        </Layout>
+      </ContextUnitId.Provider>
+    </ContextSBMenu.Provider>
   );
 }
 export default HomePage;
