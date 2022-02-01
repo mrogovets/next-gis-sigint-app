@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
 import Accordion from "@mui/material/Accordion";
@@ -16,18 +16,19 @@ import { SymbolsList } from "./SymbolsList";
 import { Divider } from "@mui/material";
 
 export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
-  const [formControlState, setFormControlState] = useState("Hostile");
+  const [formControlState, setFormControlState] = useState("hostile");
+  const [selectedSymbolsArr, setSelectedSymbolsArr] = useState([]);
 
   const getRadioGroupValue = (event) => {
     setFormControlState(event.target.value);
   };
   const setAccordionColor = (state) => {
     switch (state) {
-      case "Hostile":
+      case "hostile":
         return "tomato";
-      case "Friend":
+      case "friend":
         return "blue";
-      case "Neutral":
+      case "neutral":
         return "green";
     }
   };
@@ -42,7 +43,16 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
     }, 10);
   };
 
-  console.log(data);
+  // depends on type "hostile", "friend" or "neutral" selecting symbols
+  const getArrOfSelectedSybmols = (data) => {
+    const selectedArr = data.filter((elem) => {
+      if (elem.categorySymbols === formControlState) {
+        return elem;
+      }
+    });
+    return selectedArr;
+  };
+  // -------------------------------------------------------
 
   return (
     <Box
@@ -83,22 +93,22 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
           column="true"
           aria-labelledby="demo-radio-buttons-group-label"
           name="radio-buttons-group"
-          defaultValue="Hostile"
+          defaultValue="hostile"
           onChange={getRadioGroupValue}>
           <FormControlLabel
-            value="Friend"
+            value="friend"
             control={<Radio size="small" color="primary" />}
             label="Дружні"
             sx={{ color: "blue" }}
           />
           <FormControlLabel
-            value="Hostile"
+            value="hostile"
             control={<Radio size="small" color="warning" />}
             label="Ворожі"
             sx={{ color: "tomato" }}
           />
           <FormControlLabel
-            value="Neutral"
+            value="neutral"
             control={<Radio size="small" color="success" />}
             label="Нейтральні"
             sx={{ color: "green" }}
@@ -122,7 +132,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <SymbolsList />
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "sigInt";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -171,11 +189,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "land";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>

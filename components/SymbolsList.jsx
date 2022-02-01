@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -9,7 +9,7 @@ import { getSvgImgSymbol } from "./svgImgBase";
 import { Divider } from "@mui/material";
 import { ContextUnitId } from "../Context/ContextUnitId";
 
-export const SymbolsList = () => {
+export const SymbolsList = ({ arrSymbols = [] }) => {
   const { getUnitId } = useContext(ContextUnitId);
 
   const convertSvgToBase64 = (unit) => {
@@ -30,6 +30,26 @@ export const SymbolsList = () => {
   };
 
   return (
+    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      {arrSymbols.map((elem, i) => (
+        <React.Fragment key={i}>
+          <ListItem id={elem.id} onClick={handlerClickListItem}>
+            <ListItemAvatar>
+              <Avatar sx={{ backgroundColor: "white", width: 60, height: 60 }}>
+                <Image src={convertSvgToBase64(`${elem.id}`)} layout="fill" />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={elem.title} />
+          </ListItem>
+          <Divider />
+        </React.Fragment>
+      ))}
+    </List>
+  );
+};
+
+/*
+return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <ListItem
         id="hostileInfantryMechanizedCoy"
@@ -74,4 +94,4 @@ export const SymbolsList = () => {
       </ListItem>
     </List>
   );
-};
+*/

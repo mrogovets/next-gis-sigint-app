@@ -33,8 +33,8 @@ function HomePage() {
   };
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
 
-  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-  const apiKey = null; // for devProc only
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  // const apiKey = null; // for devProc only
 
   const containerStyle = {
     width: "100%",
