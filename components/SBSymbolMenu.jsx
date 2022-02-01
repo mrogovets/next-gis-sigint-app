@@ -170,11 +170,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "commandPosts";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -212,11 +216,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "artillery";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -231,11 +239,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "armament";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -250,11 +262,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "communicationForce";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -269,11 +285,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "air";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -288,11 +308,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "radar";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -307,11 +331,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "navy";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -326,11 +354,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "airBornForce";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -345,11 +377,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "specialForce";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -364,11 +400,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "operMaintenance";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -383,11 +423,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "electronicWarfare";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -402,11 +446,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "nbc";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -421,11 +469,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "navigation";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -440,11 +492,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "techSupport";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -459,11 +515,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "logistic";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -478,11 +538,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "medical";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -497,11 +561,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "moralPsy";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -516,11 +584,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "space";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
       </div>
