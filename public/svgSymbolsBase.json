@@ -21,6 +21,27 @@
     "svgCode": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" width=\"71.19999999999999\" height=\"57.6\" viewBox=\"-18.666666666666664 -16 237.33333333333331 192\"><path d=\"M 100,28 L172,100 100,172 28,100 100,28 Z\" stroke-width=\"4\" stroke=\"black\" fill=\"rgb(255,128,128)\" fill-opacity=\"1\" ></path><path d=\"M60,70L140,130M60,130L140,70\" stroke-width=\"4\" stroke=\"black\" fill=\"black\" ></path><g transform=\"translate(0,0)\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ><path d=\"M100,18L100,-7\" ></path><path d=\"M120,18L120,-7\" ></path><path d=\"M80,18L80,-7\" ></path></g><text x=\"8\" y=\"160\" text-anchor=\"end\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" ></text><text x=\"192\" y=\"160\" text-anchor=\"start\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" ></text></svg>"
   },
   {
+    "categorySymbols": "hostile",
+    "branchForce": "sigInt",
+    "id": "hostileSigIntBtn",
+    "title": "Батальйон РЕР",
+    "svgCode": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" width=\"71.19999999999999\" height=\"57.6\" viewBox=\"-18.666666666666664 -16 237.33333333333331 192\"><path d=\"M 100,28 L172,100 100,172 28,100 100,28 Z\" stroke-width=\"4\" stroke=\"black\" fill=\"rgb(255,128,128)\" fill-opacity=\"1\" ></path><g transform=\"translate(-25,0)\" ><text x=\"100\" y=\"115\" text-anchor=\"middle\" font-size=\"42\" font-family=\"Arial\" font-weight=\"bold\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" >MI</text></g><circle cx=\"100\" cy=\"130\" r=\"10\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ></circle><path d=\"M100,120 l0,-60 M70,70 l10,-10 10,10 10,-10 10,10 10,-10 10,10\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ></path><g transform=\"translate(0,0)\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ><path d=\"M90,18L90,-7\" ></path><path d=\"M110,18L110,-7\" ></path></g><text x=\"8\" y=\"160\" text-anchor=\"end\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" ></text><text x=\"192\" y=\"160\" text-anchor=\"start\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" ></text></svg>"
+  },
+  {
+    "categorySymbols": "hostile",
+    "branchForce": "sigInt",
+    "id": "hostileSigIntCoy",
+    "title": "Рота РЕР",
+    "svgCode": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" width=\"71.19999999999999\" height=\"57.6\" viewBox=\"-18.666666666666664 -16 237.33333333333331 192\"><path d=\"M 100,28 L172,100 100,172 28,100 100,28 Z\" stroke-width=\"4\" stroke=\"black\" fill=\"rgb(255,128,128)\" fill-opacity=\"1\" ></path><g transform=\"translate(-25,0)\" ><text x=\"100\" y=\"115\" text-anchor=\"middle\" font-size=\"42\" font-family=\"Arial\" font-weight=\"bold\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" >MI</text></g><circle cx=\"100\" cy=\"130\" r=\"10\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ></circle><path d=\"M100,120 l0,-60 M70,70 l10,-10 10,10 10,-10 10,10 10,-10 10,10\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ></path><g transform=\"translate(0,0)\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ><path d=\"M100,18L100,-7\" ></path></g><text x=\"8\" y=\"160\" text-anchor=\"end\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" ></text><text x=\"192\" y=\"160\" text-anchor=\"start\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" ></text></svg>"
+  },
+  {
+    "categorySymbols": "hostile",
+    "branchForce": "sigInt",
+    "id": "hostileSigIntPtn",
+    "title": "Взвод РЕР",
+    "svgCode": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" width=\"71.19999999999999\" height=\"53.85\" viewBox=\"-18.666666666666664 -3.5 237.33333333333331 179.5\"><path d=\"M 100,28 L172,100 100,172 28,100 100,28 Z\" stroke-width=\"4\" stroke=\"black\" fill=\"rgb(255,128,128)\" fill-opacity=\"1\" ></path><g transform=\"translate(-25,0)\" ><text x=\"100\" y=\"115\" text-anchor=\"middle\" font-size=\"42\" font-family=\"Arial\" font-weight=\"bold\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" >MI</text></g><circle cx=\"100\" cy=\"130\" r=\"10\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ></circle><path d=\"M100,120 l0,-60 M70,70 l10,-10 10,10 10,-10 10,10 10,-10 10,10\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ></path><g transform=\"translate(0,0)\" stroke-width=\"4\" stroke=\"black\" fill=\"none\" ><circle cx=\"100\" cy=\"8\" r=\"7.5\" fill=\"black\" ></circle><circle cx=\"70\" cy=\"8\" r=\"7.5\" fill=\"black\" ></circle><circle cx=\"130\" cy=\"8\" r=\"7.5\" fill=\"black\" ></circle></g><text x=\"8\" y=\"160\" text-anchor=\"end\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" ></text><text x=\"192\" y=\"160\" text-anchor=\"start\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\" stroke=\"none\" fill=\"black\" ></text></svg>"
+  },
+  {
     "categorySymbols": "friend",
     "branchForce": "sigInt",
     "id": "friendSigIntPtn",
