@@ -61,7 +61,14 @@ function HomePage() {
   // -------\GET data from db.json------------------
 
   const getUnitId = (id) => {
-    setUnitId(id);
+    console.log(id);
+    if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
+      setUnitId("");
+      console.log("strip");
+    } else {
+      setUnitId(id);
+      console.log("symbol");
+    }
   };
 
   const getUserLocation = () => {
