@@ -62,7 +62,13 @@ function HomePage() {
 
   const getUnitId = (id) => {
     console.log(id);
-    setUnitId(id);
+    if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
+      setUnitId("");
+      console.log("strip");
+    } else {
+      setUnitId(id);
+      console.log("symbol");
+    }
   };
 
   const getUserLocation = () => {
