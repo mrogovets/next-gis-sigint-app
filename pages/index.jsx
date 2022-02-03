@@ -61,6 +61,7 @@ function HomePage() {
   // -------\GET data from db.json------------------
 
   const getUnitId = (id) => {
+    console.log(id);
     setUnitId(id);
   };
 

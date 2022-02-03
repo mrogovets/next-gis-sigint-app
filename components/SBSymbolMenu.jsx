@@ -17,7 +17,6 @@ import { Divider } from "@mui/material";
 
 export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
   const [formControlState, setFormControlState] = useState("hostile");
-  const [selectedSymbolsArr, setSelectedSymbolsArr] = useState([]);
 
   const getRadioGroupValue = (event) => {
     setFormControlState(event.target.value);
@@ -155,7 +154,15 @@ export const SBSymbolMenu = ({ SymbolMenuOpen, closeSymbolMenuOpen, data }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <SymbolsList />
+            <SymbolsList
+              arrSymbols={
+                data
+                  ? getArrOfSelectedSybmols(data).filter((elem) => {
+                      return elem.branchForce === "distance";
+                    })
+                  : null
+              }
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
