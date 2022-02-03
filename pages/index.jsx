@@ -33,6 +33,10 @@ function HomePage() {
   };
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
 
+  const [isStrip, setIsStrip] = useState(false); // regime strip of SigInt in function getUnitId(id)
+
+  const [polylinePathArr, setPolylinePathArr] = useState([]); // this is path of polyline
+
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
 
@@ -64,10 +68,10 @@ function HomePage() {
     console.log(id);
     if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
       setUnitId("");
-      console.log("strip");
+      setIsStrip(true);
     } else {
       setUnitId(id);
-      console.log("symbol");
+      setIsStrip(false);
     }
   };
 
@@ -98,7 +102,15 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
-    setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
+    if (!isStrip) {
+      setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
+    } else {
+      setPolylinePathArr([
+        ...polylinePathArr,
+        { lat: clickLatLng.lat, lng: clickLatLng.lng },
+      ]);
+      console.log(polylinePathArr);
+    }
   };
 
   const createIcon = (id) => {
@@ -183,7 +195,7 @@ function HomePage() {
                   icon={createIcon(elem.unitId)}
                 />
               ))}
-              <SigintLineElement />
+              <SigintLineElement path={polylinePathArr} />
             </GoogleMap>
           </LoadScript>
         </Layout>
