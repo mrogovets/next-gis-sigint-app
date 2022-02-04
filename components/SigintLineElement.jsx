@@ -5,6 +5,8 @@ export const SigintLineElement = ({ path = [] }) => {
     console.log("polyline: ", polyline);
   };
 
+  console.log("path: ", path);
+
   // const path = [
   //   { lat: 37.772, lng: -122.214 },
   //   { lat: 21.291, lng: -157.821 },
