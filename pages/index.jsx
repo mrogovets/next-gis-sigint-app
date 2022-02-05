@@ -34,6 +34,7 @@ function HomePage() {
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
 
   const [isStrip, setIsStrip] = useState(false); // regime strip of SigInt in function getUnitId(id)
+  const [colorOfSigIntStrip, setColorOfSigintStrip] = useState("");
 
   const [polylinePathArr, setPolylinePathArr] = useState([]); // this is path of polyline
   const [collectionSigIntStripPath, setCollectionSigintStripPath] = useState(
@@ -70,6 +71,7 @@ function HomePage() {
   const getUnitId = (id) => {
     console.log(id);
     if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
+      setColorOfSigintStrip(id);
       if (isStrip) {
         setPolylinePathArr([]);
         // record polylinePathArr to Collection of SigIntStripPath arr
@@ -77,7 +79,7 @@ function HomePage() {
           ...collectionSigIntStripPath,
           [polylinePathArr],
         ]);
-        console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
+        // console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
       } else {
         setUnitId("");
         setIsStrip(true);
@@ -208,9 +210,16 @@ function HomePage() {
                   icon={createIcon(elem.unitId)}
                 />
               ))}
-              <SigintLineElement path={polylinePathArr} />
+              <SigintLineElement
+                path={polylinePathArr}
+                colorOfStripSigInt={colorOfSigIntStrip}
+              />
               {collectionSigIntStripPath.map((elem, i) => (
-                <SigintLineElement key={i} path={elem[0]} />
+                <SigintLineElement
+                  key={i}
+                  path={elem[0]}
+                  colorOfStripSigInt={colorOfSigIntStrip}
+                />
               ))}
             </GoogleMap>
           </LoadScript>
