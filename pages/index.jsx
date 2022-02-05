@@ -36,6 +36,9 @@ function HomePage() {
   const [isStrip, setIsStrip] = useState(false); // regime strip of SigInt in function getUnitId(id)
 
   const [polylinePathArr, setPolylinePathArr] = useState([]); // this is path of polyline
+  const [collectionSigIntStripPath, setCollectionSigintStripPath] = useState(
+    []
+  ); // this is finished path
 
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
@@ -67,8 +70,18 @@ function HomePage() {
   const getUnitId = (id) => {
     console.log(id);
     if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
-      setUnitId("");
-      setIsStrip(true);
+      if (isStrip) {
+        setPolylinePathArr([]);
+        // record polylinePathArr to Collection of SigIntStripPath arr
+        setCollectionSigintStripPath([
+          ...collectionSigIntStripPath,
+          [polylinePathArr],
+        ]);
+        console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
+      } else {
+        setUnitId("");
+        setIsStrip(true);
+      }
     } else {
       setUnitId(id);
       setIsStrip(false);
@@ -107,7 +120,7 @@ function HomePage() {
     } else {
       setPolylinePathArr([
         ...polylinePathArr,
-        { lat: clickLatLng.lat, lng: clickLatLng.lng },
+        { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng },
       ]);
       console.log(polylinePathArr);
     }
@@ -196,6 +209,9 @@ function HomePage() {
                 />
               ))}
               <SigintLineElement path={polylinePathArr} />
+              {collectionSigIntStripPath.map((elem, i) => (
+                <SigintLineElement key={i} path={elem[0]} />
+              ))}
             </GoogleMap>
           </LoadScript>
         </Layout>

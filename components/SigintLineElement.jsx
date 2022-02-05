@@ -5,6 +5,8 @@ export const SigintLineElement = ({ path = [] }) => {
     console.log("polyline: ", polyline);
   };
 
+  console.log("path: ", path);
+
   // const path = [
   //   { lat: 37.772, lng: -122.214 },
   //   { lat: 21.291, lng: -157.821 },
@@ -12,17 +14,30 @@ export const SigintLineElement = ({ path = [] }) => {
   //   { lat: -27.467, lng: 153.027 },
   // ];
 
+  const lineSymbol = {
+    path: "M0 5h30",
+    strokeOpacity: 1,
+    scale: 1,
+  };
+
   const options = {
     strokeColor: "#FF0000",
     strokeOpacity: 0.8,
-    strokeWeight: 2,
+    strokeWeight: 3,
     fillColor: "#FF0000",
     fillOpacity: 0.35,
     clickable: false,
     draggable: false,
     editable: false,
     visible: true,
-    radius: 300,
+    radius: 3,
+    icons: [
+      {
+        icon: lineSymbol,
+        offset: "0",
+        repeat: "10px",
+      },
+    ],
     paths: [
       { lat: 37.772, lng: -122.214 },
       { lat: 21.291, lng: -157.821 },
