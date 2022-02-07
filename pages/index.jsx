@@ -70,15 +70,26 @@ function HomePage() {
 
   const getUnitId = (id) => {
     console.log(id);
+    //------------------------
+    if (polylinePathArr.length) {
+      setCollectionSigintStripPath([
+        ...collectionSigIntStripPath,
+        [polylinePathArr],
+      ]);
+      setPolylinePathArr([]);
+    }
+    //---------------------
     if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
       setColorOfSigintStrip(id);
       if (isStrip) {
-        setPolylinePathArr([]);
         // record polylinePathArr to Collection of SigIntStripPath arr
-        setCollectionSigintStripPath([
-          ...collectionSigIntStripPath,
-          [polylinePathArr],
-        ]);
+        if (polylinePathArr.length) {
+          setCollectionSigintStripPath([
+            ...collectionSigIntStripPath,
+            [polylinePathArr],
+          ]);
+          setPolylinePathArr([]);
+        }
         // console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
       } else {
         setUnitId(id);
@@ -214,15 +225,13 @@ function HomePage() {
                 path={polylinePathArr}
                 colorOfStripSigInt={colorOfSigIntStrip}
               />
-              {collectionSigIntStripPath.map(
-                (elem, i) => (
-                  <SigintLineElement
-                    key={i}
-                    path={elem[0]}
-                    colorOfStripSigInt={elem[0][i].id}
-                  />
-                )
-                // console.log("color: ", elem[0][i].id)
+              {collectionSigIntStripPath.map((elem, i) =>
+                //   <SigintLineElement
+                //     key={i}
+                //     path={elem[0]}
+                //     colorOfStripSigInt={elem[0][i].id}
+                //   />
+                console.log("color: ", elem[0])
               )}
             </GoogleMap>
           </LoadScript>
