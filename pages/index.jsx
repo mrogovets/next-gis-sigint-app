@@ -81,7 +81,7 @@ function HomePage() {
         ]);
         // console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
       } else {
-        setUnitId("");
+        setUnitId(id);
         setIsStrip(true);
       }
     } else {
@@ -122,7 +122,7 @@ function HomePage() {
     } else {
       setPolylinePathArr([
         ...polylinePathArr,
-        { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng },
+        { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng, id: unitId },
       ]);
       console.log(polylinePathArr);
     }
@@ -214,13 +214,16 @@ function HomePage() {
                 path={polylinePathArr}
                 colorOfStripSigInt={colorOfSigIntStrip}
               />
-              {collectionSigIntStripPath.map((elem, i) => (
-                <SigintLineElement
-                  key={i}
-                  path={elem[0]}
-                  colorOfStripSigInt={colorOfSigIntStrip}
-                />
-              ))}
+              {collectionSigIntStripPath.map(
+                (elem, i) => (
+                  <SigintLineElement
+                    key={i}
+                    path={elem[0]}
+                    colorOfStripSigInt={elem[0][i].id}
+                  />
+                )
+                // console.log("color: ", elem[0][i].id)
+              )}
             </GoogleMap>
           </LoadScript>
         </Layout>
