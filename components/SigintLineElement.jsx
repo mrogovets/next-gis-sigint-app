@@ -5,7 +5,7 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
     // console.log("polyline: ", polyline);
   };
 
-  console.log("Color: ", colorOfStripSigInt);
+  // console.log("Color: ", colorOfStripSigInt);
 
   const lineSymbolDashed = {
     path: "M 0,-1 0,1 ",
