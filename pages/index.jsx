@@ -109,7 +109,7 @@ function HomePage() {
       setIsLineDivide(false);
       setUnitId(id);
     }
-    console.log("ColorOfLineDivide: ", colorOfLineDivide);
+    // console.log("ColorOfLineDivide: ", colorOfLineDivide);
   };
 
   const getUserLocation = () => {

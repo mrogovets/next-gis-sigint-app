@@ -6,17 +6,23 @@ export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
   };
 
   const curveLine = {
-    path: "M0,10 C1,0 9,0 10,10 ",
+    // path: "M0,10 C1,0 9,0 10,10 ",
+    path: "M-5,5 C-3,-8 6,-2 5,5 ",
     strokeOpacity: 1,
     strokeWeight: 3,
     scale: 2,
     rotation: 90,
   };
 
-  const lineSymbol = {
-    path: "M -2,0 -2,-2 ",
+  const startSymbol = {
+    path: "M -2,-2 2,2 M 2,-2 -2,2 ",
     strokeOpacity: 1,
     scale: 4,
+  };
+  const endSymbol = {
+    path: "M 3,-7.7 a5 5 0 1 1-10 0 5 5 0 1 1 10 0 M 3,-8 -7,-8  z",
+    strokeOpacity: 1,
+    scale: 3,
   };
 
   const options = {
@@ -37,14 +43,16 @@ export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
     icons: [
       {
         icon: curveLine,
-        offset: "0",
         repeat: "20px",
       },
-      //   {
-      //     icon: lineSymbol,
-      //     offset: "0",
-      //     repeat: "1px",
-      //   },
+      {
+        icon: startSymbol,
+        offset: "0%",
+      },
+      {
+        icon: endSymbol,
+        offset: "100%",
+      },
     ],
     zIndex: 1,
   };
