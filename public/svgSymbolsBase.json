@@ -110,5 +110,19 @@
     "id": "hostileStripSigInt",
     "title": "Смуга розвідки",
     "svgCode": ""
+  },
+  {
+    "categorySymbols": "friend",
+    "branchForce": "distance",
+    "id": "friendLineDivide",
+    "title": "Рубіж оборони (позиція), зайнятий військами",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "hostile",
+    "branchForce": "distance",
+    "id": "hostileLineDivide",
+    "title": "Рубіж оборони (позиція), зайнятий військами",
+    "svgCode": ""
   }
 ]

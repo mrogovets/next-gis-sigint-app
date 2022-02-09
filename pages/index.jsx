@@ -33,7 +33,7 @@ function HomePage() {
   };
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
 
-  const [isStrip, setIsStrip] = useState(false); // regime strip of SigInt in function getUnitId(id)
+  const [isStripSigint, setIsStripSigint] = useState(false); // regime strip of SigInt in function getUnitId(id)
   const [colorOfSigIntStrip, setColorOfSigintStrip] = useState("");
 
   const [polylinePathArr, setPolylinePathArr] = useState([]); // this is path of polyline
@@ -69,12 +69,9 @@ function HomePage() {
   // -------\GET data from db.json------------------
 
   const getUnitId = (id) => {
-    // console.log("getUnitId", id);
-    // console.log("polylinePathArr", polylinePathArr);
-    // console.log("collectionSigIntStripPath", collectionSigIntStripPath);
-
+    // ------- for drawing of StripSigint ------------
     if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
-      setIsStrip(true);
+      setIsStripSigint(true);
       setColorOfSigintStrip(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -84,8 +81,24 @@ function HomePage() {
         ]);
         setPolylinePathArr([]);
       }
-    } else {
-      setIsStrip(false);
+    }
+    // ------- \ for drawing of StripSigint ------------
+    // ------- for drawing of LineDevide ------------
+    else if (id === "friendLineDivide" || id === "hostileLineDivide") {
+      setIsStripSigint(true);
+      setColorOfSigintStrip(id);
+      setUnitId(id);
+      if (polylinePathArr.length) {
+        setCollectionSigintStripPath([
+          ...collectionSigIntStripPath,
+          [polylinePathArr],
+        ]);
+        setPolylinePathArr([]);
+      }
+    }
+    // ------- \ for drawing of LineDevide ------------
+    else {
+      setIsStripSigint(false);
       setUnitId(id);
     }
   };
@@ -117,7 +130,7 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
-    if (!isStrip) {
+    if (!isStripSigint) {
       setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
     } else {
       setPolylinePathArr([
