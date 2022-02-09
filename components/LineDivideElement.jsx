@@ -1,16 +1,16 @@
 import { Polyline } from "@react-google-maps/api";
 
-export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
+export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
   const onLoad = (polyline) => {
     // console.log("polyline: ", polyline);
   };
 
-  // console.log("Color: ", colorOfStripSigInt);
-
-  const lineSymbolDashed = {
-    path: "M 0,-1 0,1 ",
+  const curveLine = {
+    path: "M0,10 C1,0 9,0 10,10 ",
     strokeOpacity: 1,
-    scale: 4,
+    strokeWeight: 3,
+    scale: 2,
+    rotation: 90,
   };
 
   const lineSymbol = {
@@ -21,12 +21,12 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
 
   const options = {
     strokeColor: `${
-      colorOfStripSigInt === "hostileStripSigInt" ? "tomato" : "blue"
+      colorOfLineDivide === "hostileLineDivide" ? "tomato" : "blue"
     }`,
     strokeOpacity: 0,
     strokeWeight: 3,
     fillColor: `${
-      colorOfStripSigInt === "hostileStripSigInt" ? "tomato" : "blue"
+      colorOfLineDivide === "hostileLineDivide" ? "tomato" : "blue"
     }`,
     fillOpacity: 0.35,
     clickable: false,
@@ -36,15 +36,15 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
     radius: 3,
     icons: [
       {
-        icon: lineSymbolDashed,
+        icon: curveLine,
         offset: "0",
         repeat: "20px",
       },
-      {
-        icon: lineSymbol,
-        offset: "0",
-        repeat: "1px",
-      },
+      //   {
+      //     icon: lineSymbol,
+      //     offset: "0",
+      //     repeat: "1px",
+      //   },
     ],
     zIndex: 1,
   };

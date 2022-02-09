@@ -8,6 +8,7 @@ import { SideBarMenu } from "../components/SideBarMenu";
 import { ContextSBMenu } from "../Context/ContextSBMenu";
 import { SBSymbolMenu } from "../components/SBSymbolMenu";
 import { ContextUnitId } from "../Context/ContextUnitId";
+import { LineDevideElement } from "../components/LineDivideElement";
 
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
@@ -33,13 +34,17 @@ function HomePage() {
   };
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
 
-  const [isStrip, setIsStrip] = useState(false); // regime strip of SigInt in function getUnitId(id)
+  const [isStripSigint, setIsStripSigint] = useState(false); // regime strip of SigInt in function getUnitId(id)
   const [colorOfSigIntStrip, setColorOfSigintStrip] = useState("");
 
   const [polylinePathArr, setPolylinePathArr] = useState([]); // this is path of polyline
   const [collectionSigIntStripPath, setCollectionSigintStripPath] = useState(
     []
   ); // this is finished path
+
+  const [isLineDivide, setIsLineDivide] = useState(false); // regime LineDivide in function getUnitId(id)
+  const [colorOfLineDivide, setColorOfLineDivide] = useState("");
+  const [collectionLineDividePath, setCollectionLineDividePath] = useState([]); // this is finished path
 
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
@@ -69,36 +74,42 @@ function HomePage() {
   // -------\GET data from db.json------------------
 
   const getUnitId = (id) => {
-    console.log(id);
-    //------------------------
-    if (polylinePathArr.length) {
-      setCollectionSigintStripPath([
-        ...collectionSigIntStripPath,
-        [polylinePathArr],
-      ]);
-      setPolylinePathArr([]);
-    }
-    //---------------------
+    // ------- for drawing of StripSigint ------------
     if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
+      setIsStripSigint(true);
+      setIsLineDivide(false);
       setColorOfSigintStrip(id);
-      if (isStrip) {
-        // record polylinePathArr to Collection of SigIntStripPath arr
-        if (polylinePathArr.length) {
-          setCollectionSigintStripPath([
-            ...collectionSigIntStripPath,
-            [polylinePathArr],
-          ]);
-          setPolylinePathArr([]);
-        }
-        // console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
-      } else {
-        setUnitId(id);
-        setIsStrip(true);
-      }
-    } else {
       setUnitId(id);
-      setIsStrip(false);
+      if (polylinePathArr.length) {
+        setCollectionSigintStripPath([
+          ...collectionSigIntStripPath,
+          [polylinePathArr],
+        ]);
+        setPolylinePathArr([]);
+      }
     }
+    // ------- \ for drawing of StripSigint ------------
+    // ------- for drawing of LineDevide ------------
+    else if (id === "friendLineDivide" || id === "hostileLineDivide") {
+      setIsLineDivide(true);
+      setIsStripSigint(false);
+      setColorOfLineDivide(id);
+      setUnitId(id);
+      if (polylinePathArr.length) {
+        setCollectionLineDividePath([
+          ...collectionLineDividePath,
+          [polylinePathArr],
+        ]);
+        setPolylinePathArr([]);
+      }
+    }
+    // ------- \ for drawing of LineDevide ------------
+    else {
+      setIsStripSigint(false);
+      setIsLineDivide(false);
+      setUnitId(id);
+    }
+    console.log("ColorOfLineDivide: ", colorOfLineDivide);
   };
 
   const getUserLocation = () => {
@@ -128,14 +139,13 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
-    if (!isStrip) {
-      setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
-    } else {
+    if (isStripSigint || isLineDivide) {
       setPolylinePathArr([
         ...polylinePathArr,
         { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng, id: unitId },
       ]);
-      console.log(polylinePathArr);
+    } else {
+      setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
     }
   };
 
@@ -221,17 +231,37 @@ function HomePage() {
                   icon={createIcon(elem.unitId)}
                 />
               ))}
-              <SigintLineElement
-                path={polylinePathArr}
-                colorOfStripSigInt={colorOfSigIntStrip}
-              />
-              {collectionSigIntStripPath.map((elem, i) =>
-                //   <SigintLineElement
-                //     key={i}
-                //     path={elem[0]}
-                //     colorOfStripSigInt={elem[0][i].id}
-                //   />
-                console.log("color: ", elem[0])
+              {isStripSigint ? (
+                <SigintLineElement
+                  path={polylinePathArr}
+                  colorOfStripSigInt={colorOfSigIntStrip}
+                />
+              ) : null}
+              {collectionSigIntStripPath.map(
+                (elem, i) =>
+                  elem.map((el, i) => (
+                    <SigintLineElement
+                      key={i}
+                      path={el}
+                      colorOfStripSigInt={el[i].id}
+                    />
+                  ))
+                // console.log("in SigintLineElement: ", elem[0])
+              )}
+              {isLineDivide ? (
+                <LineDevideElement
+                  path={polylinePathArr}
+                  colorOfLineDivide={colorOfLineDivide}
+                />
+              ) : null}
+              {collectionLineDividePath.map((elem, i) =>
+                elem.map((el, i) => (
+                  <LineDevideElement
+                    key={i}
+                    path={el}
+                    colorOfLineDivide={el[i].id}
+                  />
+                ))
               )}
             </GoogleMap>
           </LoadScript>
