@@ -8,6 +8,7 @@ import { SideBarMenu } from "../components/SideBarMenu";
 import { ContextSBMenu } from "../Context/ContextSBMenu";
 import { SBSymbolMenu } from "../components/SBSymbolMenu";
 import { ContextUnitId } from "../Context/ContextUnitId";
+import { LineDevideElement } from "../components/LineDivideElement";
 
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
@@ -40,6 +41,10 @@ function HomePage() {
   const [collectionSigIntStripPath, setCollectionSigintStripPath] = useState(
     []
   ); // this is finished path
+
+  const [isLineDivide, setIsLineDivide] = useState(false); // regime LineDivide in function getUnitId(id)
+  const [colorOfLineDivide, setColorOfLineDivide] = useState("");
+  const [collectionLineDividePath, setCollectionLineDividePath] = useState([]); // this is finished path
 
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
@@ -85,12 +90,12 @@ function HomePage() {
     // ------- \ for drawing of StripSigint ------------
     // ------- for drawing of LineDevide ------------
     else if (id === "friendLineDivide" || id === "hostileLineDivide") {
-      setIsStripSigint(true);
-      setColorOfSigintStrip(id);
+      setIsLineDivide(true);
+      setColorOfLineDivide(id);
       setUnitId(id);
       if (polylinePathArr.length) {
-        setCollectionSigintStripPath([
-          ...collectionSigIntStripPath,
+        setCollectionLineDividePath([
+          ...collectionLineDividePath,
           [polylinePathArr],
         ]);
         setPolylinePathArr([]);
@@ -99,8 +104,10 @@ function HomePage() {
     // ------- \ for drawing of LineDevide ------------
     else {
       setIsStripSigint(false);
+      setIsLineDivide(false);
       setUnitId(id);
     }
+    console.log("ColorOfLineDivide: ", colorOfLineDivide);
   };
 
   const getUserLocation = () => {
@@ -130,13 +137,13 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
-    if (!isStripSigint) {
-      setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
-    } else {
+    if (isStripSigint || isLineDivide) {
       setPolylinePathArr([
         ...polylinePathArr,
         { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng, id: unitId },
       ]);
+    } else {
+      setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
     }
   };
 
@@ -235,8 +242,20 @@ function HomePage() {
                       colorOfStripSigInt={el[i].id}
                     />
                   ))
-
                 // console.log("in SigintLineElement: ", elem[0])
+              )}
+              <LineDevideElement
+                path={polylinePathArr}
+                colorOfLineDivide={colorOfLineDivide}
+              />
+              {collectionLineDividePath.map((elem, i) =>
+                elem.map((el, i) => (
+                  <LineDevideElement
+                    key={i}
+                    path={el}
+                    colorOfLineDivide={el[i].id}
+                  />
+                ))
               )}
             </GoogleMap>
           </LoadScript>
