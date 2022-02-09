@@ -77,6 +77,7 @@ function HomePage() {
     // ------- for drawing of StripSigint ------------
     if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
       setIsStripSigint(true);
+      setIsLineDivide(false);
       setColorOfSigintStrip(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -91,6 +92,7 @@ function HomePage() {
     // ------- for drawing of LineDevide ------------
     else if (id === "friendLineDivide" || id === "hostileLineDivide") {
       setIsLineDivide(true);
+      setIsStripSigint(false);
       setColorOfLineDivide(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -229,10 +231,12 @@ function HomePage() {
                   icon={createIcon(elem.unitId)}
                 />
               ))}
-              <SigintLineElement
-                path={polylinePathArr}
-                colorOfStripSigInt={colorOfSigIntStrip}
-              />
+              {isStripSigint ? (
+                <SigintLineElement
+                  path={polylinePathArr}
+                  colorOfStripSigInt={colorOfSigIntStrip}
+                />
+              ) : null}
               {collectionSigIntStripPath.map(
                 (elem, i) =>
                   elem.map((el, i) => (
@@ -244,10 +248,12 @@ function HomePage() {
                   ))
                 // console.log("in SigintLineElement: ", elem[0])
               )}
-              <LineDevideElement
-                path={polylinePathArr}
-                colorOfLineDivide={colorOfLineDivide}
-              />
+              {isLineDivide ? (
+                <LineDevideElement
+                  path={polylinePathArr}
+                  colorOfLineDivide={colorOfLineDivide}
+                />
+              ) : null}
               {collectionLineDividePath.map((elem, i) =>
                 elem.map((el, i) => (
                   <LineDevideElement

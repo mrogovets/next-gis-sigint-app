@@ -5,12 +5,12 @@ export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
     // console.log("polyline: ", polyline);
   };
 
-  // console.log("Color: ", colorOfLineDivide);
-
-  const lineSymbolDashed = {
-    path: "M 0,-1 0,1 ",
+  const curveLine = {
+    path: "M0,10 C1,0 9,0 10,10 ",
     strokeOpacity: 1,
-    scale: 4,
+    strokeWeight: 3,
+    scale: 2,
+    rotation: 90,
   };
 
   const lineSymbol = {
@@ -36,15 +36,15 @@ export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
     radius: 3,
     icons: [
       {
-        icon: lineSymbolDashed,
+        icon: curveLine,
         offset: "0",
         repeat: "20px",
       },
-      {
-        icon: lineSymbol,
-        offset: "0",
-        repeat: "1px",
-      },
+      //   {
+      //     icon: lineSymbol,
+      //     offset: "0",
+      //     repeat: "1px",
+      //   },
     ],
     zIndex: 1,
   };
