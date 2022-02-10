@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { ContextSBMenu } from "../Context/ContextSBMenu";
+import Link from "next/link";
 
 export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
   const { isSBMenuOpen } = useContext(ContextSBMenu);
@@ -36,6 +37,7 @@ export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
   const SixHandleClick = () => {
     isSBMenuOpen();
     getMenuNumber("Six");
+    console.log("OpOrd");
   };
 
   const SevenHandleClick = () => {
@@ -68,7 +70,9 @@ export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
       Розрахувати марш
     </Button>,
     <Button key="six" onClick={SixHandleClick}>
-      Сформувати бойове розпорядження
+      <Link href="/opordpage">
+        <a>Сформувати бойове розпорядження</a>
+      </Link>
     </Button>,
     <Button key="seven" onClick={SevenHandleClick}>
       Здійснити розрахунок сил та засобів РЕР
