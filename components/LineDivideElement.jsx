@@ -15,14 +15,14 @@ export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
   };
 
   const startSymbol = {
-    path: "M -2,-2 2,2 M 2,-2 -2,2 ",
+    path: "M 2,6.5 a5 5 0 1 1-10 0 5 5 0 1 1 10 0 M 1.5,6 -8,7.5 M -2,11 -4,2 z",
     strokeOpacity: 1,
-    scale: 4,
+    scale: 2.5,
   };
   const endSymbol = {
-    path: "M 3,-7.7 a5 5 0 1 1-10 0 5 5 0 1 1 10 0 M 3,-8 -7,-8  z",
+    path: "M 1.5,-9 a5 5 0 1 1-10 0 5 5 0 1 1 10 0 M 1.5,-9 -8,-9 M -4,-4 -3,-13 z",
     strokeOpacity: 1,
-    scale: 3,
+    scale: 2.5,
   };
 
   const options = {
