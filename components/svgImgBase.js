@@ -54,6 +54,9 @@ export const getSvgImgSymbol = (unit, UniqDes = "", higherForm = "") => {
     case "hostileLineDivide":
       return `<svg width="258.064" height="193.548" xmlns="http://www.w3.org/2000/svg"><g stroke="null" stroke-width="5"><g stroke="#FF6347" fill="none"><ellipse ry="24.165" rx="22.035" cy="82.708" cx="26.068"/><path d="M9.908 69.527l31.339 26.911M39.778 65.134L13.826 101.93"/></g><g stroke="#FF6347" fill="none"><ellipse ry="24.165" rx="22.035" cy="82.708" cx="208.226"/><path d="M192.067 69.527l31.339 26.911M221.937 65.134l-25.953 36.796"/></g><ellipse stroke="#FF6347" ry="24.165" rx="22.035" cy="79.358" cx="72.097" fill="none"/><ellipse stroke="#FF6347" ry="24.165" rx="22.035" cy="79.358" cx="119.105" fill="none"/><ellipse stroke="#FF6347" ry="24.165" rx="22.035" cy="79.358" cx="163.666" fill="none"/><path stroke="#fff" fill="#fff" d="M51.079 77.71H182.83v28.233H51.079z"/></g></svg>`;
 
+    case "friendMRLBrgd":
+      return `<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="73" height="49.8" viewBox="-21.667 6 243.333 166"><path d="M25 50h150v100H25z" stroke-width="4" stroke="#000" fill="#80E0FF"/><circle cx="100" cy="100" r="15" stroke-width="4" stroke="#000"/><path d="M85 75l15-15 15 15m-30-8l15-15 15 15M87.5 40l25-25m0 25l-25-25" stroke-width="4" stroke="#000" fill="none"/><text x="5" y="160" text-anchor="end" font-size="40" font-family="Arial" stroke-width="4">${UniqDes}</text><text x="195" y="160" font-size="40" font-family="Arial" stroke-width="4">${higherForm}</text></svg>`;
+
     default:
       return "undefined unit";
   }

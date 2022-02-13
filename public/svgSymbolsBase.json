@@ -99,6 +99,13 @@
   },
   {
     "categorySymbols": "friend",
+    "branchForce": "artillery",
+    "id": "friendMRLBrgd",
+    "title": "Реактивна артилерійська бригада",
+    "svgCode": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" width=\"73\" height=\"49.8\" viewBox=\"-21.667 6 243.333 166\"><path d=\"M25 50h150v100H25z\" stroke-width=\"4\" stroke=\"#000\" fill=\"#80E0FF\"/><circle cx=\"100\" cy=\"100\" r=\"15\" stroke-width=\"4\" stroke=\"#000\"/><path d=\"M85 75l15-15 15 15m-30-8l15-15 15 15M87.5 40l25-25m0 25l-25-25\" stroke-width=\"4\" stroke=\"#000\" fill=\"none\"/><text x=\"5\" y=\"160\" text-anchor=\"end\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\"></text><text x=\"195\" y=\"160\" font-size=\"40\" font-family=\"Arial\" stroke-width=\"4\"></text></svg>"
+  },
+  {
+    "categorySymbols": "friend",
     "branchForce": "distance",
     "id": "friendStripSigInt",
     "title": "Смуга розвідки",
