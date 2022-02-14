@@ -70,7 +70,7 @@ export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
       Розрахувати марш
     </Button>,
     <Button key="six" onClick={SixHandleClick}>
-      <Link href="/opordpage">
+      <Link href={"/opordpage"}>
         <a>Сформувати бойове розпорядження</a>
       </Link>
     </Button>,

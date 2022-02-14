@@ -1,11 +1,1 @@
-<svg width="258.0640593789936" height="193.5480445342452" xmlns="http://www.w3.org/2000/svg">
- <g id="Layer_1">
-  <title>Layer 1</title>
-  <line stroke="#000" stroke-width="3" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_1" y2="36.35882" x2="128.21954" y1="10.51249" x1="128.21954" fill="none"/>
-  <text transform="matrix(1 0 0 1 0 0)" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_2" y="175.38931" x="112.87822" stroke-dasharray="5,5" stroke="#000" fill="#000000">HF</text>
-  <line stroke="#000" stroke-width="3" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="71.74338" x2="128.21954" y1="45.89706" x1="128.21954" fill="none"/>
-  <line stroke="#000" stroke-width="3" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_4" y2="105.58949" x2="128.21954" y1="79.74317" x1="128.21954" fill="none"/>
-  <line stroke="#000" stroke-width="3" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_6" y2="144.05098" x2="128.21954" y1="118.20465" x1="128.21954" fill="none"/>
- </g>
-
-</svg>
+<svg width="258.064" height="193.548" xmlns="http://www.w3.org/2000/svg"><path stroke="#000" stroke-width="3" stroke-linecap="undefined" stroke-linejoin="undefined" fill="none" d="M128.22 10.512v25.847"/><text font-family="Noto Sans JP" font-size="24" stroke-width="0" y="175.389" x="112.878" stroke-dasharray="5 5" stroke="#000">HF</text><path stroke="#000" stroke-width="3" stroke-linecap="undefined" stroke-linejoin="undefined" fill="none" d="M128.22 45.897v25.846M128.22 79.743v25.846M128.22 118.205v25.846"/></svg>
