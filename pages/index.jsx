@@ -9,6 +9,7 @@ import { ContextSBMenu } from "../Context/ContextSBMenu";
 import { SBSymbolMenu } from "../components/SBSymbolMenu";
 import { ContextUnitId } from "../Context/ContextUnitId";
 import { LineDevideElement } from "../components/LineDivideElement";
+import { DistanceSigIntHF } from "../components/DistanceSigIntHF";
 
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
@@ -48,7 +49,7 @@ function HomePage() {
 
   const [isDistanceSigIntHF, setIsDistanceSigIntHF] = useState(false); // regime DistanceSigIntHF in function getUnitId(id)
   const [colorOfDistanceSigIntHF, setColorOfDistanceSigIntHF] = useState("");
-  const [collectionDistanceSigIntHF, setCollectionDistanceSigIntHFPath] =
+  const [collectionDistanceSigIntHFPath, setCollectionDistanceSigIntHFPath] =
     useState([]); // this is finished path
 
   const [isDistanceSigIntUHFGnd, setIsDistanceSigIntUHFGnd] = useState(false); // regime DistanceSigIntUHFGnd in function getUnitId(id)
@@ -143,7 +144,7 @@ function HomePage() {
       setUnitId(id);
       if (polylinePathArr.length) {
         setCollectionDistanceSigIntHFPath([
-          ...collectionDistanceSigIntHF,
+          ...collectionDistanceSigIntHFPath,
           [polylinePathArr],
         ]);
         setPolylinePathArr([]);
@@ -158,7 +159,7 @@ function HomePage() {
     console.log(
       "ColorOfDistanceSigIntHF: ",
       colorOfDistanceSigIntHF,
-      collectionDistanceSigIntHF
+      collectionDistanceSigIntHFPath
     );
   };
 
@@ -189,7 +190,7 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
-    if (isStripSigint || isLineDivide) {
+    if (isStripSigint || isLineDivide || isDistanceSigIntHF) {
       setPolylinePathArr([
         ...polylinePathArr,
         { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng, id: unitId },
@@ -281,6 +282,7 @@ function HomePage() {
                   icon={createIcon(elem.unitId)}
                 />
               ))}
+              {/* ------isStripSigint------- */}
               {isStripSigint ? (
                 <SigintLineElement
                   path={polylinePathArr}
@@ -298,6 +300,7 @@ function HomePage() {
                   ))
                 // console.log("in SigintLineElement: ", elem[0])
               )}
+              {/*----------isLineDivide----------  */}
               {isLineDivide ? (
                 <LineDevideElement
                   path={polylinePathArr}
@@ -310,6 +313,22 @@ function HomePage() {
                     key={i}
                     path={el}
                     colorOfLineDivide={el[i].id}
+                  />
+                ))
+              )}
+              {/*---------isDistanceSigIntHF --------*/}
+              {isDistanceSigIntHF ? (
+                <DistanceSigIntHF
+                  path={polylinePathArr}
+                  colorOfDistanceSigIntHF={colorOfDistanceSigIntHF}
+                />
+              ) : null}
+              {collectionDistanceSigIntHFPath.map((elem, i) =>
+                elem.map((el, i) => (
+                  <DistanceSigIntHF
+                    key={i}
+                    path={el}
+                    colorOfDistanceSigIntHF={el[i].id}
                   />
                 ))
               )}
