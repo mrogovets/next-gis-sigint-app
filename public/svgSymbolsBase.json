@@ -145,5 +145,61 @@
     "id": "hostileDistanceSigIntHF",
     "title": "Дальність ведення РЕР в КХ діапазоні",
     "svgCode": ""
+  },
+  {
+    "categorySymbols": "hostile",
+    "branchForce": "distance",
+    "id": "hostileDistanceSigIntUHFGnd",
+    "title": "Дальність ведення РЕР в УВЧ діапазоні",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "friend",
+    "branchForce": "distance",
+    "id": "friendDistanceSigIntUHFGnd",
+    "title": "Дальність ведення РЕР в УВЧ діапазоні",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "friend",
+    "branchForce": "distance",
+    "id": "friendDistanceSigIntVHFAir",
+    "title": "Дальність ведення РЕР в УКХ діапазоні повітряних цілей",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "hostile",
+    "branchForce": "distance",
+    "id": "hostileDistanceSigIntVHFAir",
+    "title": "Дальність ведення РЕР в УКХ діапазоні повітряних цілей",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "hostile",
+    "branchForce": "distance",
+    "id": "hostileDistanceSigIntVHFRdr",
+    "title": "Дальність ведення РТР",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "friend",
+    "branchForce": "distance",
+    "id": "friendDistanceSigIntVHFRdr",
+    "title": "Дальність ведення РТР",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "friend",
+    "branchForce": "distance",
+    "id": "friendSectorSigInt",
+    "title": "Сектор ведення РЕР",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "hostile",
+    "branchForce": "distance",
+    "id": "hostileSectorSigInt",
+    "title": "Сектор ведення РЕР",
+    "svgCode": ""
   }
 ]

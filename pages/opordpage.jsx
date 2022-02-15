@@ -10,6 +10,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 function OpOrderPage() {
   const onClickHandler = () => {
@@ -29,13 +30,15 @@ function OpOrderPage() {
               onClick={onClickHandler}>
               <MenuIcon />
             </IconButton>
-            <Avatar
-              sx={{
-                width: 60,
-                height: 60,
-              }}>
-              <Image src="/gerbTCSigint.png" alt="emblem" layout="fill" />
-            </Avatar>
+            <Link href={"/"}>
+              <Avatar
+                sx={{
+                  width: 60,
+                  height: 60,
+                }}>
+                <Image src="/gerbTCSigint.png" alt="emblem" layout="fill" />
+              </Avatar>
+            </Link>
             <Typography
               variant="h6"
               component="div"

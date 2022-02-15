@@ -46,6 +46,33 @@ function HomePage() {
   const [colorOfLineDivide, setColorOfLineDivide] = useState("");
   const [collectionLineDividePath, setCollectionLineDividePath] = useState([]); // this is finished path
 
+  const [isDistanceSigIntHF, setIsDistanceSigIntHF] = useState(false); // regime DistanceSigIntHF in function getUnitId(id)
+  const [colorOfDistanceSigIntHF, setColorOfDistanceSigIntHF] = useState("");
+  const [collectionDistanceSigIntHF, setCollectionDistanceSigIntHFPath] =
+    useState([]); // this is finished path
+
+  const [isDistanceSigIntUHFGnd, setIsDistanceSigIntUHFGnd] = useState(false); // regime DistanceSigIntUHFGnd in function getUnitId(id)
+  const [colorOfDistanceSigIntUHFGnd, setColorOfDistanceSigIntUHFGnd] =
+    useState("");
+  const [collectionDistanceSigIntUHFGnd, setCollectionDistanceSigIntUHFGnd] =
+    useState([]); // this is finished path
+
+  const [isDistanceSigIntVHFAir, setIsDistanceSigIntVHFAir] = useState(false); // regime DistanceSigIntVHFAir in function getUnitId(id)
+  const [colorOfDistanceSigIntVHFAir, setColorOfDistanceSigIntVHFAir] =
+    useState("");
+  const [collectionDistanceSigIntVHFAir, setCollectionDistanceSigIntVHFAir] =
+    useState([]); // this is finished path
+
+  const [isDistanceSigIntVHFRdr, setIsDistanceSigIntVHFRdr] = useState(false); // regime DistanceSigIntVHFRdr in function getUnitId(id)
+  const [colorOfDistanceSigIntVHFRdr, setColorOfDistanceSigIntVHFRdr] =
+    useState("");
+  const [collectionDistanceSigIntVHFRdr, setCollectionDistanceSigIntVHFRdr] =
+    useState([]); // this is finished path
+
+  const [isSectorSigInt, setIsSectorSigInt] = useState(false); // regime SectorSigInt in function getUnitId(id)
+  const [colorOfSectorSigInt, setColorOfSectorSigInt] = useState("");
+  const [collectionSectorSigInt, setCollectionSectorSigInt] = useState([]); // this is finished path
+
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
 
@@ -104,12 +131,35 @@ function HomePage() {
       }
     }
     // ------- \ for drawing of LineDevide ------------
+    // ------- for drawing of DistanceSigIntHF ------------
+    else if (
+      id === "friendDistanceSigIntHF" ||
+      id === "hostileDistanceSigIntHF"
+    ) {
+      setIsDistanceSigIntHF(true);
+      setIsStripSigint(false);
+      setIsLineDivide(false);
+      setColorOfDistanceSigIntHF(id);
+      setUnitId(id);
+      if (polylinePathArr.length) {
+        setCollectionDistanceSigIntHFPath([
+          ...collectionDistanceSigIntHF,
+          [polylinePathArr],
+        ]);
+        setPolylinePathArr([]);
+      }
+    }
+    // ------- \ for drawing of DistanceSigIntHF ------------
     else {
       setIsStripSigint(false);
       setIsLineDivide(false);
       setUnitId(id);
     }
-    // console.log("ColorOfLineDivide: ", colorOfLineDivide);
+    console.log(
+      "ColorOfDistanceSigIntHF: ",
+      colorOfDistanceSigIntHF,
+      collectionDistanceSigIntHF
+    );
   };
 
   const getUserLocation = () => {
