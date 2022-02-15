@@ -81,6 +81,12 @@ export const getSvgImgSymbol = (unit, UniqDes = "", higherForm = "") => {
     case "friendDistanceSigIntVHFRdr":
       return `<svg width="258.064" height="193.548" xmlns="http://www.w3.org/2000/svg"><path stroke-width="6" fill="none" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#00f" d="M128.22 10.512v25.847"/><text stroke="#00f" stroke-dasharray="5 5" x="62.878" y="115.389" stroke-width="0" font-size="60" font-family="Noto Sans JP" cursor="text">RDR</text><path stroke-width="6" fill="none" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#00f" d="M128.22 45.897v25.846M128.22 118.205v25.846"/><text stroke="#00f" stroke-dasharray="5 5" x="72.878" y="186.389" stroke-width="0" font-size="60" font-family="Noto Sans JP" cursor="move">AIR</text></svg>`;
 
+    case "friendSectorSigInt":
+      return `<svg width="258.064" height="193.548" xmlns="http://www.w3.org/2000/svg"><g stroke="#00f" stroke-width="6" fill="none"><path d="M39.772 97.85l154.612-76.382M192.386 22.067l-14.27 19.43M166.904 22.578l25.991-1.022M40.282 96.316l158.179 61.933M196.417 157.763l-15.027-15.879M171.911 157.348l25.027 1.244"/></g></svg>`;
+
+    case "hostileSectorSigInt":
+      return `<svg width="258.064" height="193.548" xmlns="http://www.w3.org/2000/svg"><g stroke="#FF6347" stroke-width="6" fill="none"><path d="M39.772 97.85l154.612-76.382M192.386 22.067l-14.27 19.43M166.904 22.578l25.991-1.022M40.282 96.316l158.179 61.933M196.417 157.763l-15.027-15.879M171.911 157.348l25.027 1.244"/></g></svg>`;
+
     default:
       return "undefined unit";
   }

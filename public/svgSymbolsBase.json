@@ -187,5 +187,19 @@
     "id": "friendDistanceSigIntVHFRdr",
     "title": "Дальність ведення РТР",
     "svgCode": ""
+  },
+  {
+    "categorySymbols": "friend",
+    "branchForce": "distance",
+    "id": "friendSectorSigInt",
+    "title": "Сектор ведення РЕР",
+    "svgCode": ""
+  },
+  {
+    "categorySymbols": "hostile",
+    "branchForce": "distance",
+    "id": "hostileSectorSigInt",
+    "title": "Сектор ведення РЕР",
+    "svgCode": ""
   }
 ]
