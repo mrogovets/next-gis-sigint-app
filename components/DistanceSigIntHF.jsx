@@ -38,7 +38,7 @@ export const DistanceSigIntHF = ({ path = [], colorOfDistanceSigIntHF }) => {
     icons: [
       {
         icon: textIcon,
-        offset: "100%",
+        offset: "50%",
       },
     ],
     zIndex: 1,

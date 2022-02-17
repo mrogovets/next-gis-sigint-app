@@ -10,6 +10,7 @@ import { SBSymbolMenu } from "../components/SBSymbolMenu";
 import { ContextUnitId } from "../Context/ContextUnitId";
 import { LineDevideElement } from "../components/LineDivideElement";
 import { DistanceSigIntHF } from "../components/DistanceSigIntHF";
+import { DistanceSigIntUHFGnd } from "../components/DistanceSigIntUHFGnd";
 
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
@@ -55,8 +56,10 @@ function HomePage() {
   const [isDistanceSigIntUHFGnd, setIsDistanceSigIntUHFGnd] = useState(false); // regime DistanceSigIntUHFGnd in function getUnitId(id)
   const [colorOfDistanceSigIntUHFGnd, setColorOfDistanceSigIntUHFGnd] =
     useState("");
-  const [collectionDistanceSigIntUHFGnd, setCollectionDistanceSigIntUHFGnd] =
-    useState([]); // this is finished path
+  const [
+    collectionDistanceSigIntUHFGndPath,
+    setCollectionDistanceSigIntUHFGndPath,
+  ] = useState([]); // this is finished path
 
   const [isDistanceSigIntVHFAir, setIsDistanceSigIntVHFAir] = useState(false); // regime DistanceSigIntVHFAir in function getUnitId(id)
   const [colorOfDistanceSigIntVHFAir, setColorOfDistanceSigIntVHFAir] =
@@ -106,6 +109,8 @@ function HomePage() {
     if (id === "friendStripSigInt" || id === "hostileStripSigInt") {
       setIsStripSigint(true);
       setIsLineDivide(false);
+      setIsDistanceSigIntHF(false);
+      setIsDistanceSigIntUHFGnd(false);
       setColorOfSigintStrip(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -121,6 +126,8 @@ function HomePage() {
     else if (id === "friendLineDivide" || id === "hostileLineDivide") {
       setIsLineDivide(true);
       setIsStripSigint(false);
+      setIsDistanceSigIntHF(false);
+      setIsDistanceSigIntUHFGnd(false);
       setColorOfLineDivide(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -140,6 +147,7 @@ function HomePage() {
       setIsDistanceSigIntHF(true);
       setIsStripSigint(false);
       setIsLineDivide(false);
+      setIsDistanceSigIntUHFGnd(false);
       setColorOfDistanceSigIntHF(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -151,16 +159,38 @@ function HomePage() {
       }
     }
     // ------- \ for drawing of DistanceSigIntHF ------------
+    // ------- for drawing of DistanceSigIntUHFGnd ------------
+    else if (
+      id === "hostileDistanceSigIntUHFGnd" ||
+      id === "friendDistanceSigIntUHFGnd"
+    ) {
+      setIsDistanceSigIntUHFGnd(true);
+      setIsDistanceSigIntHF(false);
+      setIsStripSigint(false);
+      setIsLineDivide(false);
+      setColorOfDistanceSigIntUHFGnd(id);
+      setUnitId(id);
+      if (polylinePathArr.length) {
+        setCollectionDistanceSigIntUHFGndPath([
+          ...collectionDistanceSigIntUHFGndPath,
+          [polylinePathArr],
+        ]);
+        setPolylinePathArr([]);
+      }
+    }
+    // ------- \ for drawing of DistanceSigIntUHFGnd ------------
     else {
       setIsStripSigint(false);
       setIsLineDivide(false);
+      setIsDistanceSigIntUHFGnd(false);
+      setIsDistanceSigIntHF(false);
       setUnitId(id);
     }
-    console.log(
-      "ColorOfDistanceSigIntHF: ",
-      colorOfDistanceSigIntHF,
-      collectionDistanceSigIntHFPath
-    );
+    // console.log(
+    //   "ColorOfDistanceSigIntHF: ",
+    //   colorOfDistanceSigIntHF,
+    //   collectionDistanceSigIntHFPath
+    // );
   };
 
   const getUserLocation = () => {
@@ -190,7 +220,12 @@ function HomePage() {
   const onMapClick = (mapsMouseEvent) => {
     const clickLatLngTmp = mapsMouseEvent.latLng.toJSON();
     setClickLatLng(clickLatLngTmp);
-    if (isStripSigint || isLineDivide || isDistanceSigIntHF) {
+    if (
+      isStripSigint ||
+      isLineDivide ||
+      isDistanceSigIntHF ||
+      isDistanceSigIntUHFGnd
+    ) {
       setPolylinePathArr([
         ...polylinePathArr,
         { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng, id: unitId },
@@ -329,6 +364,22 @@ function HomePage() {
                     key={i}
                     path={el}
                     colorOfDistanceSigIntHF={el[i].id}
+                  />
+                ))
+              )}
+              {/*---------isDistanceSigIntUHFGnd --------*/}
+              {isDistanceSigIntUHFGnd ? (
+                <DistanceSigIntUHFGnd
+                  path={polylinePathArr}
+                  colorOfDistanceSigIntUHFGnd={colorOfDistanceSigIntUHFGnd}
+                />
+              ) : null}
+              {collectionDistanceSigIntUHFGndPath.map((elem, i) =>
+                elem.map((el, i) => (
+                  <DistanceSigIntUHFGnd
+                    key={i}
+                    path={el}
+                    colorOfDistanceSigIntUHFGnd={el[i].id}
                   />
                 ))
               )}

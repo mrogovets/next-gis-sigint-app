@@ -11,6 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 
 function OpOrderPage() {
   const onClickHandler = () => {
@@ -18,6 +19,15 @@ function OpOrderPage() {
   };
   return (
     <React.Fragment>
+      <Head>
+        <title>GIS SigInt | OPORD</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          property="og:title"
+          content="GIS SigInt System"
+          key="GIS, SigInt, System"
+        />
+      </Head>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed">
           <Toolbar>
