@@ -177,14 +177,14 @@
   {
     "categorySymbols": "hostile",
     "branchForce": "distance",
-    "id": "hostileDistanceSigIntVHFRdr",
+    "id": "hostileDistanceSigIntRdrAir",
     "title": "Дальність ведення РТР",
     "svgCode": ""
   },
   {
     "categorySymbols": "friend",
     "branchForce": "distance",
-    "id": "friendDistanceSigIntVHFRdr",
+    "id": "friendDistanceSigIntRdrAir",
     "title": "Дальність ведення РТР",
     "svgCode": ""
   },
