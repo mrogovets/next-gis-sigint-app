@@ -317,6 +317,7 @@ function HomePage() {
                   icon={createIcon(elem.unitId)}
                 />
               ))}
+              {/* ----- start of collection of Polylines ------- */}
               {/* ------isStripSigint------- */}
               {isStripSigint ? (
                 <SigintLineElement
@@ -383,6 +384,7 @@ function HomePage() {
                   />
                 ))
               )}
+              {/* ----- end of collection of Polylines ------- */}
             </GoogleMap>
           </LoadScript>
         </Layout>
