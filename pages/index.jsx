@@ -12,6 +12,7 @@ import { LineDevideElement } from "../components/LineDivideElement";
 import { DistanceSigIntHF } from "../components/DistanceSigIntHF";
 import { DistanceSigIntUHFGnd } from "../components/DistanceSigIntUHFGnd";
 import { DistanceSigIntVHFAir } from "../components/DistanceSigIntVHFAir";
+import { DistanceSigIntRdrAir } from "../components/DistanceSigIntRdrAir";
 
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
@@ -184,10 +185,10 @@ function HomePage() {
       setIsDistanceSigIntHF(false);
       setIsStripSigint(false);
       setIsLineDivide(false);
-      setColorOfDistanceSigIntUHFGnd(id);
       setIsDistanceSigIntVHFAir(false);
       setIsDistanceSigIntRdrAir(false);
       setIsSectorSigInt(false);
+      setColorOfDistanceSigIntUHFGnd(id);
       setUnitId(id);
       if (polylinePathArr.length) {
         setCollectionDistanceSigIntUHFGndPath([
@@ -221,6 +222,29 @@ function HomePage() {
       }
     }
     // ------- \ for drawing of DistanceSigIntVHFAir ------------
+    // ------- for drawing of DistanceSigIntRdrAir ------------
+    else if (
+      id === "hostileDistanceSigIntRdrAir" ||
+      id === "friendDistanceSigIntRdrAir"
+    ) {
+      setIsDistanceSigIntRdrAir(true);
+      setIsDistanceSigIntUHFGnd(false);
+      setIsDistanceSigIntHF(false);
+      setIsStripSigint(false);
+      setIsLineDivide(false);
+      setIsDistanceSigIntVHFAir(false);
+      setIsSectorSigInt(false);
+      setColorOfDistanceSigIntRdrAir(id);
+      setUnitId(id);
+      if (polylinePathArr.length) {
+        setCollectionDistanceSigIntRdrAirPath([
+          ...collectionDistanceSigIntRdrAirPath,
+          [polylinePathArr],
+        ]);
+        setPolylinePathArr([]);
+      }
+    }
+    // ------- \ for drawing of DistanceSigIntRdrAir ------------
     else {
       setIsStripSigint(false);
       setIsLineDivide(false);
@@ -446,6 +470,22 @@ function HomePage() {
                     key={i}
                     path={el}
                     colorOfDistanceSigIntVHFAir={el[i].id}
+                  />
+                ))
+              )}
+              {/*---------isDistanceSigIntRdrAir --------*/}
+              {isDistanceSigIntRdrAir ? (
+                <DistanceSigIntRdrAir
+                  path={polylinePathArr}
+                  colorOfDistanceSigIntRdrAir={colorOfDistanceSigIntRdrAir}
+                />
+              ) : null}
+              {collectionDistanceSigIntRdrAirPath.map((elem, i) =>
+                elem.map((el, i) => (
+                  <DistanceSigIntRdrAir
+                    key={i}
+                    path={el}
+                    colorOfDistanceSigIntRdrAir={el[i].id}
                   />
                 ))
               )}
