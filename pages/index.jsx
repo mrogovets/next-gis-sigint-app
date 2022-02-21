@@ -11,6 +11,7 @@ import { ContextUnitId } from "../Context/ContextUnitId";
 import { LineDevideElement } from "../components/LineDivideElement";
 import { DistanceSigIntHF } from "../components/DistanceSigIntHF";
 import { DistanceSigIntUHFGnd } from "../components/DistanceSigIntUHFGnd";
+import { DistanceSigIntVHFAir } from "../components/DistanceSigIntVHFAir";
 
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
@@ -64,18 +65,24 @@ function HomePage() {
   const [isDistanceSigIntVHFAir, setIsDistanceSigIntVHFAir] = useState(false); // regime DistanceSigIntVHFAir in function getUnitId(id)
   const [colorOfDistanceSigIntVHFAir, setColorOfDistanceSigIntVHFAir] =
     useState("");
-  const [collectionDistanceSigIntVHFAir, setCollectionDistanceSigIntVHFAir] =
-    useState([]); // this is finished path
+  const [
+    collectionDistanceSigIntVHFAirPath,
+    setCollectionDistanceSigIntVHFAirPath,
+  ] = useState([]); // this is finished path
 
-  const [isDistanceSigIntVHFRdr, setIsDistanceSigIntVHFRdr] = useState(false); // regime DistanceSigIntVHFRdr in function getUnitId(id)
-  const [colorOfDistanceSigIntVHFRdr, setColorOfDistanceSigIntVHFRdr] =
+  const [isDistanceSigIntRdrAir, setIsDistanceSigIntRdrAir] = useState(false); // regime DistanceSigIntRdrAir in function getUnitId(id)
+  const [colorOfDistanceSigIntRdrAir, setColorOfDistanceSigIntRdrAir] =
     useState("");
-  const [collectionDistanceSigIntVHFRdr, setCollectionDistanceSigIntVHFRdr] =
-    useState([]); // this is finished path
+  const [
+    collectionDistanceSigIntRdrAirPath,
+    setCollectionDistanceSigIntRdrAirPath,
+  ] = useState([]); // this is finished path
 
   const [isSectorSigInt, setIsSectorSigInt] = useState(false); // regime SectorSigInt in function getUnitId(id)
   const [colorOfSectorSigInt, setColorOfSectorSigInt] = useState("");
-  const [collectionSectorSigInt, setCollectionSectorSigInt] = useState([]); // this is finished path
+  const [collectionSectorSigIntPath, setCollectionSectorSigIntPath] = useState(
+    []
+  ); // this is finished path
 
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
@@ -111,6 +118,9 @@ function HomePage() {
       setIsLineDivide(false);
       setIsDistanceSigIntHF(false);
       setIsDistanceSigIntUHFGnd(false);
+      setIsDistanceSigIntVHFAir(false);
+      setIsDistanceSigIntRdrAir(false);
+      setIsSectorSigInt(false);
       setColorOfSigintStrip(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -128,6 +138,9 @@ function HomePage() {
       setIsStripSigint(false);
       setIsDistanceSigIntHF(false);
       setIsDistanceSigIntUHFGnd(false);
+      setIsDistanceSigIntVHFAir(false);
+      setIsDistanceSigIntRdrAir(false);
+      setIsSectorSigInt(false);
       setColorOfLineDivide(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -148,6 +161,9 @@ function HomePage() {
       setIsStripSigint(false);
       setIsLineDivide(false);
       setIsDistanceSigIntUHFGnd(false);
+      setIsDistanceSigIntVHFAir(false);
+      setIsDistanceSigIntRdrAir(false);
+      setIsSectorSigInt(false);
       setColorOfDistanceSigIntHF(id);
       setUnitId(id);
       if (polylinePathArr.length) {
@@ -169,6 +185,9 @@ function HomePage() {
       setIsStripSigint(false);
       setIsLineDivide(false);
       setColorOfDistanceSigIntUHFGnd(id);
+      setIsDistanceSigIntVHFAir(false);
+      setIsDistanceSigIntRdrAir(false);
+      setIsSectorSigInt(false);
       setUnitId(id);
       if (polylinePathArr.length) {
         setCollectionDistanceSigIntUHFGndPath([
@@ -178,12 +197,39 @@ function HomePage() {
         setPolylinePathArr([]);
       }
     }
-    // ------- \ for drawing of DistanceSigIntUHFGnd ------------
+    // ------- \ for drawing of DistanceSigIntVHFAir ------------
+    // ------- for drawing of DistanceSigIntVHFAir ------------
+    else if (
+      id === "friendDistanceSigIntVHFAir" ||
+      id === "hostileDistanceSigIntVHFAir"
+    ) {
+      setIsDistanceSigIntVHFAir(true);
+      setIsDistanceSigIntUHFGnd(false);
+      setIsDistanceSigIntHF(false);
+      setIsStripSigint(false);
+      setIsLineDivide(false);
+      setIsDistanceSigIntRdrAir(false);
+      setIsSectorSigInt(false);
+      setColorOfDistanceSigIntVHFAir(id);
+      setUnitId(id);
+      if (polylinePathArr.length) {
+        setCollectionDistanceSigIntVHFAirPath([
+          ...collectionDistanceSigIntVHFAirPath,
+          [polylinePathArr],
+        ]);
+        setPolylinePathArr([]);
+      }
+    }
+    // ------- \ for drawing of DistanceSigIntVHFAir ------------
     else {
       setIsStripSigint(false);
       setIsLineDivide(false);
       setIsDistanceSigIntUHFGnd(false);
       setIsDistanceSigIntHF(false);
+      setIsDistanceSigIntVHFAir(false);
+      setIsDistanceSigIntRdrAir(false);
+      setIsSectorSigInt(false);
+
       setUnitId(id);
     }
     // console.log(
@@ -224,7 +270,10 @@ function HomePage() {
       isStripSigint ||
       isLineDivide ||
       isDistanceSigIntHF ||
-      isDistanceSigIntUHFGnd
+      isDistanceSigIntUHFGnd ||
+      isDistanceSigIntVHFAir ||
+      isDistanceSigIntRdrAir ||
+      isSectorSigInt
     ) {
       setPolylinePathArr([
         ...polylinePathArr,
@@ -381,6 +430,22 @@ function HomePage() {
                     key={i}
                     path={el}
                     colorOfDistanceSigIntUHFGnd={el[i].id}
+                  />
+                ))
+              )}
+              {/*---------isDistanceSigIntVHFAir --------*/}
+              {isDistanceSigIntVHFAir ? (
+                <DistanceSigIntVHFAir
+                  path={polylinePathArr}
+                  colorOfDistanceSigIntVHFAir={colorOfDistanceSigIntVHFAir}
+                />
+              ) : null}
+              {collectionDistanceSigIntVHFAirPath.map((elem, i) =>
+                elem.map((el, i) => (
+                  <DistanceSigIntVHFAir
+                    key={i}
+                    path={el}
+                    colorOfDistanceSigIntVHFAir={el[i].id}
                   />
                 ))
               )}
