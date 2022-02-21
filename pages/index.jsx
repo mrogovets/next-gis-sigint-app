@@ -13,6 +13,7 @@ import { DistanceSigIntHF } from "../components/DistanceSigIntHF";
 import { DistanceSigIntUHFGnd } from "../components/DistanceSigIntUHFGnd";
 import { DistanceSigIntVHFAir } from "../components/DistanceSigIntVHFAir";
 import { DistanceSigIntRdrAir } from "../components/DistanceSigIntRdrAir";
+import { SectorSigInt } from "../components/SectorSigInt";
 
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
@@ -245,6 +246,26 @@ function HomePage() {
       }
     }
     // ------- \ for drawing of DistanceSigIntRdrAir ------------
+    // ------- for drawing of SectorSigInt ------------
+    else if (id === "friendSectorSigInt" || id === "hostileSectorSigInt") {
+      setIsSectorSigInt(true);
+      setIsDistanceSigIntUHFGnd(false);
+      setIsDistanceSigIntHF(false);
+      setIsStripSigint(false);
+      setIsLineDivide(false);
+      setIsDistanceSigIntVHFAir(false);
+      setIsDistanceSigIntRdrAir(false);
+      setColorOfSectorSigInt(id);
+      setUnitId(id);
+      if (polylinePathArr.length) {
+        setCollectionSectorSigIntPath([
+          ...collectionSectorSigIntPath,
+          [polylinePathArr],
+        ]);
+        setPolylinePathArr([]);
+      }
+    }
+    // ------- \ for drawing of SectorSigInt ------------
     else {
       setIsStripSigint(false);
       setIsLineDivide(false);
@@ -486,6 +507,22 @@ function HomePage() {
                     key={i}
                     path={el}
                     colorOfDistanceSigIntRdrAir={el[i].id}
+                  />
+                ))
+              )}
+              {/*---------isSectorSigInt --------*/}
+              {isSectorSigInt ? (
+                <SectorSigInt
+                  path={polylinePathArr}
+                  colorOfSectorSigInt={colorOfSectorSigInt}
+                />
+              ) : null}
+              {collectionSectorSigIntPath.map((elem, i) =>
+                elem.map((el, i) => (
+                  <SectorSigInt
+                    key={i}
+                    path={el}
+                    colorOfSectorSigInt={el[i].id}
                   />
                 ))
               )}

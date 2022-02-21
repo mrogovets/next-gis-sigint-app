@@ -16,8 +16,8 @@ export const SectorSigInt = ({ path = [], colorOfSectorSigInt }) => {
       colorOfSectorSigInt === "hostileSectorSigInt" ? "tomato" : "blue"
     }`,
     fillOpacity: 1,
-    scale: 2,
-    rotation: 180,
+    scale: 3,
+    rotation: 0,
   };
 
   const options = {
