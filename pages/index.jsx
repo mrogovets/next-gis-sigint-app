@@ -14,6 +14,9 @@ import { DistanceSigIntUHFGnd } from "../components/DistanceSigIntUHFGnd";
 import { DistanceSigIntVHFAir } from "../components/DistanceSigIntVHFAir";
 import { DistanceSigIntRdrAir } from "../components/DistanceSigIntRdrAir";
 import { SectorSigInt } from "../components/SectorSigInt";
+import firebase from "../firebase/initFirebase";
+
+firebase();
 
 function HomePage() {
   const URL = "/svgSymbolsBase.json";
