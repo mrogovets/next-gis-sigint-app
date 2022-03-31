@@ -8,7 +8,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Avatar } from "@mui/material";
 import Image from "next/image";
-export default function Navbar({ isSBMenuOpen }) {
+import Link from "next/link";
+export default function Navbar({ isSBMenuOpen, userName }) {
   const onClickHandler = () => {
     isSBMenuOpen();
   };
@@ -38,7 +39,11 @@ export default function Navbar({ isSBMenuOpen }) {
             sx={{ flexGrow: 1, textAlign: "center" }}>
             GIS SigInt System
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit">
+            <Link href={"/auth"}>
+              <a>{userName ? userName : "Sign-In"}</a>
+            </Link>
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

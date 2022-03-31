@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { ContextSBMenu } from "../Context/ContextSBMenu";
 import Link from "next/link";
-import WriteCloudFirestore from "./cloudFirestore/write";
 
 export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
   const { isSBMenuOpen } = useContext(ContextSBMenu);
@@ -66,7 +65,6 @@ export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
     </Button>,
     <Button key="four" onClick={FourHandleClick}>
       Зберегти обстановку в базу даних
-      <WriteCloudFirestore />
     </Button>,
     <Button key="five" onClick={FiveHandleClick}>
       Розрахувати марш

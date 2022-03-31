@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Navbar from "./Navbar";
 
-export default function Layout({ children, isSBMenuOpen }) {
+export default function Layout({ children, isSBMenuOpen, userName }) {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ export default function Layout({ children, isSBMenuOpen }) {
           key="GIS, SigInt, System"
         />
       </Head>
-      <Navbar isSBMenuOpen={isSBMenuOpen} />
+      <Navbar isSBMenuOpen={isSBMenuOpen} userName={userName} />
       <main>{children}</main>
     </>
   );

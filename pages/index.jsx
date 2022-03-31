@@ -14,8 +14,28 @@ import { DistanceSigIntUHFGnd } from "../components/DistanceSigIntUHFGnd";
 import { DistanceSigIntVHFAir } from "../components/DistanceSigIntVHFAir";
 import { DistanceSigIntRdrAir } from "../components/DistanceSigIntRdrAir";
 import { SectorSigInt } from "../components/SectorSigInt";
+import firebase from "../firebase/firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function HomePage() {
+  //-----------------Log-in--------------
+  const [userName, setUserName] = useState("");
+  const [user, loading, error] = useAuthState(firebase.auth());
+
+  useEffect(() => {
+    if (!loading) {
+      try {
+        setUserName(user.displayName);
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+  }, [loading]);
+  // if (userName) {
+  //   console.log("userName", userName);
+  // }
+
+  //-----------------\Log-in--------------
   const URL = "/svgSymbolsBase.json";
 
   const [data, setData] = useState([]);
@@ -358,6 +378,7 @@ function HomePage() {
       case "Four":
         // setSymbolMenuOpen(true);
         setSymbolMenuOpen(false);
+        console.log("write to DB");
         break;
       case "Five":
         // setSymbolMenuOpen(true);
@@ -387,7 +408,7 @@ function HomePage() {
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
       <ContextUnitId.Provider value={{ getUnitId }}>
-        <Layout isSBMenuOpen={() => isSBMenuOpen()}>
+        <Layout isSBMenuOpen={() => isSBMenuOpen()} userName={userName}>
           <SideBarMenu
             SBMenuOpen={SBMenuOpen}
             getMenuNumber={(number) => getMenuNumber(number)}
