@@ -9,9 +9,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Avatar } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import firebase from "../firebase/firebaseConfig";
+
 export default function Navbar({ isSBMenuOpen, userName }) {
   const onClickHandler = () => {
     isSBMenuOpen();
+  };
+  const signOut = () => {
+    firebase.auth().signOut();
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -39,8 +44,8 @@ export default function Navbar({ isSBMenuOpen, userName }) {
             sx={{ flexGrow: 1, textAlign: "center" }}>
             GIS SigInt System
           </Typography>
-          <Button color="inherit">
-            <Link href={"/auth"}>
+          <Button color="inherit" onClick={signOut}>
+            <Link href={userName ? "" : "/auth"}>
               <a>{userName ? userName : "Sign-In"}</a>
             </Link>
           </Button>
