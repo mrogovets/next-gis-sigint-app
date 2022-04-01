@@ -16,6 +16,7 @@ import { DistanceSigIntRdrAir } from "../components/DistanceSigIntRdrAir";
 import { SectorSigInt } from "../components/SectorSigInt";
 import firebase from "../firebase/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { WriteToCloudFirestore } from "../firebase/writeFirestore";
 
 function HomePage() {
   //-----------------Log-in--------------
@@ -379,32 +380,9 @@ function HomePage() {
         // setSymbolMenuOpen(true);
         setSymbolMenuOpen(false);
         //-------- Writing of situation in DB --------------------
-        console.log("write to DB");
-
-        firebase
-          .firestore()
-          .collection("myData")
-          .doc("my_doc")
-          .set({
-            string_data: "Benjamin Carlson",
-            number_data: 2,
-            boolean_data: true,
-            map_data: { stringInMap: "Hi", numberInMap: 7 },
-            array_data: ["text", 4],
-            null_data: null,
-            time_stamp: firebase.firestore.Timestamp.fromDate(
-              new Date("December 17, 1995 03:24:00")
-            ),
-            geo_point: new firebase.firestore.GeoPoint(34.714322, -131.468435),
-          })
-          .then(alert("Data was successfully sent to cloud firestore!"));
-
-        // firebase.database().ref("post").set({
-        //   title: "post",
-        //   body: "Hello",
-        // });
+        WriteToCloudFirestore();
+        //-------- \Writing of situation in DB --------------------
         break;
-      //-------- \Writing of situation in DB --------------------
       case "Five":
         // setSymbolMenuOpen(true);
         setSymbolMenuOpen(false);
