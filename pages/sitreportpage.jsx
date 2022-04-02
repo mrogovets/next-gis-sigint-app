@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   AppBar,
   Avatar,
@@ -12,8 +12,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
-import firebase from "../firebase/firebaseConfig";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 
 function SitRepPage() {
@@ -22,7 +20,10 @@ function SitRepPage() {
   };
 
   //-------- Read situation from DB --------------------
-  console.log(ReadFromCloudFirestore());
+  const fromFirestoreData = ReadFromCloudFirestore();
+  if (fromFirestoreData) {
+    console.log("fromFirestoreData: ", fromFirestoreData);
+  }
   //-------- \Read situation from DB --------------------
 
   return (
