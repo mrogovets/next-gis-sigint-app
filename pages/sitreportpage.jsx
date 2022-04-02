@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   AppBar,
   Avatar,
@@ -8,15 +9,22 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import firebase from "../firebase/firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 
 function SitRepPage() {
   const onClickHandler = () => {
     console.log("click in sitreportpage.jsx");
   };
+
+  //-------- Read situation from DB --------------------
+  console.log(ReadFromCloudFirestore());
+  //-------- \Read situation from DB --------------------
+
   return (
     <React.Fragment>
       <Head>

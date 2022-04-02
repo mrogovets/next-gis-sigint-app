@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
 import { getSvgImgSymbol } from "../components/svgImgBase.js";
@@ -17,6 +17,7 @@ import { SectorSigInt } from "../components/SectorSigInt";
 import firebase from "../firebase/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { WriteToCloudFirestore } from "../firebase/writeFirestore";
+import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 
 function HomePage() {
   //-----------------Log-in--------------
@@ -379,9 +380,9 @@ function HomePage() {
       case "Four":
         // setSymbolMenuOpen(true);
         setSymbolMenuOpen(false);
-        //-------- Writing of situation in DB --------------------
+        //-------- Writing situation in DB --------------------
         WriteToCloudFirestore();
-        //-------- \Writing of situation in DB --------------------
+        //-------- \Writing situation in DB --------------------
         break;
       case "Five":
         // setSymbolMenuOpen(true);
