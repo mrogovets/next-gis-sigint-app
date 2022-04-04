@@ -108,13 +108,17 @@ function HomePage() {
   ); // this is finished path
 
   //----------Cheking for DB----------------------
-  console.log("markerArr: ", markerArr);
-  console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
-  console.log(collectionSigIntStripPath.length);
-  console.log(
-    "concatArr: ",
-    collectionSigIntStripPath[0][0].concat(collectionSigIntStripPath[1][0])
-  );
+  // console.log("markerArr: ", markerArr);
+  // console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
+  // console.log(collectionSigIntStripPath.length);
+
+  // if (collectionSigIntStripPath.length) {
+  //   console.log(
+  //     "concatArr: ",
+  //     collectionSigIntStripPath[0][0].concat(collectionSigIntStripPath[1][0])
+  //   );
+  // }
+
   // console.log("collectionLineDividePath: ", collectionLineDividePath);
   // console.log(
   //   "collectionDistanceSigIntHFPath: ",

@@ -12,11 +12,15 @@ export const WriteToCloudFirestore = (
 ) => {
   let collectionSigIntStripPath_data_joinArr = new Array();
 
-  for (let i = 0; i < collectionSigIntStripPath_data.length; i++) {
-    collectionSigIntStripPath_data_joinArr =
-      collectionSigIntStripPath_data_joinArr +
-      JSON.stringify(collectionSigIntStripPath_data[i]);
+  if (collectionSigIntStripPath_data.length) {
+    for (let i = 0; i < collectionSigIntStripPath_data.length; i++) {
+      collectionSigIntStripPath_data_joinArr =
+        collectionSigIntStripPath_data_joinArr.concat(
+          collectionSigIntStripPath_data[i][0]
+        );
+    }
   }
+
   console.log(
     "collectionSigIntStripPath_data_joinArr: ",
     collectionSigIntStripPath_data_joinArr
