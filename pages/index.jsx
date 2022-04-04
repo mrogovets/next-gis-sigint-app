@@ -17,7 +17,6 @@ import { SectorSigInt } from "../components/SectorSigInt";
 import firebase from "../firebase/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { WriteToCloudFirestore } from "../firebase/writeFirestore";
-import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 
 function HomePage() {
   //-----------------Log-in--------------
@@ -107,6 +106,29 @@ function HomePage() {
   const [collectionSectorSigIntPath, setCollectionSectorSigIntPath] = useState(
     []
   ); // this is finished path
+
+  //----------Cheking for DB----------------------
+  console.log("markerArr: ", markerArr);
+  // console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
+  // console.log("collectionLineDividePath: ", collectionLineDividePath);
+  // console.log(
+  //   "collectionDistanceSigIntHFPath: ",
+  //   collectionDistanceSigIntHFPath
+  // );
+  // console.log(
+  //   "collectionDistanceSigIntUHFGndPath: ",
+  //   collectionDistanceSigIntUHFGndPath
+  // );
+  // console.log(
+  //   "collectionDistanceSigIntVHFAirPath: ",
+  //   collectionDistanceSigIntVHFAirPath
+  // );
+  // console.log(
+  //   "collectionDistanceSigIntRdrAirPath: ",
+  //   collectionDistanceSigIntRdrAirPath
+  // );
+  // console.log("collectionSectorSigIntPath: ", collectionSectorSigIntPath);
+  //----------\Cheking for DB----------------------
 
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
@@ -381,7 +403,7 @@ function HomePage() {
         // setSymbolMenuOpen(true);
         setSymbolMenuOpen(false);
         //-------- Writing situation in DB --------------------
-        WriteToCloudFirestore();
+        WriteToCloudFirestore(markerArr);
         //-------- \Writing situation in DB --------------------
         break;
       case "Five":

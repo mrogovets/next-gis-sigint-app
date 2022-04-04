@@ -8,8 +8,8 @@ export const ReadFromCloudFirestore = () => {
     try {
       firebase
         .firestore()
-        .collection("myData")
-        .doc("my_doc")
+        .collection("GIS SigInt")
+        .doc("Situation data")
         .get()
         .then((res) => {
           setInfo(res.data());
