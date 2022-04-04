@@ -10,10 +10,17 @@ export const WriteToCloudFirestore = (
   // collectionDistanceSigIntRdrAirPath_data,
   // collectionSectorSigIntPath_data
 ) => {
-  const collectionSigIntStripPath_data_length =
-    collectionSigIntStripPath_data.length;
+  let collectionSigIntStripPath_data_joinArr = new Array();
 
-  const collectionSigIntStripPath_data_arr = new Array();
+  for (let i = 0; i < collectionSigIntStripPath_data.length; i++) {
+    collectionSigIntStripPath_data_joinArr =
+      collectionSigIntStripPath_data_joinArr +
+      JSON.stringify(collectionSigIntStripPath_data[i]);
+  }
+  console.log(
+    "collectionSigIntStripPath_data_joinArr: ",
+    collectionSigIntStripPath_data_joinArr
+  );
 
   try {
     firebase
@@ -22,8 +29,7 @@ export const WriteToCloudFirestore = (
       .doc("Situation data")
       .set({
         markerArr_data,
-
-        collectionSigIntStripPath_data: collectionSigIntStripPath_data[0][0],
+        collectionSigIntStripPath_data: collectionSigIntStripPath_data_joinArr,
         // collectionLineDividePath_data,
         // collectionDistanceSigIntHFPath_data,
         // collectionDistanceSigIntUHFGndPath_data,
