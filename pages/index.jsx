@@ -109,7 +109,7 @@ function HomePage() {
 
   //----------Cheking for DB----------------------
   console.log("markerArr: ", markerArr);
-  // console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
+  console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
   // console.log("collectionLineDividePath: ", collectionLineDividePath);
   // console.log(
   //   "collectionDistanceSigIntHFPath: ",
@@ -403,7 +403,16 @@ function HomePage() {
         // setSymbolMenuOpen(true);
         setSymbolMenuOpen(false);
         //-------- Writing situation in DB --------------------
-        WriteToCloudFirestore(markerArr);
+        WriteToCloudFirestore(
+          markerArr,
+          collectionSigIntStripPath
+          // collectionLineDividePath,
+          // collectionDistanceSigIntHFPath,
+          // collectionDistanceSigIntUHFGndPath,
+          // collectionDistanceSigIntVHFAirPath,
+          // collectionDistanceSigIntRdrAirPath,
+          // collectionSectorSigIntPath
+        );
         //-------- \Writing situation in DB --------------------
         break;
       case "Five":
