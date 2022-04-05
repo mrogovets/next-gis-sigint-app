@@ -414,13 +414,13 @@ function HomePage() {
         //-------- Writing situation in DB --------------------
         WriteToCloudFirestore(
           markerArr,
-          collectionSigIntStripPath
-          // collectionLineDividePath,
-          // collectionDistanceSigIntHFPath,
-          // collectionDistanceSigIntUHFGndPath,
-          // collectionDistanceSigIntVHFAirPath,
-          // collectionDistanceSigIntRdrAirPath,
-          // collectionSectorSigIntPath
+          collectionSigIntStripPath,
+          collectionLineDividePath,
+          collectionDistanceSigIntHFPath,
+          collectionDistanceSigIntUHFGndPath,
+          collectionDistanceSigIntVHFAirPath,
+          collectionDistanceSigIntRdrAirPath,
+          collectionSectorSigIntPath
         );
         //-------- \Writing situation in DB --------------------
         break;
