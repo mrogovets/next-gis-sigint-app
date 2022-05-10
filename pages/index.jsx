@@ -17,6 +17,7 @@ import { SectorSigInt } from "../components/SectorSigInt";
 import firebase from "../firebase/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { WriteToCloudFirestore } from "../firebase/writeFirestore";
+import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 
 function HomePage() {
   //-----------------Log-in--------------
@@ -403,6 +404,8 @@ function HomePage() {
       case "Two":
         // setSymbolMenuOpen(true);
         setSymbolMenuOpen(false);
+        console.log("Read from DB on map");
+
         break;
       case "Three":
         // setSymbolMenuOpen(true);
@@ -448,6 +451,20 @@ function HomePage() {
   const closeSymbolMenuOpen = () => {
     setSymbolMenuOpen(false);
   };
+
+  //-------- Read situation from DB --------------------
+  const fromFirestoreData = ReadFromCloudFirestore();
+  if (fromFirestoreData) {
+    console.log(
+      "markerArr fromFirestoreData: ",
+      fromFirestoreData.markerArr_data
+    );
+  }
+  useEffect(() => {
+    if (fromFirestoreData) setMarkerArr(fromFirestoreData.markerArr_data);
+    console.log("markerArr: ", markerArr);
+  }, [fromFirestoreData]);
+  //-------- \Read situation from DB --------------------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
