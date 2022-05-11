@@ -21,6 +21,10 @@ export const WriteToCloudFirestore = (
         );
     }
   }
+  console.log(
+    "collectionSigIntStripPath_data from writeFirestore.jsx: ",
+    JSON.stringify(collectionSigIntStripPath_data)
+  );
   // console.log(
   //   "collectionSigIntStripPath_data_joinArr: ",
   //   collectionSigIntStripPath_data_joinArr
@@ -130,7 +134,10 @@ export const WriteToCloudFirestore = (
       .doc("Situation data")
       .set({
         markerArr_data,
-        collectionSigIntStripPath_data: collectionSigIntStripPath_data_joinArr,
+        collectionSigIntStripPath_data: JSON.stringify(
+          collectionSigIntStripPath_data
+        ),
+        // collectionSigIntStripPath_data,
         collectionLineDividePath_data: collectionLineDividePath_data_joinArr,
         collectionDistanceSigIntHFPath_data:
           collectionDistanceSigIntHFPath_data_joinArr,

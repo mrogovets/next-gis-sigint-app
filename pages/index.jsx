@@ -65,6 +65,8 @@ function HomePage() {
   const [colorOfSigIntStrip, setColorOfSigintStrip] = useState("");
 
   const [polylinePathArr, setPolylinePathArr] = useState([]); // this is path of polyline
+  const [polylinePathArrTMP, setPolylinePathArrTMP] = useState([]);
+
   const [collectionSigIntStripPath, setCollectionSigintStripPath] = useState(
     []
   ); // this is finished path
@@ -456,13 +458,22 @@ function HomePage() {
   const fromFirestoreData = ReadFromCloudFirestore();
   if (fromFirestoreData) {
     console.log(
-      "markerArr fromFirestoreData: ",
-      fromFirestoreData.markerArr_data
+      "fromFirestoreData: ",
+      JSON.parse(fromFirestoreData.collectionSigIntStripPath_data)
     );
   }
   useEffect(() => {
-    if (fromFirestoreData) setMarkerArr(fromFirestoreData.markerArr_data);
-    console.log("markerArr: ", markerArr);
+    if (fromFirestoreData) {
+      setMarkerArr(fromFirestoreData.markerArr_data);
+      setCollectionSigintStripPath(
+        JSON.parse(fromFirestoreData.collectionSigIntStripPath_data)
+      );
+      //------------------
+      // fromFirestoreData.collectionSigIntStripPath_data.map((el) => {
+      //   console.log(el);
+      // });
+      // ------------------
+    }
   }, [fromFirestoreData]);
   //-------- \Read situation from DB --------------------
 
