@@ -1,6 +1,7 @@
 import firebase from "../firebase/firebaseConfig";
 
 export const WriteToCloudFirestore = (
+  operationDB = "SET",
   markerArr_data,
   collectionSigIntStripPath_data,
   collectionLineDividePath_data,
@@ -10,41 +11,59 @@ export const WriteToCloudFirestore = (
   collectionDistanceSigIntRdrAirPath_data,
   collectionSectorSigIntPath_data
 ) => {
-  try {
-    firebase
-      .firestore()
-      .collection("GIS SigInt")
-      .doc("Situation data")
-      .set({
-        markerArr_data,
-        collectionSigIntStripPath_data: JSON.stringify(
-          collectionSigIntStripPath_data
-        ),
-        // collectionSigIntStripPath_data,
-        collectionLineDividePath_data: JSON.stringify(
-          collectionLineDividePath_data
-        ),
-        collectionDistanceSigIntHFPath_data: JSON.stringify(
-          collectionDistanceSigIntHFPath_data
-        ),
-        collectionDistanceSigIntUHFGndPath_data: JSON.stringify(
-          collectionDistanceSigIntUHFGndPath_data
-        ),
-        collectionDistanceSigIntVHFAirPath_data: JSON.stringify(
-          collectionDistanceSigIntVHFAirPath_data
-        ),
-        collectionDistanceSigIntRdrAirPath_data: JSON.stringify(
-          collectionDistanceSigIntRdrAirPath_data
-        ),
-        collectionSectorSigIntPath_data: JSON.stringify(
-          collectionSectorSigIntPath_data
-        ),
-        time_stamp: firebase.firestore.Timestamp.fromDate(new Date(Date.now())),
-      })
-      .then(alert("Data was successfully sent to cloud firestore!"));
-  } catch (error) {
-    console.log(error);
-    alert(error);
+  if (operationDB === "SET") {
+    try {
+      firebase
+        .firestore()
+        .collection("GIS SigInt")
+        .doc("Situation data")
+        .set({
+          markerArr_data,
+          collectionSigIntStripPath_data: JSON.stringify(
+            collectionSigIntStripPath_data
+          ),
+          collectionLineDividePath_data: JSON.stringify(
+            collectionLineDividePath_data
+          ),
+          collectionDistanceSigIntHFPath_data: JSON.stringify(
+            collectionDistanceSigIntHFPath_data
+          ),
+          collectionDistanceSigIntUHFGndPath_data: JSON.stringify(
+            collectionDistanceSigIntUHFGndPath_data
+          ),
+          collectionDistanceSigIntVHFAirPath_data: JSON.stringify(
+            collectionDistanceSigIntVHFAirPath_data
+          ),
+          collectionDistanceSigIntRdrAirPath_data: JSON.stringify(
+            collectionDistanceSigIntRdrAirPath_data
+          ),
+          collectionSectorSigIntPath_data: JSON.stringify(
+            collectionSectorSigIntPath_data
+          ),
+          time_stamp: firebase.firestore.Timestamp.fromDate(
+            new Date(Date.now())
+          ),
+        })
+        .then(alert("Data was successfully sent to cloud firestore!"));
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  } else if (operationDB === "DEL") {
+    console.log("operationDB: ", operationDB);
+    try {
+      firebase
+        .firestore()
+        .collection("GIS SigInt")
+        .doc("Situation data")
+        .delete()
+        .then(alert("Data was successfully delete from cloud firestore!"));
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  } else {
+    console.log("undefine DB operation!!!");
   }
 };
 

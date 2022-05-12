@@ -407,7 +407,8 @@ function HomePage() {
         // setSymbolMenuOpen(true);
         setSymbolMenuOpen(false);
         console.log("Read from DB on map");
-
+        WriteToCloudFirestore("DEL");
+        location.reload(); // restart this page
         break;
       case "Three":
         // setSymbolMenuOpen(true);
@@ -418,6 +419,7 @@ function HomePage() {
         setSymbolMenuOpen(false);
         //-------- Writing situation in DB --------------------
         WriteToCloudFirestore(
+          "SET",
           markerArr,
           collectionSigIntStripPath,
           collectionLineDividePath,
