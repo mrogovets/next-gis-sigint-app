@@ -456,23 +456,30 @@ function HomePage() {
 
   //-------- Read situation from DB --------------------
   const fromFirestoreData = ReadFromCloudFirestore();
-  if (fromFirestoreData) {
-    console.log(
-      "fromFirestoreData: ",
-      JSON.parse(fromFirestoreData.collectionSigIntStripPath_data)
-    );
-  }
   useEffect(() => {
     if (fromFirestoreData) {
       setMarkerArr(fromFirestoreData.markerArr_data);
       setCollectionSigintStripPath(
         JSON.parse(fromFirestoreData.collectionSigIntStripPath_data)
       );
-      //------------------
-      // fromFirestoreData.collectionSigIntStripPath_data.map((el) => {
-      //   console.log(el);
-      // });
-      // ------------------
+      setCollectionLineDividePath(
+        JSON.parse(fromFirestoreData.collectionLineDividePath_data)
+      );
+      setCollectionDistanceSigIntHFPath(
+        JSON.parse(fromFirestoreData.collectionDistanceSigIntHFPath_data)
+      );
+      setCollectionDistanceSigIntUHFGndPath(
+        JSON.parse(fromFirestoreData.collectionDistanceSigIntUHFGndPath_data)
+      );
+      setCollectionDistanceSigIntVHFAirPath(
+        JSON.parse(fromFirestoreData.collectionDistanceSigIntVHFAirPath_data)
+      );
+      setCollectionDistanceSigIntRdrAirPath(
+        JSON.parse(fromFirestoreData.collectionDistanceSigIntRdrAirPath_data)
+      );
+      setCollectionSectorSigIntPath(
+        JSON.parse(fromFirestoreData.collectionSectorSigIntPath_data)
+      );
     }
   }, [fromFirestoreData]);
   //-------- \Read situation from DB --------------------
