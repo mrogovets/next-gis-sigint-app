@@ -58,7 +58,7 @@ export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
       Нанести обстановку вручну
     </Button>,
     <Button key="two" onClick={TwoHandleClick}>
-      Очистити карту (видалення інформації з бази даних)
+      Очистити карту
     </Button>,
     <Button key="three" onClick={ThreeHandleClick}>
       <Link href={"/sitreportpage"}>
