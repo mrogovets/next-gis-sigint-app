@@ -65,7 +65,6 @@ function HomePage() {
   const [colorOfSigIntStrip, setColorOfSigintStrip] = useState("");
 
   const [polylinePathArr, setPolylinePathArr] = useState([]); // this is path of polyline
-  const [polylinePathArrTMP, setPolylinePathArrTMP] = useState([]);
 
   const [collectionSigIntStripPath, setCollectionSigintStripPath] = useState(
     []
@@ -110,39 +109,6 @@ function HomePage() {
     []
   ); // this is finished path
 
-  //----------Cheking for DB----------------------
-  // console.log("markerArr: ", markerArr);
-  // console.log("collectionSigIntStripPath: ", collectionSigIntStripPath);
-  // console.log(collectionSigIntStripPath.length);
-
-  // if (collectionSigIntStripPath.length) {
-  //   console.log(
-  //     "concatArr: ",
-  //     collectionSigIntStripPath[0][0].concat(collectionSigIntStripPath[1][0])
-  //   );
-  // }
-
-  // console.log("collectionLineDividePath: ", collectionLineDividePath);
-  // console.log(
-  //   "collectionDistanceSigIntHFPath: ",
-  //   collectionDistanceSigIntHFPath
-  // );
-  // console.log(
-  //   "collectionDistanceSigIntUHFGndPath: ",
-  //   collectionDistanceSigIntUHFGndPath
-  // );
-  // console.log(
-  //   "collectionDistanceSigIntVHFAirPath: ",
-  //   collectionDistanceSigIntVHFAirPath
-  // );
-  // console.log(
-  //   "collectionDistanceSigIntRdrAirPath: ",
-  //   collectionDistanceSigIntRdrAirPath
-  // );
-  // console.log("collectionSectorSigIntPath: ", collectionSectorSigIntPath);
-  //----------\Cheking for DB----------------------
-
-  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiKey = null; // for devProc only
 
   const containerStyle = {
@@ -490,6 +456,9 @@ function HomePage() {
     }
   }, [fromFirestoreData]);
   //-------- \Read situation from DB --------------------
+  const onClickMarker = () => {
+    console.log("click on marker");
+  };
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -516,6 +485,7 @@ function HomePage() {
                   key={i}
                   position={elem.coords}
                   icon={createIcon(elem.unitId)}
+                  onClick={onClickMarker}
                 />
               ))}
               {/* ----- start of collection of Polylines ------- */}
