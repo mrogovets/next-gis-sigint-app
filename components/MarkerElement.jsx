@@ -2,7 +2,13 @@ import React from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { Marker } from "@react-google-maps/api";
 
-export const MarkerElement = ({ idMarker, position, icon, getMarkerID }) => {
+export const MarkerElement = ({
+  idMarker,
+  position,
+  icon,
+  getMarkerID,
+  getItemMarkerContextMenu,
+}) => {
   const coordMarker = {
     lat: parseFloat(position.lat),
     lng: parseFloat(position.lng),
@@ -37,7 +43,7 @@ export const MarkerElement = ({ idMarker, position, icon, getMarkerID }) => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Marker
         position={coordMarker}
         icon={icon}
@@ -55,11 +61,22 @@ export const MarkerElement = ({ idMarker, position, icon, getMarkerID }) => {
             ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
             : undefined
         }>
-        <MenuItem onClick={handleClose}>Copy</MenuItem>
-        <MenuItem onClick={handleClose}>Print</MenuItem>
-        <MenuItem onClick={handleClose}>Highlight</MenuItem>
-        <MenuItem onClick={handleClose}>Email</MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose;
+            getItemMarkerContextMenu("READ");
+            handleClose();
+          }}>
+          Формуляр об`єкту
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            getItemMarkerContextMenu("DELETE");
+            handleClose();
+          }}>
+          Видалити об`єкт
+        </MenuItem>
       </Menu>
-    </div>
+    </React.Fragment>
   );
 };

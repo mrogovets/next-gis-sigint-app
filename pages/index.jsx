@@ -460,6 +460,12 @@ function HomePage() {
   const getMarkerID = (idMarker) => {
     console.log("click on marker id:", idMarker);
   };
+  const getItemMarkerContextMenu = (itemMarkerContextMenu) => {
+    console.log(
+      "click on marker itemMarkerContextMenu:",
+      itemMarkerContextMenu
+    );
+  };
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -488,6 +494,9 @@ function HomePage() {
                   position={elem.coords}
                   icon={createIcon(elem.unitId)}
                   getMarkerID={(idMarker) => getMarkerID(idMarker)}
+                  getItemMarkerContextMenu={(itemMarkerContextMenu) =>
+                    getItemMarkerContextMenu(itemMarkerContextMenu)
+                  }
                 />
               ))}
               {/* ----- start of collection of Polylines ------- */}
