@@ -1,26 +1,18 @@
 import React from "react";
-import { Menu, MenuItem } from "@mui/material";
-import { Marker } from "@react-google-maps/api";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
 
-export const MarkerElement = ({ idMarker, position, icon, getMarkerID }) => {
-  const coordMarker = {
-    lat: parseFloat(position.lat),
-    lng: parseFloat(position.lng),
-  };
-
+export default function ContextMenuMarker() {
   const [contextMenu, setContextMenu] = React.useState(null);
 
   const handleContextMenu = (event) => {
-    event.domEvent.preventDefault();
-    document.oncontextmenu = () => {
-      return false;
-    };
-
+    event.preventDefault();
     setContextMenu(
       contextMenu === null
         ? {
-            mouseX: event.domEvent.x - 2,
-            mouseY: event.domEvent.y - 4,
+            mouseX: event.clientX - 2,
+            mouseY: event.clientY - 4,
           }
         : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
           // Other native context menus might behave different.
@@ -31,21 +23,21 @@ export const MarkerElement = ({ idMarker, position, icon, getMarkerID }) => {
 
   const handleClose = () => {
     setContextMenu(null);
-    document.oncontextmenu = () => {
-      return true;
-    };
   };
 
   return (
-    <div>
-      <Marker
-        position={coordMarker}
-        icon={icon}
-        onRightClick={(e) => {
-          getMarkerID(idMarker);
-          handleContextMenu(e);
-        }}
-      />
+    <div onContextMenu={handleContextMenu} style={{ cursor: "context-menu" }}>
+      <Typography>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ipsum
+        purus, bibendum sit amet vulputate eget, porta semper ligula. Donec
+        bibendum vulputate erat, ac fringilla mi finibus nec. Donec ac dolor sed
+        dolor porttitor blandit vel vel purus. Fusce vel malesuada ligula. Nam
+        quis vehicula ante, eu finibus est. Proin ullamcorper fermentum orci,
+        quis finibus massa. Nunc lobortis, massa ut rutrum ultrices, metus metus
+        finibus ex, sit amet facilisis neque enim sed neque. Quisque accumsan
+        metus vel maximus consequat. Suspendisse lacinia tellus a libero
+        volutpat maximus.
+      </Typography>
       <Menu
         open={contextMenu !== null}
         onClose={handleClose}
@@ -62,4 +54,4 @@ export const MarkerElement = ({ idMarker, position, icon, getMarkerID }) => {
       </Menu>
     </div>
   );
-};
+}

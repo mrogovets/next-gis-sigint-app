@@ -457,7 +457,7 @@ function HomePage() {
     }
   }, [fromFirestoreData]);
   //-------- \Read situation from DB --------------------
-  const onClickMarker = (idMarker) => {
+  const getMarkerID = (idMarker) => {
     console.log("click on marker id:", idMarker);
   };
 
@@ -487,7 +487,7 @@ function HomePage() {
                   idMarker={i}
                   position={elem.coords}
                   icon={createIcon(elem.unitId)}
-                  onClick={(idMarker) => onClickMarker(idMarker)}
+                  getMarkerID={(idMarker) => getMarkerID(idMarker)}
                 />
               ))}
               {/* ----- start of collection of Polylines ------- */}
