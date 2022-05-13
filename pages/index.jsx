@@ -110,6 +110,7 @@ function HomePage() {
   ); // this is finished path
 
   const apiKey = null; // for devProc only
+  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   const containerStyle = {
     width: "100%",
@@ -456,8 +457,8 @@ function HomePage() {
     }
   }, [fromFirestoreData]);
   //-------- \Read situation from DB --------------------
-  const onClickMarker = () => {
-    console.log("click on marker");
+  const onClickMarker = (idMarker) => {
+    console.log("click on marker id:", idMarker);
   };
 
   return (
@@ -483,9 +484,10 @@ function HomePage() {
               {markerArr.map((elem, i) => (
                 <MarkerElement
                   key={i}
+                  idMarker={i}
                   position={elem.coords}
                   icon={createIcon(elem.unitId)}
-                  onClick={onClickMarker}
+                  onClick={(idMarker) => onClickMarker(idMarker)}
                 />
               ))}
               {/* ----- start of collection of Polylines ------- */}
