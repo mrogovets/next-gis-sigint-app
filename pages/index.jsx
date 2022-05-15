@@ -457,15 +457,31 @@ function HomePage() {
     }
   }, [fromFirestoreData]);
   //-------- \Read situation from DB --------------------
-  const getMarkerID = (idMarker) => {
-    console.log("click on marker id:", idMarker);
+  //---------Get ID Marker & Comand from ContextMenu on Map------
+  let idMarkerContextMenuMap = null;
+  let comandFromContextMenuMap = null;
+  const getMarkerIDContextMenu = (idMarkerContextMenu) => {
+    idMarkerContextMenuMap = idMarkerContextMenu;
   };
   const getItemMarkerContextMenu = (itemMarkerContextMenu) => {
-    console.log(
-      "click on marker itemMarkerContextMenu:",
-      itemMarkerContextMenu
-    );
+    comandFromContextMenuMap = itemMarkerContextMenu;
+    switch (comandFromContextMenuMap) {
+      case "READ":
+        console.log("Read Object Form Map: ", idMarkerContextMenuMap);
+        break;
+      case "DELETE":
+        deleteMarkerFromMap(idMarkerContextMenuMap, comandFromContextMenuMap);
+        break;
+    }
   };
+  const deleteMarkerFromMap = (idMarker) => {
+    console.log("deleteMarkerFromMap", idMarker);
+    const idxInMarkerArr = markerArr.findIndex((el, i) => i === idMarker);
+    const before = markerArr.slice(0, idxInMarkerArr);
+    const after = markerArr.slice(idxInMarkerArr + 1);
+    setMarkerArr([...before, ...after]);
+  };
+  //---------\Get ID Marker & Comand from ContextMenu on Map------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -490,12 +506,14 @@ function HomePage() {
               {markerArr.map((elem, i) => (
                 <MarkerElement
                   key={i}
-                  idMarker={i}
+                  idMarkerContextMenuMap={i}
                   position={elem.coords}
                   icon={createIcon(elem.unitId)}
-                  getMarkerID={(idMarker) => getMarkerID(idMarker)}
-                  getItemMarkerContextMenu={(itemMarkerContextMenu) =>
-                    getItemMarkerContextMenu(itemMarkerContextMenu)
+                  getMarkerIDContextMenu={(idMarkerContextMenuMap) =>
+                    getMarkerIDContextMenu(idMarkerContextMenuMap)
+                  }
+                  getItemMarkerContextMenu={(itemMarkerContextMenuMap) =>
+                    getItemMarkerContextMenu(itemMarkerContextMenuMap)
                   }
                 />
               ))}

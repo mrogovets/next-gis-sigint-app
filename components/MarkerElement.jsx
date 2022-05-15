@@ -3,10 +3,10 @@ import { Menu, MenuItem } from "@mui/material";
 import { Marker } from "@react-google-maps/api";
 
 export const MarkerElement = ({
-  idMarker,
+  idMarkerContextMenuMap,
   position,
   icon,
-  getMarkerID,
+  getMarkerIDContextMenu,
   getItemMarkerContextMenu,
 }) => {
   const coordMarker = {
@@ -48,7 +48,7 @@ export const MarkerElement = ({
         position={coordMarker}
         icon={icon}
         onRightClick={(e) => {
-          getMarkerID(idMarker);
+          getMarkerIDContextMenu(idMarkerContextMenuMap);
           handleContextMenu(e);
         }}
       />
