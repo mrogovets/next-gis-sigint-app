@@ -1,6 +1,11 @@
 import { Polyline } from "@react-google-maps/api";
+import { useState } from "react";
 
-export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
+export const SigintLineElement = ({
+  path = [],
+  colorOfStripSigInt,
+  onClick,
+}) => {
   const onLoad = (polyline) => {
     // console.log("polyline: ", polyline);
   };
@@ -19,6 +24,8 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
     scale: 4,
   };
 
+  const [editableProperty, setEditableProperty] = useState(false);
+
   const options = {
     strokeColor: `${
       colorOfStripSigInt === "hostileStripSigInt" ? "tomato" : "blue"
@@ -29,9 +36,9 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
       colorOfStripSigInt === "hostileStripSigInt" ? "tomato" : "blue"
     }`,
     fillOpacity: 0.35,
-    clickable: false,
+    clickable: true,
     draggable: false,
-    editable: false,
+    editable: editableProperty,
     visible: true,
     radius: 3,
     icons: [
@@ -49,5 +56,17 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
     zIndex: 1,
   };
 
-  return <Polyline onLoad={onLoad} path={path} options={options} />;
+  const onClickHandler = () => {
+    console.log("Click on SigintLineElement");
+    setEditableProperty(true);
+  };
+
+  return (
+    <Polyline
+      onClick={onClickHandler}
+      onLoad={onLoad}
+      path={path}
+      options={options}
+    />
+  );
 };

@@ -483,6 +483,10 @@ function HomePage() {
   };
   //---------\Get ID Marker & Comand from ContextMenu on Map------
 
+  const onClickHandler = () => {
+    console.log("Click on SigintLineElement");
+  };
+
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
       <ContextUnitId.Provider value={{ getUnitId }}>
@@ -523,6 +527,7 @@ function HomePage() {
                 <SigintLineElement
                   path={polylinePathArr}
                   colorOfStripSigInt={colorOfSigIntStrip}
+                  onClick={onClickHandler}
                 />
               ) : null}
               {collectionSigIntStripPath.map(
