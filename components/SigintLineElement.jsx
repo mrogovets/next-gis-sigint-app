@@ -28,7 +28,6 @@ export const SigintLineElement = ({
   };
 
   const [contextMenu, setContextMenu] = useState(null);
-
   const [editableProperty, setEditableProperty] = useState(false);
 
   const options = {

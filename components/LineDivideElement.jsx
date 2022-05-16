@@ -1,6 +1,14 @@
+import React, { useState } from "react";
 import { Polyline } from "@react-google-maps/api";
+import { Menu, MenuItem } from "@mui/material";
 
-export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
+export const LineDevideElement = ({
+  path = [],
+  colorOfLineDivide,
+  idLineDevideElementContextMenuMap,
+  getIdLineDevideElementContextMenuMap,
+  getContextMenuCommandLineDevide,
+}) => {
   const onLoad = (polyline) => {
     // console.log("polyline: ", polyline);
   };
@@ -25,6 +33,9 @@ export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
     scale: 2.5,
   };
 
+  const [contextMenu, setContextMenu] = useState(null);
+  const [editableProperty, setEditableProperty] = useState(false);
+
   const options = {
     strokeColor: `${
       colorOfLineDivide === "hostileLineDivide" ? "tomato" : "blue"
@@ -35,9 +46,9 @@ export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
       colorOfLineDivide === "hostileLineDivide" ? "tomato" : "blue"
     }`,
     fillOpacity: 0.35,
-    clickable: false,
+    clickable: true,
     draggable: false,
-    editable: false,
+    editable: editableProperty,
     visible: true,
     radius: 3,
     icons: [
@@ -56,6 +67,78 @@ export const LineDevideElement = ({ path = [], colorOfLineDivide }) => {
     ],
     zIndex: 1,
   };
+  const handleContextMenu = (event) => {
+    event.domEvent.preventDefault();
+    document.oncontextmenu = () => {
+      return false;
+    };
 
-  return <Polyline onLoad={onLoad} path={path} options={options} />;
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.domEvent.x - 2,
+            mouseY: event.domEvent.y - 4,
+          }
+        : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
+          // Other native context menus might behave different.
+          // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+          null
+    );
+
+    getIdLineDevideElementContextMenuMap(idLineDevideElementContextMenuMap);
+  };
+
+  const handleClose = () => {
+    setContextMenu(null);
+    document.oncontextmenu = () => {
+      return true;
+    };
+  };
+
+  return (
+    <React.Fragment>
+      <Polyline
+        onRightClick={(e) => handleContextMenu(e)}
+        onLoad={onLoad}
+        path={path}
+        options={options}
+      />
+      <Menu
+        open={contextMenu !== null}
+        onClose={handleClose}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenu !== null
+            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+            : undefined
+        }>
+        <MenuItem
+          onClick={() => {
+            handleClose;
+            // getItemMarkerContextMenu("READ");
+            getContextMenuCommandLineDevide("INFO");
+            handleClose();
+          }}>
+          Інформація про смугу розмежування
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            // getItemMarkerContextMenu("DELETE");
+            setEditableProperty(true);
+            getContextMenuCommandLineDevide("EDIT");
+            handleClose();
+          }}>
+          Редагувати смугу розмежування
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            // getItemMarkerContextMenu("DELETE");
+            getContextMenuCommandLineDevide("DELETE");
+            handleClose();
+          }}>
+          Видалити смугу розмежування
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
+  );
 };

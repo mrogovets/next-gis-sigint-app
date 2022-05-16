@@ -526,7 +526,48 @@ function HomePage() {
   //---------Get ID LineDevideElement & Comand from ContextMenu on Map------
   let idLineDevideElementContextMenuMap = null;
   let comandLineDevideElementContextMenuMap = null;
+  const getIdLineDevideElementContextMenuMap = (idLineDevideContextMenu) => {
+    idLineDevideElementContextMenuMap = idLineDevideContextMenu;
+  };
+  const getContextMenuCommandLineDevide = (commandConextMenuLineDevide) => {
+    comandLineDevideElementContextMenuMap = commandConextMenuLineDevide;
+    switch (comandLineDevideElementContextMenuMap) {
+      case "INFO":
+        console.log(
+          "Info about LineDevide Form Map: ",
+          idLineDevideElementContextMenuMap
+        );
+        break;
+      case "EDIT":
+        console.log(
+          "Editing LineDevide Form Map: ",
+          idLineDevideElementContextMenuMap
+        );
+        break;
+      case "DELETE":
+        deleteLineDevideFromMap(idLineDevideElementContextMenuMap);
+        break;
+    }
+  };
+  const deleteLineDevideFromMap = (idLineDevide) => {
+    console.log("deleteLineDevideFromMap", idLineDevide);
+    const idxInCollectionLineDividePath = collectionLineDividePath.findIndex(
+      (el, i) => i === idLineDevide
+    );
+    const before = collectionLineDividePath.slice(
+      0,
+      idxInCollectionLineDividePath
+    );
+    const after = collectionLineDividePath.slice(
+      idxInCollectionLineDividePath + 1
+    );
+    setCollectionLineDividePath([...before, ...after]);
+  };
   //---------\Get ID LineDevideElement & Comand from ContextMenu on Map------
+  //---------Get ID DistanceSigIntHF & Comand from ContextMenu on Map------
+  let idDistanceSigIntHFContextMenuMap = null;
+  let comandDistanceSigIntHFContextMenuMap = null;
+  //---------\Get ID DistanceSigIntHF & Comand from ContextMenu on Map------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -599,8 +640,15 @@ function HomePage() {
                 elem.map((el, i) => (
                   <LineDevideElement
                     key={i}
+                    idLineDevideElementContextMenuMap={idx}
                     path={el}
                     colorOfLineDivide={el[i].id}
+                    getIdLineDevideElementContextMenuMap={
+                      getIdLineDevideElementContextMenuMap
+                    }
+                    getContextMenuCommandLineDevide={
+                      getContextMenuCommandLineDevide
+                    }
                   />
                 ))
               )}
