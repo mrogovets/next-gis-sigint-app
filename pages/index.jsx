@@ -497,12 +497,17 @@ function HomePage() {
           idSigintLineElementContextMenuMap
         );
         break;
+      case "EDIT":
+        console.log(
+          "Editing SigIntLine Form Map: ",
+          idSigintLineElementContextMenuMap
+        );
+        break;
       case "DELETE":
         deleteSigintLineFromMap(idSigintLineElementContextMenuMap);
         break;
     }
   };
-
   const deleteSigintLineFromMap = (idSigintLine) => {
     console.log("deleteSigintLineFromMap", idSigintLine);
     const idxInCollectionSigIntStripPath = collectionSigIntStripPath.findIndex(
@@ -517,8 +522,11 @@ function HomePage() {
     );
     setCollectionSigintStripPath([...before, ...after]);
   };
-
   //---------\Get ID SigintLineElement & Comand from ContextMenu on Map------
+  //---------Get ID LineDevideElement & Comand from ContextMenu on Map------
+  let idLineDevideElementContextMenuMap = null;
+  let comandLineDevideElementContextMenuMap = null;
+  //---------\Get ID LineDevideElement & Comand from ContextMenu on Map------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
