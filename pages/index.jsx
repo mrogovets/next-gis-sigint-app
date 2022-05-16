@@ -482,10 +482,43 @@ function HomePage() {
     setMarkerArr([...before, ...after]);
   };
   //---------\Get ID Marker & Comand from ContextMenu on Map------
-
-  const onClickHandler = () => {
-    console.log("Click on SigintLineElement");
+  //---------Get ID SigintLineElement & Comand from ContextMenu on Map------
+  let idSigintLineElementContextMenuMap = null;
+  let comandSigintLineElementContextMenuMap = null;
+  const getIdSigintLineElementContextMenuMap = (idSigintLineContextMenu) => {
+    idSigintLineElementContextMenuMap = idSigintLineContextMenu;
   };
+  const getContextMenuCommandSigintLine = (commandConextMenuSigintLine) => {
+    comandSigintLineElementContextMenuMap = commandConextMenuSigintLine;
+    switch (comandSigintLineElementContextMenuMap) {
+      case "INFO":
+        console.log(
+          "Info about SigIntLine Form Map: ",
+          idSigintLineElementContextMenuMap
+        );
+        break;
+      case "DELETE":
+        deleteSigintLineFromMap(idSigintLineElementContextMenuMap);
+        break;
+    }
+  };
+
+  const deleteSigintLineFromMap = (idSigintLine) => {
+    console.log("deleteSigintLineFromMap", idSigintLine);
+    const idxInCollectionSigIntStripPath = collectionSigIntStripPath.findIndex(
+      (el, i) => i === idSigintLine
+    );
+    const before = collectionSigIntStripPath.slice(
+      0,
+      idxInCollectionSigIntStripPath
+    );
+    const after = collectionSigIntStripPath.slice(
+      idxInCollectionSigIntStripPath + 1
+    );
+    setCollectionSigintStripPath([...before, ...after]);
+  };
+
+  //---------\Get ID SigintLineElement & Comand from ContextMenu on Map------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -527,16 +560,22 @@ function HomePage() {
                 <SigintLineElement
                   path={polylinePathArr}
                   colorOfStripSigInt={colorOfSigIntStrip}
-                  onClick={onClickHandler}
                 />
               ) : null}
               {collectionSigIntStripPath.map(
-                (elem, i) =>
+                (elem, idx) =>
                   elem.map((el, i) => (
                     <SigintLineElement
                       key={i}
+                      idSigintLineElementContextMenuMap={idx}
                       path={el}
                       colorOfStripSigInt={el[i].id}
+                      getIdSigintLineElementContextMenuMap={
+                        getIdSigintLineElementContextMenuMap
+                      }
+                      getContextMenuCommandSigintLine={
+                        getContextMenuCommandSigintLine
+                      }
                     />
                   ))
                 // console.log("in SigintLineElement: ", elem[0])
@@ -548,7 +587,7 @@ function HomePage() {
                   colorOfLineDivide={colorOfLineDivide}
                 />
               ) : null}
-              {collectionLineDividePath.map((elem, i) =>
+              {collectionLineDividePath.map((elem, idx) =>
                 elem.map((el, i) => (
                   <LineDevideElement
                     key={i}
@@ -564,7 +603,7 @@ function HomePage() {
                   colorOfDistanceSigIntHF={colorOfDistanceSigIntHF}
                 />
               ) : null}
-              {collectionDistanceSigIntHFPath.map((elem, i) =>
+              {collectionDistanceSigIntHFPath.map((elem, idx) =>
                 elem.map((el, i) => (
                   <DistanceSigIntHF
                     key={i}
@@ -580,7 +619,7 @@ function HomePage() {
                   colorOfDistanceSigIntUHFGnd={colorOfDistanceSigIntUHFGnd}
                 />
               ) : null}
-              {collectionDistanceSigIntUHFGndPath.map((elem, i) =>
+              {collectionDistanceSigIntUHFGndPath.map((elem, idx) =>
                 elem.map((el, i) => (
                   <DistanceSigIntUHFGnd
                     key={i}
@@ -596,7 +635,7 @@ function HomePage() {
                   colorOfDistanceSigIntVHFAir={colorOfDistanceSigIntVHFAir}
                 />
               ) : null}
-              {collectionDistanceSigIntVHFAirPath.map((elem, i) =>
+              {collectionDistanceSigIntVHFAirPath.map((elem, idx) =>
                 elem.map((el, i) => (
                   <DistanceSigIntVHFAir
                     key={i}
@@ -612,7 +651,7 @@ function HomePage() {
                   colorOfDistanceSigIntRdrAir={colorOfDistanceSigIntRdrAir}
                 />
               ) : null}
-              {collectionDistanceSigIntRdrAirPath.map((elem, i) =>
+              {collectionDistanceSigIntRdrAirPath.map((elem, idx) =>
                 elem.map((el, i) => (
                   <DistanceSigIntRdrAir
                     key={i}
@@ -628,7 +667,7 @@ function HomePage() {
                   colorOfSectorSigInt={colorOfSectorSigInt}
                 />
               ) : null}
-              {collectionSectorSigIntPath.map((elem, i) =>
+              {collectionSectorSigIntPath.map((elem, idx) =>
                 elem.map((el, i) => (
                   <SectorSigInt
                     key={i}

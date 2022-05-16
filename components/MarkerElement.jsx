@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { Marker } from "@react-google-maps/api";
 
@@ -14,7 +14,7 @@ export const MarkerElement = ({
     lng: parseFloat(position.lng),
   };
 
-  const [contextMenu, setContextMenu] = React.useState(null);
+  const [contextMenu, setContextMenu] = useState(null);
 
   const handleContextMenu = (event) => {
     event.domEvent.preventDefault();

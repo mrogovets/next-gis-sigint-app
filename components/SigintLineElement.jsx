@@ -1,10 +1,13 @@
+import React, { useState } from "react";
 import { Polyline } from "@react-google-maps/api";
-import { useState } from "react";
+import { Menu, MenuItem } from "@mui/material";
 
 export const SigintLineElement = ({
   path = [],
   colorOfStripSigInt,
-  onClick,
+  idSigintLineElementContextMenuMap,
+  getIdSigintLineElementContextMenuMap,
+  getContextMenuCommandSigintLine,
 }) => {
   const onLoad = (polyline) => {
     // console.log("polyline: ", polyline);
@@ -23,6 +26,8 @@ export const SigintLineElement = ({
     strokeOpacity: 1,
     scale: 4,
   };
+
+  const [contextMenu, setContextMenu] = useState(null);
 
   const [editableProperty, setEditableProperty] = useState(false);
 
@@ -56,17 +61,78 @@ export const SigintLineElement = ({
     zIndex: 1,
   };
 
-  const onClickHandler = () => {
-    console.log("Click on SigintLineElement");
-    setEditableProperty(true);
+  const handleContextMenu = (event) => {
+    event.domEvent.preventDefault();
+    document.oncontextmenu = () => {
+      return false;
+    };
+
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.domEvent.x - 2,
+            mouseY: event.domEvent.y - 4,
+          }
+        : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
+          // Other native context menus might behave different.
+          // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+          null
+    );
+
+    getIdSigintLineElementContextMenuMap(idSigintLineElementContextMenuMap);
+  };
+
+  const handleClose = () => {
+    setContextMenu(null);
+    document.oncontextmenu = () => {
+      return true;
+    };
   };
 
   return (
-    <Polyline
-      onClick={onClickHandler}
-      onLoad={onLoad}
-      path={path}
-      options={options}
-    />
+    <React.Fragment>
+      <Polyline
+        onRightClick={(e) => handleContextMenu(e)}
+        onLoad={onLoad}
+        path={path}
+        options={options}
+      />
+      <Menu
+        open={contextMenu !== null}
+        onClose={handleClose}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenu !== null
+            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+            : undefined
+        }>
+        <MenuItem
+          onClick={() => {
+            handleClose;
+            // getItemMarkerContextMenu("READ");
+            getContextMenuCommandSigintLine("INFO");
+            handleClose();
+          }}>
+          Інформація про смугу розвідки
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            // getItemMarkerContextMenu("DELETE");
+            setEditableProperty(true);
+            getContextMenuCommandSigintLine("EDIT");
+            handleClose();
+          }}>
+          Редагувати смугу розвідки
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            // getItemMarkerContextMenu("DELETE");
+            getContextMenuCommandSigintLine("DELETE");
+            handleClose();
+          }}>
+          Видалити смугу розвідки
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
   );
 };
