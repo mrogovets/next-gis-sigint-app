@@ -567,6 +567,48 @@ function HomePage() {
   //---------Get ID DistanceSigIntHF & Comand from ContextMenu on Map------
   let idDistanceSigIntHFContextMenuMap = null;
   let comandDistanceSigIntHFContextMenuMap = null;
+  const getIdDistanceSigIntHFContextMenuMap = (
+    idDistanceSigIntHFContextMenu
+  ) => {
+    idDistanceSigIntHFContextMenuMap = idDistanceSigIntHFContextMenu;
+  };
+  const getContextMenuCommandDistanceSigIntHF = (
+    commandConextMenuDistanceSigIntHF
+  ) => {
+    comandDistanceSigIntHFContextMenuMap = commandConextMenuDistanceSigIntHF;
+    switch (comandDistanceSigIntHFContextMenuMap) {
+      case "INFO":
+        console.log(
+          "Info about DistanceSigIntHF Form Map: ",
+          idDistanceSigIntHFContextMenuMap
+        );
+        break;
+      case "EDIT":
+        console.log(
+          "Editing DistanceSigIntHF Form Map: ",
+          idDistanceSigIntHFContextMenuMap
+        );
+        break;
+      case "DELETE":
+        deleteDistanceSigIntHFFromMap(idDistanceSigIntHFContextMenuMap);
+        break;
+    }
+  };
+  const deleteDistanceSigIntHFFromMap = (idDistanceSigIntHF) => {
+    console.log("deleteDistanceSigIntHFFromMap", idDistanceSigIntHF);
+    const idxInCollectionDistanceSigIntHFPath =
+      collectionDistanceSigIntHFPath.findIndex(
+        (el, i) => i === idDistanceSigIntHF
+      );
+    const before = collectionDistanceSigIntHFPath.slice(
+      0,
+      idxInCollectionDistanceSigIntHFPath
+    );
+    const after = collectionDistanceSigIntHFPath.slice(
+      idxInCollectionDistanceSigIntHFPath + 1
+    );
+    setCollectionDistanceSigIntHFPath([...before, ...after]);
+  };
   //---------\Get ID DistanceSigIntHF & Comand from ContextMenu on Map------
 
   return (
@@ -663,8 +705,15 @@ function HomePage() {
                 elem.map((el, i) => (
                   <DistanceSigIntHF
                     key={i}
+                    idDistanceSigIntHFContextMenuMap={idx}
                     path={el}
                     colorOfDistanceSigIntHF={el[i].id}
+                    getIdDistanceSigIntHFContextMenuMap={
+                      getIdDistanceSigIntHFContextMenuMap
+                    }
+                    getContextMenuCommandDistanceSigIntHF={
+                      getContextMenuCommandDistanceSigIntHF
+                    }
                   />
                 ))
               )}

@@ -84,7 +84,6 @@ export const LineDevideElement = ({
           // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
           null
     );
-
     getIdLineDevideElementContextMenuMap(idLineDevideElementContextMenuMap);
   };
 
