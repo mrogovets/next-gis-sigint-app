@@ -751,6 +751,42 @@ function HomePage() {
     setCollectionDistanceSigIntVHFAirPath([...before, ...after]);
   };
   //---------\Get ID DistanceSigIntVHFAir & Comand from ContextMenu on Map------
+  //---------Get ID SectorSigInt & Comand from ContextMenu on Map------
+  let idSectorSigIntContextMenuMap = null;
+  let comandSectorSigIntContextMenuMap = null;
+  const getIdSectorSigIntContextMenuMap = (idSectorSigIntContextMenu) => {
+    idSectorSigIntContextMenuMap = idSectorSigIntContextMenu;
+  };
+  const getContextMenuCommandSectorSigInt = (commandConextMenuSectorSigInt) => {
+    comandSectorSigIntContextMenuMap = commandConextMenuSectorSigInt;
+    switch (comandSectorSigIntContextMenuMap) {
+      case "INFO":
+        console.log(
+          "Info about SectorSigInt Form Map: ",
+          idSectorSigIntContextMenuMap
+        );
+        break;
+      case "EDIT":
+        console.log(
+          "Editing SectorSigInt Form Map: ",
+          idSectorSigIntContextMenuMap
+        );
+        break;
+      case "DELETE":
+        deleteSectorSigIntFromMap(idSectorSigIntContextMenuMap);
+        break;
+    }
+  };
+  const deleteSectorSigIntFromMap = (idSectorSigInt) => {
+    console.log("deleteSectorSigIntFromMap", idSectorSigInt);
+    const idxSectorSigIntPath = collectionSectorSigIntPath.findIndex(
+      (el, i) => i === idSectorSigInt
+    );
+    const before = collectionSectorSigIntPath.slice(0, idxSectorSigIntPath);
+    const after = collectionSectorSigIntPath.slice(idxSectorSigIntPath + 1);
+    setCollectionSectorSigIntPath([...before, ...after]);
+  };
+  //---------\Get ID SectorSigInt & Comand from ContextMenu on Map------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -938,8 +974,15 @@ function HomePage() {
                 elem.map((el, i) => (
                   <SectorSigInt
                     key={i}
+                    idSectorSigIntContextMenuMap={idx}
                     path={el}
                     colorOfSectorSigInt={el[i].id}
+                    getIdSectorSigIntContextMenuMap={
+                      getIdSectorSigIntContextMenuMap
+                    }
+                    getContextMenuCommandSectorSigInt={
+                      getContextMenuCommandSectorSigInt
+                    }
                   />
                 ))
               )}
