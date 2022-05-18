@@ -704,6 +704,53 @@ function HomePage() {
     setCollectionDistanceSigIntUHFGndPath([...before, ...after]);
   };
   //---------\Get ID DistanceSigIntUHFGnd & Comand from ContextMenu on Map------
+  //---------Get ID DistanceSigIntVHFAir & Comand from ContextMenu on Map------
+  let idDistanceSigIntVHFAirContextMenuMap = null;
+  let comandDistanceSigIntVHFAirContextMenuMap = null;
+  const getIdDistanceSigIntVHFAirContextMenuMap = (
+    idDistanceSigIntVHFAirContextMenu
+  ) => {
+    idDistanceSigIntVHFAirContextMenuMap = idDistanceSigIntVHFAirContextMenu;
+  };
+  const getContextMenuCommandDistanceSigIntVHFAir = (
+    commandConextMenuDistanceSigIntVHFAir
+  ) => {
+    comandDistanceSigIntVHFAirContextMenuMap =
+      commandConextMenuDistanceSigIntVHFAir;
+    switch (comandDistanceSigIntVHFAirContextMenuMap) {
+      case "INFO":
+        console.log(
+          "Info about DistanceSigIntVHFAir Form Map: ",
+          idDistanceSigIntVHFAirContextMenuMap
+        );
+        break;
+      case "EDIT":
+        console.log(
+          "Editing DistanceSigIntVHFAir Form Map: ",
+          idDistanceSigIntVHFAirContextMenuMap
+        );
+        break;
+      case "DELETE":
+        deleteDistanceSigIntVHFAirFromMap(idDistanceSigIntVHFAirContextMenuMap);
+        break;
+    }
+  };
+  const deleteDistanceSigIntVHFAirFromMap = (idDistanceSigIntVHFAir) => {
+    console.log("deleteDistanceSigIntVHFAirFromMap", idDistanceSigIntVHFAir);
+    const idxInCollectionDistanceSigIntVHFAirPath =
+      collectionDistanceSigIntVHFAirPath.findIndex(
+        (el, i) => i === idDistanceSigIntVHFAir
+      );
+    const before = collectionDistanceSigIntVHFAirPath.slice(
+      0,
+      idxInCollectionDistanceSigIntVHFAirPath
+    );
+    const after = collectionDistanceSigIntVHFAirPath.slice(
+      idxInCollectionDistanceSigIntVHFAirPath + 1
+    );
+    setCollectionDistanceSigIntVHFAirPath([...before, ...after]);
+  };
+  //---------\Get ID DistanceSigIntVHFAir & Comand from ContextMenu on Map------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -845,8 +892,15 @@ function HomePage() {
                 elem.map((el, i) => (
                   <DistanceSigIntVHFAir
                     key={i}
+                    idDistanceSigIntVHFAirContextMenuMap={idx}
                     path={el}
                     colorOfDistanceSigIntVHFAir={el[i].id}
+                    getIdDistanceSigIntVHFAirContextMenuMap={
+                      getIdDistanceSigIntVHFAirContextMenuMap
+                    }
+                    getContextMenuCommandDistanceSigIntVHFAir={
+                      getContextMenuCommandDistanceSigIntVHFAir
+                    }
                   />
                 ))
               )}
