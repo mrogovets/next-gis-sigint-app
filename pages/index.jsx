@@ -18,6 +18,7 @@ import firebase from "../firebase/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { WriteToCloudFirestore } from "../firebase/writeFirestore";
 import { ReadFromCloudFirestore } from "../firebase/readFirestore";
+import ModalWindowObjectForm from "../components/ModalWindowObjectForm";
 
 function HomePage() {
   //-----------------Log-in--------------
@@ -460,6 +461,10 @@ function HomePage() {
   //---------Get ID Marker & Comand from ContextMenu on Map------
   let idMarkerContextMenuMap = null;
   let comandFromContextMenuMap = null;
+  const [openModalWindowObject, setModalWindowObject] = useState(false); // open ModalWindowObjectForm
+  const closeModalWindowObject = () => {
+    setModalWindowObject(false);
+  };
   const getMarkerIDContextMenu = (idMarkerContextMenu) => {
     idMarkerContextMenuMap = idMarkerContextMenu;
   };
@@ -468,6 +473,7 @@ function HomePage() {
     switch (comandFromContextMenuMap) {
       case "READ":
         console.log("Read Object Form Map: ", idMarkerContextMenuMap);
+        setModalWindowObject(true);
         break;
       case "DELETE":
         deleteMarkerFromMap(idMarkerContextMenuMap, comandFromContextMenuMap);
@@ -989,6 +995,10 @@ function HomePage() {
               {/* ----- end of collection of Polylines ------- */}
             </GoogleMap>
           </LoadScript>
+          <ModalWindowObjectForm
+            openModalWindowObject={openModalWindowObject}
+            closeModalWindowObject={closeModalWindowObject}
+          />
         </Layout>
       </ContextUnitId.Provider>
     </ContextSBMenu.Provider>
