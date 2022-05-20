@@ -19,6 +19,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { WriteToCloudFirestore } from "../firebase/writeFirestore";
 import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 import ModalWindowObjectForm from "../components/ModalWindowObjectForm";
+import { geoToRectCoord } from "../modules/geoToRectCoord";
 
 function HomePage() {
   //-----------------Log-in--------------
@@ -473,6 +474,24 @@ function HomePage() {
     switch (comandFromContextMenuMap) {
       case "READ":
         console.log("Read Object Form Map: ", idMarkerContextMenuMap);
+        //-----------Transform coords from Geographic to Decart
+
+        console.log(
+          "Coords of Object: ",
+          markerArr[idMarkerContextMenuMap].coords
+        );
+
+        console.log(geoToRectCoord(2, 3));
+
+        /*
+        Наймену-вання об’єкта
+        Місце знаход-ження: ш - д -	
+        Належність	
+        В яких джерелах проявля-ється	
+        Особливості функціону-вання	
+        Дата остан-нього підтвер-дження
+        */
+        //-----------\Transform coords from Geographic to Decart
         setModalWindowObject(true);
         break;
       case "DELETE":
