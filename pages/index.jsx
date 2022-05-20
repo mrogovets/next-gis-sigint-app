@@ -481,7 +481,12 @@ function HomePage() {
           markerArr[idMarkerContextMenuMap].coords
         );
 
-        console.log(geoToRectCoord(2, 3));
+        console.log(
+          geoToRectCoord(
+            markerArr[idMarkerContextMenuMap].coords.lat,
+            markerArr[idMarkerContextMenuMap].coords.lng
+          )
+        );
 
         /*
         Наймену-вання об’єкта
