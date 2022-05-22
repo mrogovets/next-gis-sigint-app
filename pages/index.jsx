@@ -20,6 +20,7 @@ import { WriteToCloudFirestore } from "../firebase/writeFirestore";
 import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 import ModalWindowObjectForm from "../components/ModalWindowObjectForm";
 import { geoToRectCoord } from "../modules/geoToRectCoord";
+import { rectCoordToGeo } from "../modules/rectCoordToGeo";
 
 function HomePage() {
   //-----------------Log-in--------------
@@ -482,10 +483,21 @@ function HomePage() {
         );
 
         console.log(
+          "geoToRectCoord: ",
           geoToRectCoord(
             markerArr[idMarkerContextMenuMap].coords.lat,
             markerArr[idMarkerContextMenuMap].coords.lng
           )
+        );
+
+        const sk42Coord = geoToRectCoord(
+          markerArr[idMarkerContextMenuMap].coords.lat,
+          markerArr[idMarkerContextMenuMap].coords.lng
+        );
+
+        console.log(
+          "rectCoordToGeo: ",
+          rectCoordToGeo(sk42Coord.X_lngSk42, sk42Coord.Y_latSk42)
         );
 
         /*

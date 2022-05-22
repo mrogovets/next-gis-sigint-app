@@ -27,7 +27,6 @@ export const geoToRectCoord = (lng, lat, height = 200) => {
   const wz = 0;
   const ms = 0;
 
-  //public const double PI;
   const ro = (360 * 60 * 60) / (2 * Math.PI); // кількість кутових секунд в радіані
   const B = (Bd * Math.PI) / 180; // рад
   const L = (Ld * Math.PI) / 180;
@@ -137,5 +136,5 @@ export const geoToRectCoord = (lng, lat, height = 200) => {
     VI * Math.pow(Lon - Lon0, 5) -
     6; // for returning
 
-  return { N1, E, WGS84Alt };
+  return { X_lngSk42: N1, Y_latSk42: E, WGS84Alt };
 };
