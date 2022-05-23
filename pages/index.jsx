@@ -500,6 +500,20 @@ function HomePage() {
           rectCoordToGeo(sk42Coord.X_lngSk42, sk42Coord.Y_latSk42)
         );
 
+        const wgs84Coord = rectCoordToGeo(
+          sk42Coord.X_lngSk42,
+          sk42Coord.Y_latSk42
+        );
+
+        console.log(
+          "err_x: ",
+          markerArr[idMarkerContextMenuMap].coords.lng - wgs84Coord.Ldeg
+        );
+        console.log(
+          "err_y: ",
+          markerArr[idMarkerContextMenuMap].coords.lat - wgs84Coord.Bdeg
+        );
+
         /*
         Наймену-вання об’єкта
         Місце знаход-ження: ш - д -	
