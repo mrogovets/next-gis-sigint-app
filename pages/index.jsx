@@ -21,6 +21,7 @@ import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 import ModalWindowObjectForm from "../components/ModalWindowObjectForm";
 import { geoToRectCoord } from "../modules/geoToRectCoord";
 import { rectCoordToGeo } from "../modules/rectCoordToGeo";
+import { sk42ToWGS84 } from "../modules/sk42ToWGS84";
 function HomePage() {
   //-----------------Log-in--------------
   const [userName, setUserName] = useState("");
@@ -496,7 +497,7 @@ function HomePage() {
 
         console.log(
           "rectCoordToGeo: ",
-          rectCoordToGeo(sk42Coord.X_lngSk42, sk42Coord.Y_latSk42)
+          sk42ToWGS84(sk42Coord.X_lngSk42, sk42Coord.Y_latSk42)
         );
 
         /*
