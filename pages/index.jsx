@@ -20,7 +20,6 @@ import { WriteToCloudFirestore } from "../firebase/writeFirestore";
 import { ReadFromCloudFirestore } from "../firebase/readFirestore";
 import ModalWindowObjectForm from "../components/ModalWindowObjectForm";
 import { geoToRectCoord } from "../modules/geoToRectCoord";
-import { rectCoordToGeo } from "../modules/rectCoordToGeo";
 import { sk42ToWGS84 } from "../modules/sk42ToWGS84";
 function HomePage() {
   //-----------------Log-in--------------
@@ -111,6 +110,8 @@ function HomePage() {
   const [collectionSectorSigIntPath, setCollectionSectorSigIntPath] = useState(
     []
   ); // this is finished path
+
+  const [coordinatesSk42, setCoordinatesSk42] = useState(null);
 
   const apiKey = null; // for devProc only
   // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
@@ -474,41 +475,16 @@ function HomePage() {
     comandFromContextMenuMap = itemMarkerContextMenu;
     switch (comandFromContextMenuMap) {
       case "READ":
-        console.log("Read Object Form Map: ", idMarkerContextMenuMap);
-        //-----------Transform coords from Geographic to Decart
-
-        console.log(
-          "Coords of Object: ",
-          markerArr[idMarkerContextMenuMap].coords
-        );
-
-        console.log(
-          "geoToRectCoord: ",
+        setCoordinatesSk42(
           geoToRectCoord(
             markerArr[idMarkerContextMenuMap].coords.lat,
             markerArr[idMarkerContextMenuMap].coords.lng
           )
-        );
-
-        const sk42Coord = geoToRectCoord(
-          markerArr[idMarkerContextMenuMap].coords.lat,
-          markerArr[idMarkerContextMenuMap].coords.lng
-        );
-
-        console.log(
-          "rectCoordToGeo: ",
-          sk42ToWGS84(sk42Coord.X_lngSk42, sk42Coord.Y_latSk42)
-        );
-
-        /*
-        Наймену-вання об’єкта
-        Місце знаход-ження: ш - д -	
-        Належність	
-        В яких джерелах проявля-ється	
-        Особливості функціону-вання	
-        Дата остан-нього підтвер-дження
-        */
-        //-----------\Transform coords from Geographic to Decart
+        ); // get coordinates in SK-42 system
+        // console.log(
+        //   "rectCoordToGeo: ",
+        //   sk42ToWGS84(sk42Coord.X_lngSk42, sk42Coord.Y_latSk42)
+        // );
         setModalWindowObject(true);
         break;
       case "DELETE":
@@ -1034,6 +1010,7 @@ function HomePage() {
           <ModalWindowObjectForm
             openModalWindowObject={openModalWindowObject}
             closeModalWindowObject={closeModalWindowObject}
+            coordinatesSk42={coordinatesSk42}
           />
         </Layout>
       </ContextUnitId.Provider>
