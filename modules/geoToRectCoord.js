@@ -18,8 +18,12 @@ export const geoToRectCoord = (lng, lat, height = 200) => {
   const a = (aP + aW) / 2;
   const e2 = (e2P + e2W) / 2;
   // поправки
-  const dx = 25;
-  const dy = -128; // !!!
+  // const dx = 25;
+  // const dy = -128; // !!!
+  // const dz = -80;
+
+  const dx = 30;
+  const dy = -126; // !!!
   const dz = -80;
 
   const wx = 0;
