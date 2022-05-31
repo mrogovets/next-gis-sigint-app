@@ -503,7 +503,16 @@ function HomePage() {
         //   "rectCoordToGeo: ",
         //   sk42ToWGS84(sk42Coord.X_lngSk42, sk42Coord.Y_latSk42)
         // );
-        setModalWindowHostileObject(true);
+        if (
+          markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("hostile") >= 0
+        ) {
+          setModalWindowHostileObject(true);
+        } // checking for Hostile Object
+        else if (
+          markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("friend") >= 0
+        ) {
+          setModalWindowFriendObject(true);
+        } // checking for Hostile Object
         break;
       case "DELETE":
         deleteMarkerFromMap(idMarkerContextMenuMap, comandFromContextMenuMap);

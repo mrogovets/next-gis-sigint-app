@@ -59,7 +59,7 @@ export default function BasicModalFriendObject({
             variant="h6"
             component="h2"
             sx={{ textAlign: "center" }}>
-            Формуляр об`єкта розвідки
+            Формуляр підрозділу РЕР
           </Typography>
           <TextField
             id="outlined-textarea"
