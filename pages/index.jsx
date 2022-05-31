@@ -18,7 +18,8 @@ import firebase from "../firebase/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { WriteToCloudFirestore } from "../firebase/writeFirestore";
 import { ReadFromCloudFirestore } from "../firebase/readFirestore";
-import ModalWindowObjectForm from "../components/ModalWindowObjectForm";
+import ModalWindowHostileObjectForm from "../components/ModalWindowHostileObjectForm";
+import ModalWindowFriendObjectForm from "../components/ModalWindowFriendObjectForm";
 import { geoToRectCoord } from "../modules/geoToRectCoord";
 import { sk42ToWGS84 } from "../modules/sk42ToWGS84";
 function HomePage() {
@@ -464,17 +465,34 @@ function HomePage() {
   //---------Get ID Marker & Comand from ContextMenu on Map------
   let idMarkerContextMenuMap = null;
   let comandFromContextMenuMap = null;
-  const [openModalWindowObject, setModalWindowObject] = useState(false); // open ModalWindowObjectForm
-  const closeModalWindowObject = () => {
-    setModalWindowObject(false);
-  };
   const getMarkerIDContextMenu = (idMarkerContextMenu) => {
     idMarkerContextMenuMap = idMarkerContextMenu;
   };
+  //------------------
+  const [openModalWindowHostileObject, setModalWindowHostileObject] =
+    useState(false); // open ModalWindowHostileObjectForm
+  const closeModalWindowHostileObject = () => {
+    setModalWindowHostileObject(false);
+  };
+  //------------------
+  const [openModalWindowFriendObject, setModalWindowFriendObject] =
+    useState(false); // open ModalWindowHostileObjectForm
+  const closeModalWindowFriendObject = () => {
+    setModalWindowFriendObject(false);
+  };
+  //------------------
   const getItemMarkerContextMenu = (itemMarkerContextMenu) => {
     comandFromContextMenuMap = itemMarkerContextMenu;
     switch (comandFromContextMenuMap) {
       case "READ":
+        console.log(
+          "hostile: ",
+          markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("hostile")
+        );
+        console.log(
+          "friend: ",
+          markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("friend")
+        );
         setCoordinatesSk42(
           geoToRectCoord(
             markerArr[idMarkerContextMenuMap].coords.lat,
@@ -485,7 +503,7 @@ function HomePage() {
         //   "rectCoordToGeo: ",
         //   sk42ToWGS84(sk42Coord.X_lngSk42, sk42Coord.Y_latSk42)
         // );
-        setModalWindowObject(true);
+        setModalWindowHostileObject(true);
         break;
       case "DELETE":
         deleteMarkerFromMap(idMarkerContextMenuMap, comandFromContextMenuMap);
@@ -1007,9 +1025,14 @@ function HomePage() {
               {/* ----- end of collection of Polylines ------- */}
             </GoogleMap>
           </LoadScript>
-          <ModalWindowObjectForm
-            openModalWindowObject={openModalWindowObject}
-            closeModalWindowObject={closeModalWindowObject}
+          <ModalWindowHostileObjectForm
+            openModalWindowHostileObject={openModalWindowHostileObject}
+            closeModalWindowHostileObject={closeModalWindowHostileObject}
+            coordinatesSk42={coordinatesSk42}
+          />
+          <ModalWindowFriendObjectForm
+            openModalWindowFriendObject={openModalWindowFriendObject}
+            closeModalWindowFriendObject={closeModalWindowFriendObject}
             coordinatesSk42={coordinatesSk42}
           />
         </Layout>

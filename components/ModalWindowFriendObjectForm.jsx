@@ -25,9 +25,9 @@ const style = {
   "& .MuiTextField-root": { m: 0.7, width: "100%" },
 };
 
-export default function BasicModal({
-  openModalWindowObject,
-  closeModalWindowObject,
+export default function BasicModalFriendObject({
+  openModalWindowFriendObject,
+  closeModalWindowFriendObject,
   coordinatesSk42,
 }) {
   const [value, setValue] = useState("Controlled");
@@ -44,13 +44,13 @@ export default function BasicModal({
   return (
     <div>
       <Modal
-        open={openModalWindowObject}
-        onClose={closeModalWindowObject}
+        open={openModalWindowFriendObject}
+        onClose={closeModalWindowFriendObject}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style} noValidate autoComplete="off">
           <Stack marginTop={1} sx={{ width: ".5rem", ml: "18rem" }}>
-            <Button variant="outlined" onClick={closeModalWindowObject}>
+            <Button variant="outlined" onClick={closeModalWindowFriendObject}>
               <CloseIcon fontSize="medium" />
             </Button>
           </Stack>
@@ -64,11 +64,11 @@ export default function BasicModal({
           <TextField
             id="outlined-textarea"
             label="Найменування об'єкта розвідки"
-            placeholder="Введіть найменування об'єкта розвідки"
+            placeholder="Введіть найменування підрозділу РЕР"
           />
           <TextField
             id="outlined-textarea"
-            label="Місцезнаходження об'єкта розвідки"
+            label="Місцезнаходження підрозділу РЕР"
             placeholder="широта | довгота"
             value={`широта: ${
               coordinatesSk42 ? Math.trunc(coordinatesSk42.X_lngSk42) : ``
@@ -79,7 +79,7 @@ export default function BasicModal({
           />
           <TextField
             id="outlined-multiline-static"
-            label="В яких джерела проявляється"
+            label="Завдання підрозділу РЕР"
             placeholder="Введіть джерела, в яких проявляється об'єкт розвідки"
             multiline
             rows={4}
@@ -87,7 +87,7 @@ export default function BasicModal({
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
               <MobileDatePicker
-                label="Дата останнього підтвердження"
+                label="Дата розгортання підрозділу РЕР"
                 inputFormat="dd.MM.yyyy"
                 value={valueDate}
                 onChange={handleChangeDate}
