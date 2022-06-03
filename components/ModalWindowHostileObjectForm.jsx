@@ -9,6 +9,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
+import LisIntelSource from "./LisIntelSource";
+import { Container } from "@mui/system";
 
 const style = {
   position: "absolute",
@@ -16,13 +18,20 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  height: 500,
+  height: 600,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
   pt: 1,
   "& .MuiTextField-root": { m: 0.7, width: "100%" },
+  "& .MuiContainer-root": {
+    border: 1,
+    borderColor: "rgba(0, 0, 0, 0.25)",
+    borderRadius: "4px",
+    m: 0.7,
+    "&: hover": { borderColor: "rgba(0, 0, 0, 0.87)" },
+  },
 };
 
 export default function BasicModalHostileObject({
@@ -84,6 +93,10 @@ export default function BasicModalHostileObject({
             multiline
             rows={4}
           />
+          <Container>
+            <label>Дата останнього підтвердження</label>
+            <LisIntelSource />
+          </Container>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
               <MobileDatePicker
