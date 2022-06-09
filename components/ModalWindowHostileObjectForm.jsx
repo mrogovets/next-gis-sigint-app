@@ -30,8 +30,11 @@ const style = {
     borderColor: "rgba(0, 0, 0, 0.25)",
     borderRadius: "4px",
     m: 0.7,
-    "&: hover": { borderColor: "rgba(0, 0, 0, 0.87)" },
+    "&: hover": {
+      borderColor: "rgba(0, 0, 0, 0.87)",
+    },
   },
+  "& .labelListIntelSource": { marginLeft: "1rem" },
 };
 
 export default function BasicModalHostileObject({
@@ -86,15 +89,10 @@ export default function BasicModalHostileObject({
             }`}
             onChange={handleChange}
           />
-          <TextField
-            id="outlined-multiline-static"
-            label="В яких джерела проявляється"
-            placeholder="Введіть джерела, в яких проявляється об'єкт розвідки"
-            multiline
-            rows={4}
-          />
+          <label className="labelListIntelSource">
+            В яких джерелах проявляється
+          </label>
           <Container>
-            <label>Дата останнього підтвердження</label>
             <LisIntelSource />
           </Container>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
