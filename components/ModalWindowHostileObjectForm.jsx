@@ -9,6 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LisIntelSource from "./LisIntelSource";
 import { Container } from "@mui/system";
 
@@ -53,6 +54,9 @@ export default function BasicModalHostileObject({
   const handleChangeDate = (newValueDate) => {
     setValueDate(newValueDate);
   };
+  const addIntelSource = () => {
+    console.log("Clicked addIntelSource");
+  };
   return (
     <div>
       <Modal
@@ -94,6 +98,12 @@ export default function BasicModalHostileObject({
           </label>
           <Container>
             <LisIntelSource />
+            <Button
+              variant="text"
+              sx={{ marginLeft: 12 }}
+              onClick={addIntelSource}>
+              <AddCircleIcon fontSize="large" />
+            </Button>
           </Container>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
