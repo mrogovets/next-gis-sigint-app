@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LisIntelSource from "./LisIntelSource";
 import { Container } from "@mui/system";
+import BasicModalHostileSource from "./ModalWindowHostileSourceForm";
 
 const style = {
   position: "absolute",
@@ -119,6 +120,7 @@ export default function BasicModalHostileObject({
           <Stack alignContent={"center"} marginLeft={1.3} mt={2}>
             <Button variant="contained">Записати до бази даних</Button>
           </Stack>
+          <BasicModalHostileSource />
         </Box>
       </Modal>
     </div>

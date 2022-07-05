@@ -1,5 +1,4 @@
 import React from "react";
-import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -34,7 +33,7 @@ function renderRow(props) {
 export default function LisIntelSource() {
   return (
     <FixedSizeList
-      itemData={[1, 2, 3, 6, 5, 6, 7, 8, 9, 10]}
+      itemData={[1, 2, 3, 6, 5, 6, 7, 8, 9, 10]} // info from DB about IntelSources
       height={150}
       width={"105%"}
       maxWidth={360}
