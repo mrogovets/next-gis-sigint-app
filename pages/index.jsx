@@ -57,10 +57,13 @@ function HomePage() {
   const [clickLatLng, setClickLatLng] = useState(center);
 
   const [unitId, setUnitId] = useState("");
+  const [hostileSourceArr, setHostileSourceArr] = useState([3, 3, 3]);
+  const [friendEquipmentsArr, setFriendEquipmentsArr] = useState([1, 1, 1]);
 
   const markerObjTmp = {
     coords: center,
     unitId,
+    hostileSourceArr,
   };
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
 
@@ -353,7 +356,17 @@ function HomePage() {
         { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng, id: unitId },
       ]);
     } else {
-      setMarkerArr([...markerArr, { coords: clickLatLngTmp, unitId }]);
+      if (unitId.lastIndexOf("hostile") >= 0) {
+        setMarkerArr([
+          ...markerArr,
+          { coords: clickLatLngTmp, unitId, hostileSourceArr },
+        ]);
+      } else {
+        setMarkerArr([
+          ...markerArr,
+          { coords: clickLatLngTmp, unitId, friendEquipmentsArr },
+        ]);
+      }
     }
   };
 
@@ -465,8 +478,13 @@ function HomePage() {
   //---------Get ID Marker & Comand from ContextMenu on Map------
   let idMarkerContextMenuMap = null;
   let comandFromContextMenuMap = null;
+
+  // const [idMarkerHostileObject, setIdMarkerHostileObject] = useState(null);
+  // console.log("idMarkerHostileObject: ", idMarkerHostileObject);
+
   const getMarkerIDContextMenu = (idMarkerContextMenu) => {
     idMarkerContextMenuMap = idMarkerContextMenu;
+    // setIdMarkerHostileObject(idMarkerContextMenu);
   };
   //------------------
   const [openModalWindowHostileObject, setModalWindowHostileObject] =
@@ -487,7 +505,8 @@ function HomePage() {
       case "READ":
         console.log(
           "hostile: ",
-          markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("hostile")
+          markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("hostile"),
+          idMarkerContextMenuMap
         );
         console.log(
           "friend: ",
@@ -1050,3 +1069,5 @@ function HomePage() {
   );
 }
 export default HomePage;
+
+// idNumberHostileObject = { idNumberHostileObject };
