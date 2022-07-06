@@ -21,24 +21,20 @@ function renderRow(props) {
           <CommentIcon />
         </IconButton>
       }>
-      <ListItemText
-        primary={`${
-          props.data[index]
-        }-Радіомережа управління та оповіщення 121 бтгр ${index + 1}`}
-      />
+      <ListItemText primary={props.data[index]} />
     </ListItem>
   );
 }
 
-export default function LisIntelSource() {
+export default function LisIntelSource({ itemData }) {
   return (
     <FixedSizeList
-      itemData={[1, 2, 3, 6, 5, 6, 7, 8, 9, 10]} // info from DB about IntelSources
+      itemData={itemData} // info from DB about IntelSources
       height={150}
       width={"105%"}
       maxWidth={360}
       itemSize={55}
-      itemCount={9}
+      itemCount={itemData.length}
       overscanCount={5}>
       {renderRow}
     </FixedSizeList>
