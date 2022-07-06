@@ -17,22 +17,16 @@ const style = {
   pb: 3,
 };
 
-export default function BasicModalHostileSource() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export default function BasicModalHostileSource({
+  openModalWindowHostileSource,
+  closeModalWindowHostileSource,
+}) {
   return (
     <Fragment>
-      <Button onClick={handleOpen}>Open Child Modal</Button>
       <Modal
         hideBackdrop
-        open={open}
-        onClose={handleClose}
+        open={openModalWindowHostileSource}
+        onClose={closeModalWindowHostileSource}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description">
         <Box sx={{ ...style, width: 200 }}>
@@ -40,7 +34,9 @@ export default function BasicModalHostileSource() {
           <p id="child-modal-description">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
           </p>
-          <Button onClick={handleClose}>Close Child Modal</Button>
+          <Button onClick={closeModalWindowHostileSource}>
+            Close Child Modal
+          </Button>
         </Box>
       </Modal>
     </Fragment>

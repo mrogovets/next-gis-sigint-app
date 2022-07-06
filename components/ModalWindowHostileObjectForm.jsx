@@ -57,7 +57,15 @@ export default function BasicModalHostileObject({
   };
   const addIntelSource = () => {
     console.log("Clicked addIntelSource");
+    setModalWindowHostileSource(true);
   };
+  //------------------
+  const [openModalWindowHostileSource, setModalWindowHostileSource] =
+    useState(false); // open ModalWindowHostileSourceForm
+  const closeModalWindowHostileSource = () => {
+    setModalWindowHostileSource(false);
+  };
+  //------------------
   return (
     <div>
       <Modal
@@ -120,7 +128,10 @@ export default function BasicModalHostileObject({
           <Stack alignContent={"center"} marginLeft={1.3} mt={2}>
             <Button variant="contained">Записати до бази даних</Button>
           </Stack>
-          <BasicModalHostileSource />
+          <BasicModalHostileSource
+            openModalWindowHostileSource={openModalWindowHostileSource}
+            closeModalWindowHostileSource={closeModalWindowHostileSource}
+          />
         </Box>
       </Modal>
     </div>
