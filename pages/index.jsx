@@ -61,6 +61,7 @@ function HomePage() {
   const [friendEquipmentsArr, setFriendEquipmentsArr] = useState([1, 1, 1]);
 
   const markerObjTmp = {
+    idObject: Date.now(),
     coords: center,
     unitId,
     hostileSourceArr,
@@ -359,12 +360,22 @@ function HomePage() {
       if (unitId.lastIndexOf("hostile") >= 0) {
         setMarkerArr([
           ...markerArr,
-          { coords: clickLatLngTmp, unitId, hostileSourceArr },
+          {
+            idObject: Date.now(),
+            coords: clickLatLngTmp,
+            unitId,
+            hostileSourceArr,
+          },
         ]);
       } else {
         setMarkerArr([
           ...markerArr,
-          { coords: clickLatLngTmp, unitId, friendEquipmentsArr },
+          {
+            idObject: Date.now(),
+            coords: clickLatLngTmp,
+            unitId,
+            friendEquipmentsArr,
+          },
         ]);
       }
     }
