@@ -44,6 +44,15 @@ export default function BasicModalHostileObject({
   closeModalWindowHostileObject,
   coordinatesSk42,
 }) {
+  const itemData = [
+    "Радіомережа управління та оповіщення 121 бтгр",
+    "Радіомережа управління та оповіщення 122 бтгр",
+    "Радіомережа управління та оповіщення 123 бтгр",
+    "Радіомережа управління та оповіщення 124 бтгр",
+    "Радіомережа управління та оповіщення 125 бтгр",
+    "Радіомережа управління та оповіщення 126 бтгр",
+    "Радіомережа управління та оповіщення 127 бтгр",
+  ];
   const [value, setValue] = useState("Controlled");
 
   const handleChange = (event) => {
@@ -66,6 +75,16 @@ export default function BasicModalHostileObject({
     setModalWindowHostileSource(false);
   };
   //------------------
+
+  const addToListHostileSource = (data) => {
+    itemData.push(...itemData, data);
+  };
+
+  const getDataHostileSource = (dataSource) => {
+    console.log(dataSource);
+    addToListHostileSource(dataSource.valueNameSource);
+    console.log(itemData);
+  };
   return (
     <div>
       <Modal
@@ -106,17 +125,7 @@ export default function BasicModalHostileObject({
             В яких джерелах проявляється
           </label>
           <Container>
-            <LisIntelSource
-              itemData={[
-                "Радіомережа управління та оповіщення 121 бтгр",
-                "Радіомережа управління та оповіщення 122 бтгр",
-                "Радіомережа управління та оповіщення 123 бтгр",
-                "Радіомережа управління та оповіщення 124 бтгр",
-                "Радіомережа управління та оповіщення 125 бтгр",
-                "Радіомережа управління та оповіщення 126 бтгр",
-                "Радіомережа управління та оповіщення 127 бтгр",
-              ]}
-            />
+            <LisIntelSource itemData={itemData} />
             <Button
               variant="text"
               sx={{ marginLeft: 12 }}
@@ -141,6 +150,7 @@ export default function BasicModalHostileObject({
           <BasicModalHostileSource
             openModalWindowHostileSource={openModalWindowHostileSource}
             closeModalWindowHostileSource={closeModalWindowHostileSource}
+            getDataHostileSource={getDataHostileSource}
           />
         </Box>
       </Modal>

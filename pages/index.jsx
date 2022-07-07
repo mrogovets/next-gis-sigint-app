@@ -57,8 +57,8 @@ function HomePage() {
   const [clickLatLng, setClickLatLng] = useState(center);
 
   const [unitId, setUnitId] = useState("");
-  const [hostileSourceArr, setHostileSourceArr] = useState([3, 3, 3]);
-  const [friendEquipmentsArr, setFriendEquipmentsArr] = useState([1, 1, 1]);
+  const [hostileSourceArr, setHostileSourceArr] = useState([]);
+  const [friendEquipmentsArr, setFriendEquipmentsArr] = useState([]);
 
   const markerObjTmp = {
     idObject: Date.now(),

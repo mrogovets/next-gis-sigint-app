@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
 import { Stack, TextField, Typography } from "@mui/material";
 
 const style = {
@@ -10,7 +11,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  height: 400,
+  height: 430,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -28,14 +29,21 @@ const style = {
 export default function BasicModalHostileSource({
   openModalWindowHostileSource,
   closeModalWindowHostileSource,
+  getDataHostileSource,
 }) {
-  const [value, setValue] = useState("");
+  const [valueDescribeSource, setValueDescribeSource] = useState("");
+  const [valueNameSource, setValueNameSource] = useState("");
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleChangeValueDescribeSource = (event) => {
+    setValueDescribeSource(event.target.value);
+  };
+  const handleChangeValueNameSource = (event) => {
+    setValueNameSource(event.target.value);
   };
   const onClickHandler = () => {
-    setValue("");
+    setValueDescribeSource("");
+    setValueNameSource("");
+    getDataHostileSource({ valueDescribeSource, valueNameSource });
     closeModalWindowHostileSource();
   };
   return (
@@ -47,6 +55,11 @@ export default function BasicModalHostileSource({
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description">
         <Box sx={{ ...style, width: 350 }}>
+          <Stack marginTop={0.8} sx={{ width: ".5rem", ml: "15rem" }}>
+            <Button variant="outlined" onClick={closeModalWindowHostileSource}>
+              <CloseIcon fontSize="medium" />
+            </Button>
+          </Stack>
           <Typography
             id="modal-modal-title"
             variant="h6"
@@ -58,6 +71,8 @@ export default function BasicModalHostileSource({
             id="outlined-textarea"
             label="Найменування джерела РЕР"
             placeholder="Введіть найменування джерела РЕР"
+            value={valueNameSource}
+            onChange={handleChangeValueNameSource}
           />
           <TextField
             id="outlined-multiline-flexible"
@@ -65,8 +80,8 @@ export default function BasicModalHostileSource({
             multiline
             rows={7}
             placeholder="Введіть еталонний джерела РЕР"
-            value={value}
-            onChange={handleChange}
+            value={valueDescribeSource}
+            onChange={handleChangeValueDescribeSource}
           />
           <Stack alignContent={"center"} marginLeft={1.3} mt={2}>
             <Button variant="contained" onClick={onClickHandler}>
