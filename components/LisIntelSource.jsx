@@ -29,7 +29,7 @@ function renderRow(props) {
 export default function LisIntelSource({ itemData }) {
   return (
     <FixedSizeList
-      itemData={itemData} // info from DB about IntelSources
+      itemData={itemData.map((el) => el.nameHostileSource)} // info from DB about IntelSources
       height={150}
       width={"105%"}
       maxWidth={360}

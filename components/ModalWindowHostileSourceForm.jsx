@@ -31,19 +31,19 @@ export default function BasicModalHostileSource({
   closeModalWindowHostileSource,
   getDataHostileSource,
 }) {
-  const [valueDescribeSource, setValueDescribeSource] = useState("");
-  const [valueNameSource, setValueNameSource] = useState("");
+  const [descriptionHostileSource, setDescribeSource] = useState("");
+  const [nameHostileSource, setNameSource] = useState("");
 
-  const handleChangeValueDescribeSource = (event) => {
-    setValueDescribeSource(event.target.value);
+  const handleChangeDescribeSource = (event) => {
+    setDescribeSource(event.target.value);
   };
-  const handleChangeValueNameSource = (event) => {
-    setValueNameSource(event.target.value);
+  const handleChangeNameSource = (event) => {
+    setNameSource(event.target.value);
   };
   const onClickHandler = () => {
-    setValueDescribeSource("");
-    setValueNameSource("");
-    getDataHostileSource({ valueDescribeSource, valueNameSource });
+    setDescribeSource("");
+    setNameSource("");
+    getDataHostileSource({ descriptionHostileSource, nameHostileSource });
     closeModalWindowHostileSource();
   };
   return (
@@ -71,8 +71,8 @@ export default function BasicModalHostileSource({
             id="outlined-textarea"
             label="Найменування джерела РЕР"
             placeholder="Введіть найменування джерела РЕР"
-            value={valueNameSource}
-            onChange={handleChangeValueNameSource}
+            value={nameHostileSource}
+            onChange={handleChangeNameSource}
           />
           <TextField
             id="outlined-multiline-flexible"
@@ -80,8 +80,8 @@ export default function BasicModalHostileSource({
             multiline
             rows={7}
             placeholder="Введіть еталонний джерела РЕР"
-            value={valueDescribeSource}
-            onChange={handleChangeValueDescribeSource}
+            value={descriptionHostileSource}
+            onChange={handleChangeDescribeSource}
           />
           <Stack alignContent={"center"} marginLeft={1.3} mt={2}>
             <Button variant="contained" onClick={onClickHandler}>

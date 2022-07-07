@@ -43,20 +43,19 @@ export default function BasicModalHostileObject({
   openModalWindowHostileObject,
   closeModalWindowHostileObject,
   coordinatesSk42,
+  hostileSourceArr,
+  getHostileObjectData,
 }) {
-  const itemData = [
-    "Радіомережа управління та оповіщення 121 бтгр",
-    "Радіомережа управління та оповіщення 122 бтгр",
-    "Радіомережа управління та оповіщення 123 бтгр",
-    "Радіомережа управління та оповіщення 124 бтгр",
-    "Радіомережа управління та оповіщення 125 бтгр",
-    "Радіомережа управління та оповіщення 126 бтгр",
-    "Радіомережа управління та оповіщення 127 бтгр",
-  ];
-  const [value, setValue] = useState("Controlled");
+  // computing of hostileSourceArr as itemData
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const itemData = hostileSourceArr;
+
+  //-----\ computing of hostileSourceArr as itemData
+
+  const [valuePosition, setValuePosition] = useState("");
+
+  const handleChangePosition = (event) => {
+    setValuePosition(event.target.value);
   };
   const timeElapsed = Date.now();
   const [valueDate, setValueDate] = useState(new Date(timeElapsed));
@@ -77,14 +76,18 @@ export default function BasicModalHostileObject({
   //------------------
 
   const addToListHostileSource = (data) => {
-    itemData.push(...itemData, data);
+    itemData.push(data);
   };
 
   const getDataHostileSource = (dataSource) => {
-    console.log(dataSource);
-    addToListHostileSource(dataSource.valueNameSource);
-    console.log(itemData);
+    addToListHostileSource(dataSource);
   };
+
+  const handlerClickAddToDB = () => {
+    getHostileObjectData(itemData);
+    closeModalWindowHostileObject();
+  };
+
   return (
     <div>
       <Modal
@@ -119,7 +122,7 @@ export default function BasicModalHostileObject({
             } | довгота: ${
               coordinatesSk42 ? Math.trunc(coordinatesSk42.Y_latSk42) : ``
             }`}
-            onChange={handleChange}
+            onChange={handleChangePosition}
           />
           <label className="labelListIntelSource">
             В яких джерелах проявляється
@@ -145,7 +148,9 @@ export default function BasicModalHostileObject({
             </Stack>
           </LocalizationProvider>
           <Stack alignContent={"center"} marginLeft={1.3} mt={2}>
-            <Button variant="contained">Записати до бази даних</Button>
+            <Button variant="contained" onClick={handlerClickAddToDB}>
+              Записати до бази даних
+            </Button>
           </Stack>
           <BasicModalHostileSource
             openModalWindowHostileSource={openModalWindowHostileSource}

@@ -57,13 +57,51 @@ function HomePage() {
   const [clickLatLng, setClickLatLng] = useState(center);
 
   const [unitId, setUnitId] = useState("");
-  const [hostileSourceArr, setHostileSourceArr] = useState([]);
+  const [hostileSourceArr, setHostileSourceArr] = useState([
+    {
+      nameHostileSource: "Радіомережа управління та оповіщення 121 бтгр",
+      descriptionHostileSource:
+        "description Радіомережа управління та оповіщення 121 бтгр",
+    },
+    {
+      nameHostileSource: "Радіомережа управління та оповіщення 122 бтгр",
+      descriptionHostileSource:
+        "description Радіомережа управління та оповіщення 122 бтгр",
+    },
+    {
+      nameHostileSource: "Радіомережа управління та оповіщення 123 бтгр",
+      descriptionHostileSource:
+        "description Радіомережа управління та оповіщення 123 бтгр",
+    },
+    {
+      nameHostileSource: "Радіомережа управління та оповіщення 124 бтгр",
+      descriptionHostileSource:
+        "description Радіомережа управління та оповіщення 124 бтгр",
+    },
+    {
+      nameHostileSource: "Радіомережа управління та оповіщення 125 бтгр",
+      descriptionHostileSource:
+        "description Радіомережа управління та оповіщення 125 бтгр",
+    },
+    {
+      nameHostileSource: "Радіомережа управління та оповіщення 126 бтгр",
+      descriptionHostileSorce:
+        "description Радіомережа управління та оповіщення 126 бтгр",
+    },
+    {
+      nameHostileSource: "Радіомережа управління та оповіщення 127 бтгр",
+      descriptionHostileSource:
+        "description Радіомережа управління та оповіщення 127 бтгр",
+    },
+  ]);
+  const [nameHostileObject, setNameHostileObject] = useState("");
   const [friendEquipmentsArr, setFriendEquipmentsArr] = useState([]);
 
   const markerObjTmp = {
     idObject: Date.now(),
     coords: center,
     unitId,
+    nameHostileObject,
     hostileSourceArr,
   };
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
@@ -863,6 +901,10 @@ function HomePage() {
   };
   //---------\Get ID SectorSigInt & Comand from ContextMenu on Map------
 
+  const getHostileObjectData = (hostileObjectData) => {
+    setHostileSourceArr(hostileObjectData);
+  };
+
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
       <ContextUnitId.Provider value={{ getUnitId }}>
@@ -1068,6 +1110,8 @@ function HomePage() {
             openModalWindowHostileObject={openModalWindowHostileObject}
             closeModalWindowHostileObject={closeModalWindowHostileObject}
             coordinatesSk42={coordinatesSk42}
+            hostileSourceArr={hostileSourceArr}
+            getHostileObjectData={getHostileObjectData}
           />
           <ModalWindowFriendObjectForm
             openModalWindowFriendObject={openModalWindowFriendObject}
