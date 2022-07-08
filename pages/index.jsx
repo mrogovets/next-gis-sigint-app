@@ -367,7 +367,7 @@ function HomePage() {
             idObject: Date.now(),
             coords: clickLatLngTmp,
             unitId,
-            hostileSourceArr,
+            hostileSourceArr: [],
           },
         ]);
       } else {
@@ -377,7 +377,7 @@ function HomePage() {
             idObject: Date.now(),
             coords: clickLatLngTmp,
             unitId,
-            friendEquipmentsArr,
+            friendEquipmentsArr: [],
           },
         ]);
       }
@@ -497,10 +497,13 @@ function HomePage() {
 
   const getMarkerIDContextMenu = (idMarkerContextMenu) => {
     setIdMarkerContextMenuMap(idMarkerContextMenu);
-    setHostileSourceArr(
-      fromFirestoreData.markerArr_data[idMarkerContextMenu].hostileSourceArr
-    ); // set the list of THE clicked Hostile Object
-    // setIdMarkerHostileObject(idMarkerContextMenu);
+    try {
+      setHostileSourceArr(
+        fromFirestoreData.markerArr_data[idMarkerContextMenu].hostileSourceArr
+      ); // set the list of THE clicked Hostile Object
+    } catch (error) {
+      setHostileSourceArr([]);
+    }
   };
   //------------------
   const [openModalWindowHostileObject, setModalWindowHostileObject] =
@@ -872,22 +875,11 @@ function HomePage() {
     setHostileSourceArr(hostileObjectData);
   };
 
-  //-------- Read list of hostile source from DB --------------------
+  //-------- Update data of Hostile Source List in DB --------------------
   const addHostileObjectToDB = () => {
-    const hostileSourceData = fromFirestoreData;
-
-    //-------- Update data of Hostile Source List in DB --------------------
     UpdateInCloudFirestore(markerArr);
-    //-------- \Writing situation in DB --------------------
-
-    console.log(
-      hostileSourceData.markerArr_data[idMarkerContextMenuMap].hostileSourceArr
-    );
-
-    console.log(markerArr);
   };
-  //-------- \Read list of hostile source from DB -------------------
-
+  //-------- \Update data of Hostile Source List in DB --------------------
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
       <ContextUnitId.Provider value={{ getUnitId }}>
