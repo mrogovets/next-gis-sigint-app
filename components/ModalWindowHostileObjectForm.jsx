@@ -45,6 +45,7 @@ export default function BasicModalHostileObject({
   coordinatesSk42,
   hostileSourceArr,
   getHostileObjectData,
+  addHostileObjectToDB,
 }) {
   // computing of hostileSourceArr as itemData
 
@@ -86,6 +87,7 @@ export default function BasicModalHostileObject({
   const handlerClickAddToDB = () => {
     getHostileObjectData(itemData);
     closeModalWindowHostileObject();
+    addHostileObjectToDB();
   };
 
   return (

@@ -22,6 +22,7 @@ import ModalWindowHostileObjectForm from "../components/ModalWindowHostileObject
 import ModalWindowFriendObjectForm from "../components/ModalWindowFriendObjectForm";
 import { geoToRectCoord } from "../modules/geoToRectCoord";
 import { sk42ToWGS84 } from "../modules/sk42ToWGS84";
+import { UpdateInCloudFirestore } from "../firebase/updateFirestore";
 function HomePage() {
   //-----------------Log-in--------------
   const [userName, setUserName] = useState("");
@@ -57,43 +58,7 @@ function HomePage() {
   const [clickLatLng, setClickLatLng] = useState(center);
 
   const [unitId, setUnitId] = useState("");
-  const [hostileSourceArr, setHostileSourceArr] = useState([
-    {
-      nameHostileSource: "Радіомережа управління та оповіщення 121 бтгр",
-      descriptionHostileSource:
-        "description Радіомережа управління та оповіщення 121 бтгр",
-    },
-    {
-      nameHostileSource: "Радіомережа управління та оповіщення 122 бтгр",
-      descriptionHostileSource:
-        "description Радіомережа управління та оповіщення 122 бтгр",
-    },
-    {
-      nameHostileSource: "Радіомережа управління та оповіщення 123 бтгр",
-      descriptionHostileSource:
-        "description Радіомережа управління та оповіщення 123 бтгр",
-    },
-    {
-      nameHostileSource: "Радіомережа управління та оповіщення 124 бтгр",
-      descriptionHostileSource:
-        "description Радіомережа управління та оповіщення 124 бтгр",
-    },
-    {
-      nameHostileSource: "Радіомережа управління та оповіщення 125 бтгр",
-      descriptionHostileSource:
-        "description Радіомережа управління та оповіщення 125 бтгр",
-    },
-    {
-      nameHostileSource: "Радіомережа управління та оповіщення 126 бтгр",
-      descriptionHostileSorce:
-        "description Радіомережа управління та оповіщення 126 бтгр",
-    },
-    {
-      nameHostileSource: "Радіомережа управління та оповіщення 127 бтгр",
-      descriptionHostileSource:
-        "description Радіомережа управління та оповіщення 127 бтгр",
-    },
-  ]);
+  const [hostileSourceArr, setHostileSourceArr] = useState([]);
   const [nameHostileObject, setNameHostileObject] = useState("");
   const [friendEquipmentsArr, setFriendEquipmentsArr] = useState([]);
 
@@ -525,14 +490,16 @@ function HomePage() {
   }, [fromFirestoreData]);
   //-------- \Read situation from DB --------------------
   //---------Get ID Marker & Comand from ContextMenu on Map------
-  let idMarkerContextMenuMap = null;
+  // let idMarkerContextMenuMap = null;
   let comandFromContextMenuMap = null;
 
-  // const [idMarkerHostileObject, setIdMarkerHostileObject] = useState(null);
-  // console.log("idMarkerHostileObject: ", idMarkerHostileObject);
+  const [idMarkerContextMenuMap, setIdMarkerContextMenuMap] = useState(null);
 
   const getMarkerIDContextMenu = (idMarkerContextMenu) => {
-    idMarkerContextMenuMap = idMarkerContextMenu;
+    setIdMarkerContextMenuMap(idMarkerContextMenu);
+    setHostileSourceArr(
+      fromFirestoreData.markerArr_data[idMarkerContextMenu].hostileSourceArr
+    ); // set the list of THE clicked Hostile Object
     // setIdMarkerHostileObject(idMarkerContextMenu);
   };
   //------------------
@@ -905,6 +872,22 @@ function HomePage() {
     setHostileSourceArr(hostileObjectData);
   };
 
+  //-------- Read list of hostile source from DB --------------------
+  const addHostileObjectToDB = () => {
+    const hostileSourceData = fromFirestoreData;
+
+    //-------- Update data of Hostile Source List in DB --------------------
+    UpdateInCloudFirestore(markerArr);
+    //-------- \Writing situation in DB --------------------
+
+    console.log(
+      hostileSourceData.markerArr_data[idMarkerContextMenuMap].hostileSourceArr
+    );
+
+    console.log(markerArr);
+  };
+  //-------- \Read list of hostile source from DB -------------------
+
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
       <ContextUnitId.Provider value={{ getUnitId }}>
@@ -1112,6 +1095,7 @@ function HomePage() {
             coordinatesSk42={coordinatesSk42}
             hostileSourceArr={hostileSourceArr}
             getHostileObjectData={getHostileObjectData}
+            addHostileObjectToDB={addHostileObjectToDB}
           />
           <ModalWindowFriendObjectForm
             openModalWindowFriendObject={openModalWindowFriendObject}
