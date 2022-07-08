@@ -90,6 +90,10 @@ export default function BasicModalHostileObject({
     addHostileObjectToDB();
   };
 
+  const commentIconClick = () => {
+    console.log("clicked");
+  };
+
   return (
     <div>
       <Modal
@@ -130,7 +134,10 @@ export default function BasicModalHostileObject({
             В яких джерелах проявляється
           </label>
           <Container>
-            <LisIntelSource itemData={itemData} />
+            <LisIntelSource
+              itemData={itemData}
+              commentIconClick={commentIconClick}
+            />
             <Button
               variant="text"
               sx={{ marginLeft: 12 }}

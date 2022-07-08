@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import { FixedSizeList } from "react-window";
 function renderRow(props) {
   const { index, style } = props;
-  // console.log(props.data);
+  console.log(props);
 
   return (
     <ListItem
@@ -26,7 +26,7 @@ function renderRow(props) {
   );
 }
 
-export default function LisIntelSource({ itemData }) {
+export default function LisIntelSource({ itemData, commentIconClick }) {
   return (
     <FixedSizeList
       itemData={itemData.map((el) => el.nameHostileSource)} // info from DB about IntelSources
