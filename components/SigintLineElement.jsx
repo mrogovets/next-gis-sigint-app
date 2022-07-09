@@ -1,6 +1,14 @@
+import React, { useState } from "react";
 import { Polyline } from "@react-google-maps/api";
+import { Menu, MenuItem } from "@mui/material";
 
-export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
+export const SigintLineElement = ({
+  path = [],
+  colorOfStripSigInt,
+  idSigintLineElementContextMenuMap,
+  getIdSigintLineElementContextMenuMap,
+  getContextMenuCommandSigintLine,
+}) => {
   const onLoad = (polyline) => {
     // console.log("polyline: ", polyline);
   };
@@ -19,6 +27,9 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
     scale: 4,
   };
 
+  const [contextMenu, setContextMenu] = useState(null);
+  const [editableProperty, setEditableProperty] = useState(false);
+
   const options = {
     strokeColor: `${
       colorOfStripSigInt === "hostileStripSigInt" ? "tomato" : "blue"
@@ -29,9 +40,9 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
       colorOfStripSigInt === "hostileStripSigInt" ? "tomato" : "blue"
     }`,
     fillOpacity: 0.35,
-    clickable: false,
+    clickable: true,
     draggable: false,
-    editable: false,
+    editable: editableProperty,
     visible: true,
     radius: 3,
     icons: [
@@ -49,5 +60,78 @@ export const SigintLineElement = ({ path = [], colorOfStripSigInt }) => {
     zIndex: 1,
   };
 
-  return <Polyline onLoad={onLoad} path={path} options={options} />;
+  const handleContextMenu = (event) => {
+    event.domEvent.preventDefault();
+    document.oncontextmenu = () => {
+      return false;
+    };
+
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.domEvent.x - 2,
+            mouseY: event.domEvent.y - 4,
+          }
+        : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
+          // Other native context menus might behave different.
+          // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+          null
+    );
+
+    getIdSigintLineElementContextMenuMap(idSigintLineElementContextMenuMap);
+  };
+
+  const handleClose = () => {
+    setContextMenu(null);
+    document.oncontextmenu = () => {
+      return true;
+    };
+  };
+
+  return (
+    <React.Fragment>
+      <Polyline
+        onRightClick={(e) => handleContextMenu(e)}
+        onLoad={onLoad}
+        path={path}
+        options={options}
+      />
+      <Menu
+        open={contextMenu !== null}
+        onClose={handleClose}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenu !== null
+            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+            : undefined
+        }>
+        <MenuItem
+          onClick={() => {
+            handleClose;
+            // getItemMarkerContextMenu("READ");
+            getContextMenuCommandSigintLine("INFO");
+            handleClose();
+          }}>
+          Інформація про смугу розвідки
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            // getItemMarkerContextMenu("DELETE");
+            setEditableProperty(true);
+            getContextMenuCommandSigintLine("EDIT");
+            handleClose();
+          }}>
+          Редагувати смугу розвідки
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            // getItemMarkerContextMenu("DELETE");
+            getContextMenuCommandSigintLine("DELETE");
+            handleClose();
+          }}>
+          Видалити смугу розвідки
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
+  );
 };

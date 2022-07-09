@@ -58,13 +58,15 @@ export const SideBarMenu = ({ SBMenuOpen, getMenuNumber }) => {
       Нанести обстановку вручну
     </Button>,
     <Button key="two" onClick={TwoHandleClick}>
-      Завантажити обстановку з файлу
+      Очистити карту
     </Button>,
     <Button key="three" onClick={ThreeHandleClick}>
-      Записати обстановку у файл
+      <Link href={"/sitreportpage"}>
+        <a>Сформувати оцінку обстановки</a>
+      </Link>
     </Button>,
     <Button key="four" onClick={FourHandleClick}>
-      Зберегти обстановку в базу даних
+      Записати обстановку до бази даних
     </Button>,
     <Button key="five" onClick={FiveHandleClick}>
       Розрахувати марш

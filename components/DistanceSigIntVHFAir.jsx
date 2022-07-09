@@ -1,8 +1,13 @@
+import React, { useState } from "react";
 import { Polyline } from "@react-google-maps/api";
+import { Menu, MenuItem } from "@mui/material";
 
 export const DistanceSigIntVHFAir = ({
   path = [],
   colorOfDistanceSigIntVHFAir,
+  idDistanceSigIntVHFAirContextMenuMap,
+  getIdDistanceSigIntVHFAirContextMenuMap,
+  getContextMenuCommandDistanceSigIntVHFAir,
 }) => {
   const onLoad = (polyline) => {
     // console.log("polyline: ", polyline);
@@ -44,6 +49,9 @@ export const DistanceSigIntVHFAir = ({
     rotation: 180,
   };
 
+  const [contextMenu, setContextMenu] = useState(null);
+  const [editableProperty, setEditableProperty] = useState(false);
+
   const options = {
     strokeColor: `${
       colorOfDistanceSigIntVHFAir === "hostileDistanceSigIntVHFAir"
@@ -58,9 +66,9 @@ export const DistanceSigIntVHFAir = ({
         : "blue"
     }`,
     fillOpacity: 1,
-    clickable: false,
+    clickable: true,
     draggable: false,
-    editable: false,
+    editable: editableProperty,
     visible: true,
     radius: 3,
     icons: [
@@ -76,5 +84,77 @@ export const DistanceSigIntVHFAir = ({
     zIndex: 1,
   };
 
-  return <Polyline onLoad={onLoad} path={path} options={options} />;
+  const handleContextMenu = (event) => {
+    event.domEvent.preventDefault();
+    document.oncontextmenu = () => {
+      return false;
+    };
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.domEvent.x - 2,
+            mouseY: event.domEvent.y - 4,
+          }
+        : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
+          // Other native context menus might behave different.
+          // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+          null
+    );
+    getIdDistanceSigIntVHFAirContextMenuMap(
+      idDistanceSigIntVHFAirContextMenuMap
+    );
+  };
+  const handleClose = () => {
+    setContextMenu(null);
+    document.oncontextmenu = () => {
+      return true;
+    };
+  };
+
+  return (
+    <React.Fragment>
+      <Polyline
+        onRightClick={(e) => handleContextMenu(e)}
+        onLoad={onLoad}
+        path={path}
+        options={options}
+      />
+      <Menu
+        open={contextMenu !== null}
+        onClose={handleClose}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenu !== null
+            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+            : undefined
+        }>
+        <MenuItem
+          onClick={() => {
+            handleClose;
+            // getItemMarkerContextMenu("READ");
+            getContextMenuCommandDistanceSigIntVHFAir("INFO");
+            handleClose();
+          }}>
+          Інформація про лінію дальності розвідки в УКХ діапазоні по повітряних
+          цілях
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            setEditableProperty(true);
+            getContextMenuCommandDistanceSigIntVHFAir("EDIT");
+            handleClose();
+          }}>
+          Редагувати лінію дальності розвідки в УКХ діапазоні по повітряних
+          цілях
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            getContextMenuCommandDistanceSigIntVHFAir("DELETE");
+            handleClose();
+          }}>
+          Видалити лінію дальності розвідки в УКХ діапазоні по повітряних цілях
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
+  );
 };
