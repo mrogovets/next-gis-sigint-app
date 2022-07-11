@@ -877,6 +877,16 @@ function HomePage() {
 
   //-------- Update data of Hostile Source List in DB --------------------
   const addHostileObjectToDB = () => {
+    const tmpMarker = markerArr[idMarkerContextMenuMap];
+    setMarkerArr([
+      ...markerArr,
+      {
+        idObject: tmpMarker.idObject,
+        coords: tmpMarker.coords,
+        unitId: tmpMarker.unitId,
+        hostileSourceArr: hostileSourceArr,
+      },
+    ]);
     UpdateInCloudFirestore(markerArr);
   };
   //-------- \Update data of Hostile Source List in DB --------------------
