@@ -8,6 +8,7 @@ import { SideBarMenu } from "../components/SideBarMenu";
 import { ContextSBMenu } from "../Context/ContextSBMenu";
 import { SBSymbolMenu } from "../components/SBSymbolMenu";
 import { ContextUnitId } from "../Context/ContextUnitId";
+import { ContextListHostelSource } from "../Context/ContextListHostelSource";
 import { LineDevideElement } from "../components/LineDivideElement";
 import { DistanceSigIntHF } from "../components/DistanceSigIntHF";
 import { DistanceSigIntUHFGnd } from "../components/DistanceSigIntUHFGnd";
@@ -461,7 +462,7 @@ function HomePage() {
   };
 
   //-------- Read situation from DB --------------------
-  const fromFirestoreData = ReadFromCloudFirestore();
+  let fromFirestoreData = ReadFromCloudFirestore();
   useEffect(() => {
     if (fromFirestoreData) {
       setMarkerArr(fromFirestoreData.markerArr_data);
@@ -502,7 +503,11 @@ function HomePage() {
         fromFirestoreData.markerArr_data[idMarkerContextMenu].hostileSourceArr
       ); // set the list of THE clicked Hostile Object
     } catch (error) {
-      setHostileSourceArr([]);
+      try {
+        setHostileSourceArr(markerArr[idMarkerContextMenu].hostileSourceArr);
+      } catch (error) {
+        setHostileSourceArr([]);
+      }
     }
   };
   //------------------
@@ -522,15 +527,6 @@ function HomePage() {
     comandFromContextMenuMap = itemMarkerContextMenu;
     switch (comandFromContextMenuMap) {
       case "READ":
-        console.log(
-          "hostile: ",
-          markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("hostile"),
-          idMarkerContextMenuMap
-        );
-        console.log(
-          "friend: ",
-          markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("friend")
-        );
         setCoordinatesSk42(
           geoToRectCoord(
             markerArr[idMarkerContextMenuMap].coords.lat,
@@ -558,7 +554,6 @@ function HomePage() {
     }
   };
   const deleteMarkerFromMap = (idMarker) => {
-    console.log("deleteMarkerFromMap", idMarker);
     const idxInMarkerArr = markerArr.findIndex((el, i) => i === idMarker);
     const before = markerArr.slice(0, idxInMarkerArr);
     const after = markerArr.slice(idxInMarkerArr + 1);
@@ -871,240 +866,257 @@ function HomePage() {
   };
   //---------\Get ID SectorSigInt & Comand from ContextMenu on Map------
 
+  let before = 0,
+    after = 0;
+
   const getHostileObjectData = (hostileObjectData) => {
     setHostileSourceArr(hostileObjectData);
   };
 
+  const updateMarkerArr = (listHostileSource) => {
+    const tmpMarker = markerArr[idMarkerContextMenuMap];
+
+    const idxInMarkerArr = markerArr.findIndex(
+      (el, i) => i === idMarkerContextMenuMap
+    );
+    before = markerArr.slice(0, idxInMarkerArr);
+    after = markerArr.slice(idxInMarkerArr + 1);
+    after.unshift({
+      idObject: tmpMarker.idObject,
+      coords: tmpMarker.coords,
+      unitId: tmpMarker.unitId,
+      hostileSourceArr: listHostileSource,
+    });
+    setMarkerArr([...before, ...after]);
+  };
+
   //-------- Update data of Hostile Source List in DB --------------------
   const addHostileObjectToDB = () => {
-    const tmpMarker = markerArr[idMarkerContextMenuMap];
-    setMarkerArr([
-      ...markerArr,
-      {
-        idObject: tmpMarker.idObject,
-        coords: tmpMarker.coords,
-        unitId: tmpMarker.unitId,
-        hostileSourceArr: hostileSourceArr,
-      },
-    ]);
     UpdateInCloudFirestore(markerArr);
   };
   //-------- \Update data of Hostile Source List in DB --------------------
+
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
       <ContextUnitId.Provider value={{ getUnitId }}>
-        <Layout isSBMenuOpen={() => isSBMenuOpen()} userName={userName}>
-          <SideBarMenu
-            SBMenuOpen={SBMenuOpen}
-            getMenuNumber={(number) => getMenuNumber(number)}
-          />
-          <SBSymbolMenu
-            SymbolMenuOpen={symbolMenuOpen}
-            closeSymbolMenuOpen={() => closeSymbolMenuOpen()}
-            data={data}
-          />
-          <LoadScript googleMapsApiKey={apiKey}>
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={clickLatLng}
-              zoom={zoom}
-              onClick={onMapClick}>
-              <Marker onLoad={onLoad} position={center} title="You are here" />
-              {markerArr.map((elem, i) => (
-                <MarkerElement
-                  key={i}
-                  idMarkerContextMenuMap={i}
-                  position={elem.coords}
-                  icon={createIcon(elem.unitId)}
-                  getMarkerIDContextMenu={(idMarkerContextMenuMap) =>
-                    getMarkerIDContextMenu(idMarkerContextMenuMap)
-                  }
-                  getItemMarkerContextMenu={(itemMarkerContextMenuMap) =>
-                    getItemMarkerContextMenu(itemMarkerContextMenuMap)
-                  }
+        <ContextListHostelSource.Provider value={{ updateMarkerArr }}>
+          <Layout isSBMenuOpen={() => isSBMenuOpen()} userName={userName}>
+            <SideBarMenu
+              SBMenuOpen={SBMenuOpen}
+              getMenuNumber={(number) => getMenuNumber(number)}
+            />
+            <SBSymbolMenu
+              SymbolMenuOpen={symbolMenuOpen}
+              closeSymbolMenuOpen={() => closeSymbolMenuOpen()}
+              data={data}
+            />
+            <LoadScript googleMapsApiKey={apiKey}>
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={clickLatLng}
+                zoom={zoom}
+                onClick={onMapClick}>
+                <Marker
+                  onLoad={onLoad}
+                  position={center}
+                  title="You are here"
                 />
-              ))}
-              {/* ----- start of collection of Polylines ------- */}
-              {/* ------isStripSigint------- */}
-              {isStripSigint ? (
-                <SigintLineElement
-                  path={polylinePathArr}
-                  colorOfStripSigInt={colorOfSigIntStrip}
-                />
-              ) : null}
-              {collectionSigIntStripPath.map(
-                (elem, idx) =>
+                {markerArr.map((elem, i) => (
+                  <MarkerElement
+                    key={i}
+                    idMarkerContextMenuMap={i}
+                    position={elem.coords}
+                    icon={createIcon(elem.unitId)}
+                    getMarkerIDContextMenu={(idMarkerContextMenuMap) =>
+                      getMarkerIDContextMenu(idMarkerContextMenuMap)
+                    }
+                    getItemMarkerContextMenu={(itemMarkerContextMenuMap) =>
+                      getItemMarkerContextMenu(itemMarkerContextMenuMap)
+                    }
+                  />
+                ))}
+                {/* ----- start of collection of Polylines ------- */}
+                {/* ------isStripSigint------- */}
+                {isStripSigint ? (
+                  <SigintLineElement
+                    path={polylinePathArr}
+                    colorOfStripSigInt={colorOfSigIntStrip}
+                  />
+                ) : null}
+                {collectionSigIntStripPath.map(
+                  (elem, idx) =>
+                    elem.map((el, i) => (
+                      <SigintLineElement
+                        key={i}
+                        idSigintLineElementContextMenuMap={idx}
+                        path={el}
+                        colorOfStripSigInt={el[i].id}
+                        getIdSigintLineElementContextMenuMap={
+                          getIdSigintLineElementContextMenuMap
+                        }
+                        getContextMenuCommandSigintLine={
+                          getContextMenuCommandSigintLine
+                        }
+                      />
+                    ))
+                  // console.log("in SigintLineElement: ", elem[0])
+                )}
+                {/*----------isLineDivide----------  */}
+                {isLineDivide ? (
+                  <LineDevideElement
+                    path={polylinePathArr}
+                    colorOfLineDivide={colorOfLineDivide}
+                  />
+                ) : null}
+                {collectionLineDividePath.map((elem, idx) =>
                   elem.map((el, i) => (
-                    <SigintLineElement
+                    <LineDevideElement
                       key={i}
-                      idSigintLineElementContextMenuMap={idx}
+                      idLineDevideElementContextMenuMap={idx}
                       path={el}
-                      colorOfStripSigInt={el[i].id}
-                      getIdSigintLineElementContextMenuMap={
-                        getIdSigintLineElementContextMenuMap
+                      colorOfLineDivide={el[i].id}
+                      getIdLineDevideElementContextMenuMap={
+                        getIdLineDevideElementContextMenuMap
                       }
-                      getContextMenuCommandSigintLine={
-                        getContextMenuCommandSigintLine
+                      getContextMenuCommandLineDevide={
+                        getContextMenuCommandLineDevide
                       }
                     />
                   ))
-                // console.log("in SigintLineElement: ", elem[0])
-              )}
-              {/*----------isLineDivide----------  */}
-              {isLineDivide ? (
-                <LineDevideElement
-                  path={polylinePathArr}
-                  colorOfLineDivide={colorOfLineDivide}
-                />
-              ) : null}
-              {collectionLineDividePath.map((elem, idx) =>
-                elem.map((el, i) => (
-                  <LineDevideElement
-                    key={i}
-                    idLineDevideElementContextMenuMap={idx}
-                    path={el}
-                    colorOfLineDivide={el[i].id}
-                    getIdLineDevideElementContextMenuMap={
-                      getIdLineDevideElementContextMenuMap
-                    }
-                    getContextMenuCommandLineDevide={
-                      getContextMenuCommandLineDevide
-                    }
-                  />
-                ))
-              )}
-              {/*---------isDistanceSigIntHF --------*/}
-              {isDistanceSigIntHF ? (
-                <DistanceSigIntHF
-                  path={polylinePathArr}
-                  colorOfDistanceSigIntHF={colorOfDistanceSigIntHF}
-                />
-              ) : null}
-              {collectionDistanceSigIntHFPath.map((elem, idx) =>
-                elem.map((el, i) => (
+                )}
+                {/*---------isDistanceSigIntHF --------*/}
+                {isDistanceSigIntHF ? (
                   <DistanceSigIntHF
-                    key={i}
-                    idDistanceSigIntHFContextMenuMap={idx}
-                    path={el}
-                    colorOfDistanceSigIntHF={el[i].id}
-                    getIdDistanceSigIntHFContextMenuMap={
-                      getIdDistanceSigIntHFContextMenuMap
-                    }
-                    getContextMenuCommandDistanceSigIntHF={
-                      getContextMenuCommandDistanceSigIntHF
-                    }
+                    path={polylinePathArr}
+                    colorOfDistanceSigIntHF={colorOfDistanceSigIntHF}
                   />
-                ))
-              )}
-              {/*---------isDistanceSigIntUHFGnd --------*/}
-              {isDistanceSigIntUHFGnd ? (
-                <DistanceSigIntUHFGnd
-                  path={polylinePathArr}
-                  colorOfDistanceSigIntUHFGnd={colorOfDistanceSigIntUHFGnd}
-                />
-              ) : null}
-              {collectionDistanceSigIntUHFGndPath.map((elem, idx) =>
-                elem.map((el, i) => (
+                ) : null}
+                {collectionDistanceSigIntHFPath.map((elem, idx) =>
+                  elem.map((el, i) => (
+                    <DistanceSigIntHF
+                      key={i}
+                      idDistanceSigIntHFContextMenuMap={idx}
+                      path={el}
+                      colorOfDistanceSigIntHF={el[i].id}
+                      getIdDistanceSigIntHFContextMenuMap={
+                        getIdDistanceSigIntHFContextMenuMap
+                      }
+                      getContextMenuCommandDistanceSigIntHF={
+                        getContextMenuCommandDistanceSigIntHF
+                      }
+                    />
+                  ))
+                )}
+                {/*---------isDistanceSigIntUHFGnd --------*/}
+                {isDistanceSigIntUHFGnd ? (
                   <DistanceSigIntUHFGnd
-                    key={i}
-                    idDistanceSigIntUHFGndContextMenuMap={idx}
-                    path={el}
-                    colorOfDistanceSigIntUHFGnd={el[i].id}
-                    getIdDistanceSigIntUHFGndContextMenuMap={
-                      getIdDistanceSigIntUHFGndContextMenuMap
-                    }
-                    getContextMenuCommandDistanceSigIntUHFGnd={
-                      getContextMenuCommandDistanceSigIntUHFGnd
-                    }
+                    path={polylinePathArr}
+                    colorOfDistanceSigIntUHFGnd={colorOfDistanceSigIntUHFGnd}
                   />
-                ))
-              )}
-              {/*---------isDistanceSigIntVHFAir --------*/}
-              {isDistanceSigIntVHFAir ? (
-                <DistanceSigIntVHFAir
-                  path={polylinePathArr}
-                  colorOfDistanceSigIntVHFAir={colorOfDistanceSigIntVHFAir}
-                />
-              ) : null}
-              {collectionDistanceSigIntVHFAirPath.map((elem, idx) =>
-                elem.map((el, i) => (
+                ) : null}
+                {collectionDistanceSigIntUHFGndPath.map((elem, idx) =>
+                  elem.map((el, i) => (
+                    <DistanceSigIntUHFGnd
+                      key={i}
+                      idDistanceSigIntUHFGndContextMenuMap={idx}
+                      path={el}
+                      colorOfDistanceSigIntUHFGnd={el[i].id}
+                      getIdDistanceSigIntUHFGndContextMenuMap={
+                        getIdDistanceSigIntUHFGndContextMenuMap
+                      }
+                      getContextMenuCommandDistanceSigIntUHFGnd={
+                        getContextMenuCommandDistanceSigIntUHFGnd
+                      }
+                    />
+                  ))
+                )}
+                {/*---------isDistanceSigIntVHFAir --------*/}
+                {isDistanceSigIntVHFAir ? (
                   <DistanceSigIntVHFAir
-                    key={i}
-                    idDistanceSigIntVHFAirContextMenuMap={idx}
-                    path={el}
-                    colorOfDistanceSigIntVHFAir={el[i].id}
-                    getIdDistanceSigIntVHFAirContextMenuMap={
-                      getIdDistanceSigIntVHFAirContextMenuMap
-                    }
-                    getContextMenuCommandDistanceSigIntVHFAir={
-                      getContextMenuCommandDistanceSigIntVHFAir
-                    }
+                    path={polylinePathArr}
+                    colorOfDistanceSigIntVHFAir={colorOfDistanceSigIntVHFAir}
                   />
-                ))
-              )}
-              {/*---------isDistanceSigIntRdrAir --------*/}
-              {isDistanceSigIntRdrAir ? (
-                <DistanceSigIntRdrAir
-                  path={polylinePathArr}
-                  colorOfDistanceSigIntRdrAir={colorOfDistanceSigIntRdrAir}
-                />
-              ) : null}
-              {collectionDistanceSigIntRdrAirPath.map((elem, idx) =>
-                elem.map((el, i) => (
+                ) : null}
+                {collectionDistanceSigIntVHFAirPath.map((elem, idx) =>
+                  elem.map((el, i) => (
+                    <DistanceSigIntVHFAir
+                      key={i}
+                      idDistanceSigIntVHFAirContextMenuMap={idx}
+                      path={el}
+                      colorOfDistanceSigIntVHFAir={el[i].id}
+                      getIdDistanceSigIntVHFAirContextMenuMap={
+                        getIdDistanceSigIntVHFAirContextMenuMap
+                      }
+                      getContextMenuCommandDistanceSigIntVHFAir={
+                        getContextMenuCommandDistanceSigIntVHFAir
+                      }
+                    />
+                  ))
+                )}
+                {/*---------isDistanceSigIntRdrAir --------*/}
+                {isDistanceSigIntRdrAir ? (
                   <DistanceSigIntRdrAir
-                    key={i}
-                    idDistanceSigIntRdrAirContextMenuMap={idx}
-                    path={el}
-                    colorOfDistanceSigIntRdrAir={el[i].id}
-                    getIdDistanceSigIntRdrAirContextMenuMap={
-                      getIdDistanceSigIntRdrAirContextMenuMap
-                    }
-                    getContextMenuCommandDistanceSigIntRdrAir={
-                      getContextMenuCommandDistanceSigIntRdrAir
-                    }
+                    path={polylinePathArr}
+                    colorOfDistanceSigIntRdrAir={colorOfDistanceSigIntRdrAir}
                   />
-                ))
-              )}
-              {/*---------isSectorSigInt --------*/}
-              {isSectorSigInt ? (
-                <SectorSigInt
-                  path={polylinePathArr}
-                  colorOfSectorSigInt={colorOfSectorSigInt}
-                />
-              ) : null}
-              {collectionSectorSigIntPath.map((elem, idx) =>
-                elem.map((el, i) => (
+                ) : null}
+                {collectionDistanceSigIntRdrAirPath.map((elem, idx) =>
+                  elem.map((el, i) => (
+                    <DistanceSigIntRdrAir
+                      key={i}
+                      idDistanceSigIntRdrAirContextMenuMap={idx}
+                      path={el}
+                      colorOfDistanceSigIntRdrAir={el[i].id}
+                      getIdDistanceSigIntRdrAirContextMenuMap={
+                        getIdDistanceSigIntRdrAirContextMenuMap
+                      }
+                      getContextMenuCommandDistanceSigIntRdrAir={
+                        getContextMenuCommandDistanceSigIntRdrAir
+                      }
+                    />
+                  ))
+                )}
+                {/*---------isSectorSigInt --------*/}
+                {isSectorSigInt ? (
                   <SectorSigInt
-                    key={i}
-                    idSectorSigIntContextMenuMap={idx}
-                    path={el}
-                    colorOfSectorSigInt={el[i].id}
-                    getIdSectorSigIntContextMenuMap={
-                      getIdSectorSigIntContextMenuMap
-                    }
-                    getContextMenuCommandSectorSigInt={
-                      getContextMenuCommandSectorSigInt
-                    }
+                    path={polylinePathArr}
+                    colorOfSectorSigInt={colorOfSectorSigInt}
                   />
-                ))
-              )}
-              {/* ----- end of collection of Polylines ------- */}
-            </GoogleMap>
-          </LoadScript>
-          <ModalWindowHostileObjectForm
-            openModalWindowHostileObject={openModalWindowHostileObject}
-            closeModalWindowHostileObject={closeModalWindowHostileObject}
-            coordinatesSk42={coordinatesSk42}
-            hostileSourceArr={hostileSourceArr}
-            getHostileObjectData={getHostileObjectData}
-            addHostileObjectToDB={addHostileObjectToDB}
-          />
-          <ModalWindowFriendObjectForm
-            openModalWindowFriendObject={openModalWindowFriendObject}
-            closeModalWindowFriendObject={closeModalWindowFriendObject}
-            coordinatesSk42={coordinatesSk42}
-          />
-        </Layout>
+                ) : null}
+                {collectionSectorSigIntPath.map((elem, idx) =>
+                  elem.map((el, i) => (
+                    <SectorSigInt
+                      key={i}
+                      idSectorSigIntContextMenuMap={idx}
+                      path={el}
+                      colorOfSectorSigInt={el[i].id}
+                      getIdSectorSigIntContextMenuMap={
+                        getIdSectorSigIntContextMenuMap
+                      }
+                      getContextMenuCommandSectorSigInt={
+                        getContextMenuCommandSectorSigInt
+                      }
+                    />
+                  ))
+                )}
+                {/* ----- end of collection of Polylines ------- */}
+              </GoogleMap>
+            </LoadScript>
+            <ModalWindowHostileObjectForm
+              openModalWindowHostileObject={openModalWindowHostileObject}
+              closeModalWindowHostileObject={closeModalWindowHostileObject}
+              coordinatesSk42={coordinatesSk42}
+              hostileSourceArr={hostileSourceArr}
+              getHostileObjectData={getHostileObjectData}
+              addHostileObjectToDB={addHostileObjectToDB}
+            />
+            <ModalWindowFriendObjectForm
+              openModalWindowFriendObject={openModalWindowFriendObject}
+              closeModalWindowFriendObject={closeModalWindowFriendObject}
+              coordinatesSk42={coordinatesSk42}
+            />
+          </Layout>
+        </ContextListHostelSource.Provider>
       </ContextUnitId.Provider>
     </ContextSBMenu.Provider>
   );

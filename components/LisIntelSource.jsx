@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import CommentIcon from "@mui/icons-material/Comment";
 import IconButton from "@mui/material/IconButton";
 import { FixedSizeList } from "react-window";
+import { ContextListHostelSource } from "../Context/ContextListHostelSource";
 function renderRow(props) {
   const { index, style } = props;
-  console.log(props);
+  // console.log(props);
 
   return (
     <ListItem
@@ -27,6 +28,11 @@ function renderRow(props) {
 }
 
 export default function LisIntelSource({ itemData, commentIconClick }) {
+  const { updateMarkerArr } = useContext(ContextListHostelSource);
+  useEffect(() => {
+    updateMarkerArr(itemData);
+  }, [itemData]);
+
   return (
     <FixedSizeList
       itemData={itemData.map((el) => el.nameHostileSource)} // info from DB about IntelSources
