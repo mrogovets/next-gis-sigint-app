@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -26,10 +26,11 @@ const style = {
   },
 };
 
-export default function BasicModalHostileSource({
+export default function ModalWindowHostileSourceForm({
   openModalWindowHostileSource,
   closeModalWindowHostileSource,
   getDataHostileSource,
+  dataHostileSource,
 }) {
   const [descriptionHostileSource, setDescribeSource] = useState("");
   const [nameHostileSource, setNameSource] = useState("");
@@ -40,12 +41,20 @@ export default function BasicModalHostileSource({
   const handleChangeNameSource = (event) => {
     setNameSource(event.target.value);
   };
-  const onClickHandler = () => {
+  const onClickHandlerAddHostileSource = () => {
     setDescribeSource("");
     setNameSource("");
     getDataHostileSource({ descriptionHostileSource, nameHostileSource });
     closeModalWindowHostileSource();
   };
+
+  useEffect(() => {
+    if (dataHostileSource) {
+      setNameSource(dataHostileSource.nameHostileSource);
+      setDescribeSource(dataHostileSource.descriptionHostileSource);
+    }
+  }, [dataHostileSource]);
+
   return (
     <Fragment>
       <Modal
@@ -83,9 +92,20 @@ export default function BasicModalHostileSource({
             value={descriptionHostileSource}
             onChange={handleChangeDescribeSource}
           />
-          <Stack alignContent={"center"} marginLeft={1.3} mt={2}>
-            <Button variant="contained" onClick={onClickHandler}>
+          <Stack
+            display={"flex"}
+            flexDirection={"row"}
+            alignContent={"start"}
+            mt={1}>
+            <Button
+              variant="contained"
+              onClick={onClickHandlerAddHostileSource}>
               Додати до переліку джерел
+            </Button>
+            <Button
+              variant="contained"
+              onClick={onClickHandlerAddHostileSource}>
+              Оновити інформацію
             </Button>
           </Stack>
         </Box>

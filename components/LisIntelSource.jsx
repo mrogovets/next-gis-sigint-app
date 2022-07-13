@@ -6,11 +6,15 @@ import IconButton from "@mui/material/IconButton";
 import { ContextListHostelSource } from "../Context/ContextListHostelSource";
 import { List } from "@mui/material";
 
-export default function LisIntelSource({ itemData, commentIconClick }) {
+export default function LisIntelSource({ itemData, getIndexCommentIconClick }) {
   const { updateMarkerArr } = useContext(ContextListHostelSource);
   useEffect(() => {
     updateMarkerArr(itemData);
   }, [itemData]);
+
+  const onClickHandler = (indexLineSource) => {
+    getIndexCommentIconClick(indexLineSource);
+  };
 
   return (
     <List
@@ -28,7 +32,9 @@ export default function LisIntelSource({ itemData, commentIconClick }) {
           disableGutters
           divider
           secondaryAction={
-            <IconButton aria-label="comment" onClick={commentIconClick}>
+            <IconButton
+              aria-label="comment"
+              onClick={() => onClickHandler(index)}>
               <CommentIcon />
             </IconButton>
           }>

@@ -12,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LisIntelSource from "./LisIntelSource";
 import { Container } from "@mui/system";
-import BasicModalHostileSource from "./ModalWindowHostileSourceForm";
+import ModalWindowHostileSourceForm from "./ModalWindowHostileSourceForm";
 
 const style = {
   position: "absolute",
@@ -39,7 +39,7 @@ const style = {
   "& .labelListIntelSource": { marginLeft: "1rem" },
 };
 
-export default function BasicModalHostileObject({
+export default function ModalWindowHostileObjectForm({
   openModalWindowHostileObject,
   closeModalWindowHostileObject,
   coordinatesSk42,
@@ -89,8 +89,13 @@ export default function BasicModalHostileObject({
     addHostileObjectToDB();
   };
 
-  const commentIconClick = () => {
-    console.log("Comment Icon Clicked");
+  const [dataHostileSource, setDataHostileSource] = useState(null);
+
+  const getIndexCommentIconClick = (indexLineSource) => {
+    console.log("Comment Icon Clicked: ", indexLineSource);
+    console.log("itemData: ", itemData[indexLineSource]);
+    setDataHostileSource(itemData[indexLineSource]);
+    setModalWindowHostileSource(true);
   };
 
   return (
@@ -135,7 +140,9 @@ export default function BasicModalHostileObject({
           <Container>
             <LisIntelSource
               itemData={itemData}
-              commentIconClick={commentIconClick}
+              getIndexCommentIconClick={(indexLineSource) =>
+                getIndexCommentIconClick(indexLineSource)
+              }
             />
             <Button
               variant="text"
@@ -160,10 +167,11 @@ export default function BasicModalHostileObject({
               Записати до бази даних
             </Button>
           </Stack>
-          <BasicModalHostileSource
+          <ModalWindowHostileSourceForm
             openModalWindowHostileSource={openModalWindowHostileSource}
             closeModalWindowHostileSource={closeModalWindowHostileSource}
             getDataHostileSource={getDataHostileSource}
+            dataHostileSource={dataHostileSource}
           />
         </Box>
       </Modal>
