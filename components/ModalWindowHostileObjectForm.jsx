@@ -65,7 +65,6 @@ export default function BasicModalHostileObject({
     setValueDate(newValueDate);
   };
   const addIntelSource = () => {
-    console.log("Clicked addIntelSource");
     setModalWindowHostileSource(true);
   };
   //------------------
@@ -91,7 +90,7 @@ export default function BasicModalHostileObject({
   };
 
   const commentIconClick = () => {
-    console.log("clicked");
+    console.log("Comment Icon Clicked");
   };
 
   return (
