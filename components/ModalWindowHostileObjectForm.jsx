@@ -79,10 +79,17 @@ export default function ModalWindowHostileObjectForm({
     itemData.push(data);
   };
   const rewriteListHostileSource = (data) => {
-    console.log("rewriteListHostileSource");
+    console.log("rewriteListHostileSource: ", data);
   };
-  const deleteHostileSource = (data) => {
-    console.log("deleteHostileSource");
+
+  const [indexLineDel, setIndexLineDel] = useState(null);
+  const deleteHostileSource = (indexLineSource) => {
+    console.log("old itemData", itemData);
+    const before = itemData.slice(0, indexLineSource);
+    const after = itemData.slice(indexLineSource + 1);
+    itemData = before.concat(after);
+    console.log("new ItemData: ", itemData);
+    setIndexLineDel(indexLineSource);
   };
 
   const getDataHostileSource = (dataSource, getBtnClicked) => {
@@ -104,7 +111,7 @@ export default function ModalWindowHostileObjectForm({
         rewriteListHostileSource(dataSource);
         break;
       case "delete":
-        deleteHostileSource(dataSource);
+        deleteHostileSource(indexLineHostelSource);
         break;
       default:
         break;
@@ -119,10 +126,12 @@ export default function ModalWindowHostileObjectForm({
 
   const [dataHostileSource, setDataHostileSource] = useState(null);
 
+  const [indexLineHostelSource, setIndexLineHostelSource] = useState(null);
   const getIndexCommentIconClick = (indexLineSource) => {
     console.log("Comment Icon Clicked: ", indexLineSource);
     console.log("itemData: ", itemData[indexLineSource]);
     setDataHostileSource(itemData[indexLineSource]);
+    setIndexLineHostelSource(indexLineSource);
     setModalWindowHostileSource(true);
   };
 
@@ -171,6 +180,7 @@ export default function ModalWindowHostileObjectForm({
               getIndexCommentIconClick={(indexLineSource) =>
                 getIndexCommentIconClick(indexLineSource)
               }
+              indexLineDel={indexLineDel}
             />
             <Button
               variant="text"

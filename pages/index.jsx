@@ -549,7 +549,8 @@ function HomePage() {
         } // checking for Hostile Object
         break;
       case "DELETE":
-        deleteMarkerFromMap(idMarkerContextMenuMap, comandFromContextMenuMap);
+        // deleteMarkerFromMap(idMarkerContextMenuMap, comandFromContextMenuMap);
+        deleteMarkerFromMap(idMarkerContextMenuMap);
         break;
     }
   };
