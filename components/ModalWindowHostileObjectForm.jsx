@@ -46,6 +46,7 @@ export default function ModalWindowHostileObjectForm({
   hostileSourceArr,
   getHostileObjectData,
   addHostileObjectToDB,
+  deleteHostileSourceFromDB,
 }) {
   // computing of hostileSourceArr as itemData
 
@@ -82,14 +83,14 @@ export default function ModalWindowHostileObjectForm({
     console.log("rewriteListHostileSource: ", data);
   };
 
-  const [indexLineDel, setIndexLineDel] = useState(null);
   const deleteHostileSource = (indexLineSource) => {
     console.log("old itemData", itemData);
     const before = itemData.slice(0, indexLineSource);
     const after = itemData.slice(indexLineSource + 1);
     itemData = before.concat(after);
     console.log("new ItemData: ", itemData);
-    setIndexLineDel(indexLineSource);
+    getHostileObjectData(itemData);
+    deleteHostileSourceFromDB(itemData);
   };
 
   const getDataHostileSource = (dataSource, getBtnClicked) => {
@@ -97,15 +98,7 @@ export default function ModalWindowHostileObjectForm({
 
     switch (getBtnClicked) {
       case "add":
-        if (
-          dataSource.descriptionHostileSource ===
-            dataHostileSource.descriptionHostileSource &&
-          dataSource.nameHostileSource === dataHostileSource.nameHostileSource
-        ) {
-          return;
-        } else {
-          addToListHostileSource(dataSource);
-        }
+        addToListHostileSource(dataSource);
         break;
       case "rewrite":
         rewriteListHostileSource(dataSource);
@@ -180,7 +173,6 @@ export default function ModalWindowHostileObjectForm({
               getIndexCommentIconClick={(indexLineSource) =>
                 getIndexCommentIconClick(indexLineSource)
               }
-              indexLineDel={indexLineDel}
             />
             <Button
               variant="text"
