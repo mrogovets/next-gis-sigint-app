@@ -1,42 +1,57 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import CommentIcon from "@mui/icons-material/Comment";
 import IconButton from "@mui/material/IconButton";
-import { FixedSizeList } from "react-window";
-function renderRow(props) {
-  const { index, style } = props;
-  console.log(props);
+import { ContextListHostelSource } from "../Context/ContextListHostelSource";
+import { List } from "@mui/material";
+
+export default function LisIntelSource({
+  itemData,
+  getIndexCommentIconClick,
+  indexLineDel,
+}) {
+  const { updateMarkerArr } = useContext(ContextListHostelSource);
+  useEffect(() => {
+    updateMarkerArr(itemData);
+  }, [itemData]);
+
+  const onClickHandler = (indexLineSource) => {
+    getIndexCommentIconClick(indexLineSource);
+  };
 
   return (
-    <ListItem
-      style={style}
-      key={index}
-      component="div"
-      disablePadding
-      disableGutters
-      divider
-      secondaryAction={
-        <IconButton aria-label="comment">
-          <CommentIcon />
-        </IconButton>
-      }>
-      <ListItemText primary={props.data[index]} />
-    </ListItem>
-  );
-}
-
-export default function LisIntelSource({ itemData, commentIconClick }) {
-  return (
-    <FixedSizeList
-      itemData={itemData.map((el) => el.nameHostileSource)} // info from DB about IntelSources
-      height={150}
-      width={"105%"}
-      maxWidth={360}
-      itemSize={55}
-      itemCount={itemData.length}
-      overscanCount={5}>
-      {renderRow}
-    </FixedSizeList>
+    <List
+      sx={{
+        height: 150,
+        width: "105%",
+        maxWidth: 360,
+        bgcolor: "background.paper",
+        overflow: "auto",
+      }}>
+      {itemData.map((el, index) => (
+        <ListItem
+          key={index}
+          disablePadding
+          disableGutters
+          divider
+          secondaryAction={
+            <IconButton
+              aria-label="comment"
+              onClick={() => onClickHandler(index)}>
+              <CommentIcon />
+            </IconButton>
+          }>
+          <ListItemText
+            primary={el.nameHostileSource}
+            sx={{
+              textDecoration: `${
+                indexLineDel === index ? "line-through" : "none"
+              }`,
+            }}
+          />
+        </ListItem>
+      ))}
+    </List>
   );
 }

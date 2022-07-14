@@ -1,9 +1,19 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
-import { Stack, TextField, Typography } from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Tooltip from "@mui/material/Tooltip";
 
 const style = {
   position: "absolute",
@@ -26,10 +36,11 @@ const style = {
   },
 };
 
-export default function BasicModalHostileSource({
+export default function ModalWindowHostileSourceForm({
   openModalWindowHostileSource,
   closeModalWindowHostileSource,
   getDataHostileSource,
+  dataHostileSource,
 }) {
   const [descriptionHostileSource, setDescribeSource] = useState("");
   const [nameHostileSource, setNameSource] = useState("");
@@ -40,12 +51,41 @@ export default function BasicModalHostileSource({
   const handleChangeNameSource = (event) => {
     setNameSource(event.target.value);
   };
-  const onClickHandler = () => {
+  const onClickHandlerAddHostileSource = () => {
     setDescribeSource("");
     setNameSource("");
-    getDataHostileSource({ descriptionHostileSource, nameHostileSource });
+    getDataHostileSource(
+      { descriptionHostileSource, nameHostileSource },
+      "add"
+    );
     closeModalWindowHostileSource();
   };
+  const onClickHandlerRewriteHostileSource = () => {
+    setDescribeSource("");
+    setNameSource("");
+    getDataHostileSource(
+      { descriptionHostileSource, nameHostileSource },
+      "rewrite"
+    );
+    closeModalWindowHostileSource();
+  };
+  const onClickHandlerDeleteHostileSource = () => {
+    setDescribeSource("");
+    setNameSource("");
+    getDataHostileSource(
+      { descriptionHostileSource, nameHostileSource },
+      "delete"
+    );
+    closeModalWindowHostileSource();
+  };
+
+  useEffect(() => {
+    if (dataHostileSource) {
+      setNameSource(dataHostileSource.nameHostileSource);
+      setDescribeSource(dataHostileSource.descriptionHostileSource);
+    }
+  }, [dataHostileSource]);
+
   return (
     <Fragment>
       <Modal
@@ -83,10 +123,39 @@ export default function BasicModalHostileSource({
             value={descriptionHostileSource}
             onChange={handleChangeDescribeSource}
           />
-          <Stack alignContent={"center"} marginLeft={1.3} mt={2}>
-            <Button variant="contained" onClick={onClickHandler}>
-              Додати до переліку джерел
-            </Button>
+          <Stack
+            direction="row"
+            spacing={1}
+            mt={0.5}
+            justifyContent="center"
+            alignItems="center">
+            <Tooltip title="Додати до переліку джерел" placement="top" arrow>
+              <IconButton
+                aria-label="add"
+                color="primary"
+                size="large"
+                onClick={onClickHandlerAddHostileSource}>
+                <AddCircleIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Зберегти зміни" placement="top" arrow>
+              <IconButton
+                aria-label="add"
+                color="primary"
+                size="large"
+                onClick={onClickHandlerRewriteHostileSource}>
+                <CheckCircleOutlineIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Видалити джерело" placement="top" arrow>
+              <IconButton
+                aria-label="delete"
+                color="primary"
+                size="large"
+                onClick={onClickHandlerDeleteHostileSource}>
+                <DeleteIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
           </Stack>
         </Box>
       </Modal>
