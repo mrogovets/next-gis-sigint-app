@@ -78,9 +78,37 @@ export default function ModalWindowHostileObjectForm({
   const addToListHostileSource = (data) => {
     itemData.push(data);
   };
+  const rewriteListHostileSource = (data) => {
+    console.log("rewriteListHostileSource");
+  };
+  const deleteHostileSource = (data) => {
+    console.log("deleteHostileSource");
+  };
 
-  const getDataHostileSource = (dataSource) => {
-    addToListHostileSource(dataSource);
+  const getDataHostileSource = (dataSource, getBtnClicked) => {
+    console.log("getBtnClicked: ", getBtnClicked);
+
+    switch (getBtnClicked) {
+      case "add":
+        if (
+          dataSource.descriptionHostileSource ===
+            dataHostileSource.descriptionHostileSource &&
+          dataSource.nameHostileSource === dataHostileSource.nameHostileSource
+        ) {
+          return;
+        } else {
+          addToListHostileSource(dataSource);
+        }
+        break;
+      case "rewrite":
+        rewriteListHostileSource(dataSource);
+        break;
+      case "delete":
+        deleteHostileSource(dataSource);
+        break;
+      default:
+        break;
+    }
   };
 
   const handlerClickAddToDB = () => {

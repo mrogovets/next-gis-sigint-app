@@ -3,7 +3,17 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
-import { Stack, TextField, Typography } from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Tooltip from "@mui/material/Tooltip";
 
 const style = {
   position: "absolute",
@@ -44,7 +54,28 @@ export default function ModalWindowHostileSourceForm({
   const onClickHandlerAddHostileSource = () => {
     setDescribeSource("");
     setNameSource("");
-    getDataHostileSource({ descriptionHostileSource, nameHostileSource });
+    getDataHostileSource(
+      { descriptionHostileSource, nameHostileSource },
+      "add"
+    );
+    closeModalWindowHostileSource();
+  };
+  const onClickHandlerRewriteHostileSource = () => {
+    setDescribeSource("");
+    setNameSource("");
+    getDataHostileSource(
+      { descriptionHostileSource, nameHostileSource },
+      "rewrite"
+    );
+    closeModalWindowHostileSource();
+  };
+  const onClickHandlerDeleteHostileSource = () => {
+    setDescribeSource("");
+    setNameSource("");
+    getDataHostileSource(
+      { descriptionHostileSource, nameHostileSource },
+      "delete"
+    );
     closeModalWindowHostileSource();
   };
 
@@ -93,20 +124,38 @@ export default function ModalWindowHostileSourceForm({
             onChange={handleChangeDescribeSource}
           />
           <Stack
-            display={"flex"}
-            flexDirection={"row"}
-            alignContent={"start"}
-            mt={1}>
-            <Button
-              variant="contained"
-              onClick={onClickHandlerAddHostileSource}>
-              Додати до переліку джерел
-            </Button>
-            <Button
-              variant="contained"
-              onClick={onClickHandlerAddHostileSource}>
-              Оновити інформацію
-            </Button>
+            direction="row"
+            spacing={1}
+            mt={0.5}
+            justifyContent="center"
+            alignItems="center">
+            <Tooltip title="Додати до переліку джерел" placement="top" arrow>
+              <IconButton
+                aria-label="add"
+                color="primary"
+                size="large"
+                onClick={onClickHandlerAddHostileSource}>
+                <AddCircleIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Зберегти зміни" placement="top" arrow>
+              <IconButton
+                aria-label="add"
+                color="primary"
+                size="large"
+                onClick={onClickHandlerRewriteHostileSource}>
+                <CheckCircleOutlineIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Видалити джерело" placement="top" arrow>
+              <IconButton
+                aria-label="delete"
+                color="primary"
+                size="large"
+                onClick={onClickHandlerDeleteHostileSource}>
+                <DeleteIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
           </Stack>
         </Box>
       </Modal>
