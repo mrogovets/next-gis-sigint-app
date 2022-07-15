@@ -873,8 +873,6 @@ function HomePage() {
 
   const getHostileObjectData = (hostileObjectData) => {
     setHostileSourceArr(hostileObjectData);
-    console.log("index.jsx hostileSourceArr: ", hostileSourceArr);
-    console.log("index.jsx hostileObjectData: ", hostileObjectData);
   };
 
   const updateMarkerArr = (listHostileSource) => {
