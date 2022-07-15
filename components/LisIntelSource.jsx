@@ -6,12 +6,16 @@ import IconButton from "@mui/material/IconButton";
 import { ContextListHostelSource } from "../Context/ContextListHostelSource";
 import { List } from "@mui/material";
 
-export default function LisIntelSource({ itemData, getIndexCommentIconClick }) {
+export default function LisIntelSource({
+  itemData,
+  getIndexCommentIconClick,
+  nameHostileObject,
+}) {
   const { updateMarkerArr } = useContext(ContextListHostelSource);
 
   useEffect(() => {
-    updateMarkerArr(itemData);
-  }, [itemData]);
+    updateMarkerArr(itemData, nameHostileObject);
+  }, [itemData, nameHostileObject]);
 
   const onClickHandler = (indexLineSource) => {
     getIndexCommentIconClick(indexLineSource);

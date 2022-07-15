@@ -368,6 +368,7 @@ function HomePage() {
             idObject: Date.now(),
             coords: clickLatLngTmp,
             unitId,
+            nameHostileObject,
             hostileSourceArr: [],
           },
         ]);
@@ -378,6 +379,7 @@ function HomePage() {
             idObject: Date.now(),
             coords: clickLatLngTmp,
             unitId,
+            nameHostileObject,
             friendEquipmentsArr: [],
           },
         ]);
@@ -875,7 +877,7 @@ function HomePage() {
     setHostileSourceArr(hostileObjectData);
   };
 
-  const updateMarkerArr = (listHostileSource) => {
+  const updateMarkerArr = (listHostileSource, nameHostileObject) => {
     const tmpMarker = markerArr[idMarkerContextMenuMap];
     const idxInMarkerArr = markerArr.findIndex(
       (el, i) => i === idMarkerContextMenuMap
@@ -886,6 +888,7 @@ function HomePage() {
       idObject: tmpMarker.idObject,
       coords: tmpMarker.coords,
       unitId: tmpMarker.unitId,
+      nameHostileObject: nameHostileObject,
       hostileSourceArr: listHostileSource,
     });
     setMarkerArr([...before, ...after]);
@@ -1110,7 +1113,6 @@ function HomePage() {
               hostileSourceArr={hostileSourceArr}
               getHostileObjectData={getHostileObjectData}
               addHostileObjectToDB={addHostileObjectToDB}
-              // deleteHostileSourceFromDB={deleteHostileSourceFromDB}
             />
             <ModalWindowFriendObjectForm
               openModalWindowFriendObject={openModalWindowFriendObject}

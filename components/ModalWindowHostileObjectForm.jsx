@@ -46,7 +46,6 @@ export default function ModalWindowHostileObjectForm({
   hostileSourceArr,
   getHostileObjectData,
   addHostileObjectToDB,
-  // deleteHostileSourceFromDB,
 }) {
   // computing of hostileSourceArr as itemData
 
@@ -121,6 +120,11 @@ export default function ModalWindowHostileObjectForm({
     setModalWindowHostileSource(true);
   };
 
+  const [nameHostileObject, setNameHostileObject] = useState("");
+  const handleChangeNameObject = (event) => {
+    setNameHostileObject(event.target.value);
+  };
+
   return (
     <div>
       <Modal
@@ -145,6 +149,8 @@ export default function ModalWindowHostileObjectForm({
             id="outlined-textarea"
             label="Найменування об'єкта розвідки"
             placeholder="Введіть найменування об'єкта розвідки"
+            value={nameHostileObject}
+            onChange={handleChangeNameObject}
           />
           <TextField
             id="outlined-textarea"
@@ -166,6 +172,7 @@ export default function ModalWindowHostileObjectForm({
               getIndexCommentIconClick={(indexLineSource) =>
                 getIndexCommentIconClick(indexLineSource)
               }
+              nameHostileObject={nameHostileObject}
             />
             <Button
               variant="text"
