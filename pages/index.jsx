@@ -499,9 +499,10 @@ function HomePage() {
   const getMarkerIDContextMenu = (idMarkerContextMenu) => {
     setIdMarkerContextMenuMap(idMarkerContextMenu);
     try {
-      setHostileSourceArr(
-        fromFirestoreData.markerArr_data[idMarkerContextMenu].hostileSourceArr
-      ); // set the list of THE clicked Hostile Object
+      // setHostileSourceArr(
+      //   fromFirestoreData.markerArr_data[idMarkerContextMenu].hostileSourceArr
+      // ); // set the list of THE clicked Hostile Object
+      setHostileSourceArr(markerArr[idMarkerContextMenu].hostileSourceArr);
     } catch (error) {
       try {
         setHostileSourceArr(markerArr[idMarkerContextMenu].hostileSourceArr);
@@ -872,12 +873,12 @@ function HomePage() {
 
   const getHostileObjectData = (hostileObjectData) => {
     setHostileSourceArr(hostileObjectData);
-    console.log("hostileObjectData: ", hostileObjectData);
+    console.log("index.jsx hostileSourceArr: ", hostileSourceArr);
+    console.log("index.jsx hostileObjectData: ", hostileObjectData);
   };
 
   const updateMarkerArr = (listHostileSource) => {
     const tmpMarker = markerArr[idMarkerContextMenuMap];
-
     const idxInMarkerArr = markerArr.findIndex(
       (el, i) => i === idMarkerContextMenuMap
     );
@@ -890,7 +891,6 @@ function HomePage() {
       hostileSourceArr: listHostileSource,
     });
     setMarkerArr([...before, ...after]);
-    console.log(markerArr);
   };
 
   //-------- Update data of Hostile Source List in DB --------------------
@@ -898,17 +898,6 @@ function HomePage() {
     UpdateInCloudFirestore(markerArr);
   };
   //-------- \Update data of Hostile Source List in DB --------------------
-  //-------- Delete hostileSource from Hostile Source List in DB --------------------
-  const deleteHostileSourceFromDB = (listHostileSource) => {
-    const tmpMarker = markerArr[idMarkerContextMenuMap];
-    const idxInMarkerArr = markerArr.findIndex(
-      (el, i) => i === idMarkerContextMenuMap
-    );
-    tmpMarker.hostileSourceArr = listHostileSource;
-
-    console.log("delete & idxInMarkerArr: ", tmpMarker);
-  };
-  //-------- \Delete hostileSource from Hostile Source List in DB --------------------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -1123,7 +1112,7 @@ function HomePage() {
               hostileSourceArr={hostileSourceArr}
               getHostileObjectData={getHostileObjectData}
               addHostileObjectToDB={addHostileObjectToDB}
-              deleteHostileSourceFromDB={deleteHostileSourceFromDB}
+              // deleteHostileSourceFromDB={deleteHostileSourceFromDB}
             />
             <ModalWindowFriendObjectForm
               openModalWindowFriendObject={openModalWindowFriendObject}

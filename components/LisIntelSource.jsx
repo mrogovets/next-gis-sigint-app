@@ -8,6 +8,7 @@ import { List } from "@mui/material";
 
 export default function LisIntelSource({ itemData, getIndexCommentIconClick }) {
   const { updateMarkerArr } = useContext(ContextListHostelSource);
+
   useEffect(() => {
     updateMarkerArr(itemData);
   }, [itemData]);
