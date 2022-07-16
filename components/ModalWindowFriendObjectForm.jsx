@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
+import { Container, TextField } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Button from "@mui/material/Button";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CloseIcon from "@mui/icons-material/Close";
+import ListSigintMeans from "./ListSigintMeans";
 
 const style = {
   position: "absolute",
@@ -16,16 +18,26 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  height: 500,
+  height: 600,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
   pt: 1,
   "& .MuiTextField-root": { m: 0.7, width: "100%" },
+  "& .MuiContainer-root": {
+    border: 1,
+    borderColor: "rgba(0, 0, 0, 0.25)",
+    borderRadius: "4px",
+    m: 0.7,
+    "&: hover": {
+      borderColor: "rgba(0, 0, 0, 0.87)",
+    },
+  },
+  "& .labelListIntelSource": { marginLeft: "1rem" },
 };
 
-export default function BasicModalFriendObject({
+export default function ModalWindowFriendObjectForm({
   openModalWindowFriendObject,
   closeModalWindowFriendObject,
   coordinatesSk42,
@@ -63,7 +75,7 @@ export default function BasicModalFriendObject({
           </Typography>
           <TextField
             id="outlined-textarea"
-            label="Найменування об'єкта розвідки"
+            label="Найменування підрозділу РЕР"
             placeholder="Введіть найменування підрозділу РЕР"
           />
           <TextField
@@ -77,13 +89,13 @@ export default function BasicModalFriendObject({
             }`}
             onChange={handleChange}
           />
-          <TextField
-            id="outlined-multiline-static"
-            label="Завдання підрозділу РЕР"
-            placeholder="Введіть джерела, в яких проявляється об'єкт розвідки"
-            multiline
-            rows={4}
-          />
+          <label className="labelListIntelSource">Наявні засоби РЕР</label>
+          <Container>
+            <ListSigintMeans />
+            <Button variant="text" sx={{ marginLeft: 12 }}>
+              <AddCircleIcon fontSize="large" />
+            </Button>
+          </Container>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
               <MobileDatePicker
