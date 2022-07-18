@@ -60,14 +60,14 @@ function HomePage() {
 
   const [unitId, setUnitId] = useState("");
   const [hostileSourceArr, setHostileSourceArr] = useState([]);
-  const [nameHostileObject, setNameHostileObject] = useState("");
+  const [nameObject, setNameObject] = useState("");
   const [friendEquipmentsArr, setFriendEquipmentsArr] = useState([]);
 
   const markerObjTmp = {
     idObject: Date.now(),
     coords: center,
     unitId,
-    nameHostileObject,
+    nameObject,
     hostileSourceArr,
   };
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
@@ -368,7 +368,7 @@ function HomePage() {
             idObject: Date.now(),
             coords: clickLatLngTmp,
             unitId,
-            nameHostileObject,
+            nameObject,
             hostileSourceArr: [],
           },
         ]);
@@ -379,7 +379,7 @@ function HomePage() {
             idObject: Date.now(),
             coords: clickLatLngTmp,
             unitId,
-            nameHostileObject,
+            nameObject,
             friendEquipmentsArr: [],
           },
         ]);
@@ -877,7 +877,7 @@ function HomePage() {
     setHostileSourceArr(hostileObjectData);
   };
 
-  const updateMarkerArr = (listHostileSource, nameHostileObject) => {
+  const updateMarkerArr = (listHostileSource, nameObject) => {
     const tmpMarker = markerArr[idMarkerContextMenuMap];
     const idxInMarkerArr = markerArr.findIndex(
       (el, i) => i === idMarkerContextMenuMap
@@ -888,7 +888,7 @@ function HomePage() {
       idObject: tmpMarker.idObject,
       coords: tmpMarker.coords,
       unitId: tmpMarker.unitId,
-      nameHostileObject: nameHostileObject,
+      nameObject,
       hostileSourceArr: listHostileSource,
     });
     setMarkerArr([...before, ...after]);

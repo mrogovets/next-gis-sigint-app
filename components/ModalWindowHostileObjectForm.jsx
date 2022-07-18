@@ -120,9 +120,9 @@ export default function ModalWindowHostileObjectForm({
     setModalWindowHostileSource(true);
   };
 
-  const [nameHostileObject, setNameHostileObject] = useState("");
+  const [nameObject, setNameObject] = useState(""); // const [nameHostileObject, setNameHostileObject] = useState("");
   const handleChangeNameObject = (event) => {
-    setNameHostileObject(event.target.value);
+    setNameObject(event.target.value);
   };
 
   return (
@@ -149,7 +149,7 @@ export default function ModalWindowHostileObjectForm({
             id="outlined-textarea"
             label="Найменування об'єкта розвідки"
             placeholder="Введіть найменування об'єкта розвідки"
-            value={nameHostileObject}
+            value={nameObject}
             onChange={handleChangeNameObject}
           />
           <TextField
@@ -172,7 +172,7 @@ export default function ModalWindowHostileObjectForm({
               getIndexCommentIconClick={(indexLineSource) =>
                 getIndexCommentIconClick(indexLineSource)
               }
-              nameHostileObject={nameHostileObject}
+              nameObject={nameObject}
             />
             <Button
               variant="text"

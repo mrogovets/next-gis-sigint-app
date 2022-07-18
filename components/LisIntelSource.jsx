@@ -9,13 +9,13 @@ import { List } from "@mui/material";
 export default function LisIntelSource({
   itemData,
   getIndexCommentIconClick,
-  nameHostileObject,
+  nameObject,
 }) {
   const { updateMarkerArr } = useContext(ContextListHostelSource);
 
   useEffect(() => {
-    updateMarkerArr(itemData, nameHostileObject);
-  }, [itemData, nameHostileObject]);
+    updateMarkerArr(itemData, nameObject);
+  }, [itemData, nameObject]);
 
   const onClickHandler = (indexLineSource) => {
     getIndexCommentIconClick(indexLineSource);
