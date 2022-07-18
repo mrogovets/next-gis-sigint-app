@@ -1,11 +1,24 @@
-import React from "react";
-import List from "@mui/material/List";
+import React, { useContext, useEffect } from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import CommentIcon from "@mui/icons-material/Comment";
 import IconButton from "@mui/material/IconButton";
+import { ContextListHostelSource } from "../Context/ContextListHostelSource";
+import { List } from "@mui/material";
 
-export default function ListSigintMeans() {
+export default function ListSigintMeans({
+  itemData,
+  getIndexCommentIconClick,
+  nameObject,
+}) {
+  const { updateMarkerArr } = useContext(ContextListHostelSource);
+  useEffect(() => {
+    updateMarkerArr(itemData, nameObject);
+  }, [itemData, nameObject]);
+
+  const onClickHandler = (indexLineMeans) => {
+    getIndexCommentIconClick(indexLineMeans);
+  };
   return (
     <List
       sx={{
@@ -15,16 +28,20 @@ export default function ListSigintMeans() {
         bgcolor: "background.paper",
         overflow: "auto",
       }}>
-      {[1, 2, 3].map((value) => (
+      {itemData.map((el, index) => (
         <ListItem
-          key={value}
+          key={index}
+          disablePadding
           disableGutters
+          divider
           secondaryAction={
-            <IconButton aria-label="comment">
+            <IconButton
+              aria-label="comment"
+              onClick={() => onClickHandler(index)}>
               <CommentIcon />
             </IconButton>
           }>
-          <ListItemText primary={`Line item ${value}`} />
+          <ListItemText primary={el.nameFriendMeans} />
         </ListItem>
       ))}
     </List>
