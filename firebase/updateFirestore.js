@@ -1,5 +1,4 @@
 import firebase from "../firebase/firebaseConfig";
-import { doc, updateDoc } from "firebase/firestore";
 
 export const UpdateInCloudFirestore = (markerArr_data) => {
   try {

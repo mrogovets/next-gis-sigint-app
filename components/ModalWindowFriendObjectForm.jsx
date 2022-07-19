@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
+import { Container, TextField } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Button from "@mui/material/Button";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CloseIcon from "@mui/icons-material/Close";
+import ListSigintMeans from "./ListSigintMeans";
+import ModalWindowFriendMeansForm from "./ModalWindowFriendMeansForm";
 
 const style = {
   position: "absolute",
@@ -16,24 +19,43 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  height: 500,
+  height: 600,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
   pt: 1,
   "& .MuiTextField-root": { m: 0.7, width: "100%" },
+  "& .MuiContainer-root": {
+    border: 1,
+    borderColor: "rgba(0, 0, 0, 0.25)",
+    borderRadius: "4px",
+    m: 0.7,
+    "&: hover": {
+      borderColor: "rgba(0, 0, 0, 0.87)",
+    },
+  },
+  "& .labelListIntelSource": { marginLeft: "1rem" },
 };
 
-export default function BasicModalFriendObject({
+export default function ModalWindowFriendObjectForm({
   openModalWindowFriendObject,
   closeModalWindowFriendObject,
   coordinatesSk42,
+  friendEquipmentsArr,
+  getFriendObjectData,
+  addFriendObjectToDB,
 }) {
-  const [value, setValue] = useState("Controlled");
+  // computing of friendEquipmentsArr as itemData
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const itemData = friendEquipmentsArr;
+
+  //-----\ computing of friendEquipmentsArr as itemData
+
+  const [valuePosition, setValuePosition] = useState("");
+
+  const handleChangePosition = (event) => {
+    setValuePosition(event.target.value);
   };
   const timeElapsed = Date.now();
   const [valueDate, setValueDate] = useState(new Date(timeElapsed));
@@ -41,6 +63,67 @@ export default function BasicModalFriendObject({
   const handleChangeDate = (newValueDate) => {
     setValueDate(newValueDate);
   };
+  const addSigintMeans = () => {
+    setModalWindowFriendMeans(true);
+  };
+  //------------------
+  const [openModalWindowFriendMeans, setModalWindowFriendMeans] =
+    useState(false); // open ModalWindowFriendMeansForm
+  const closeModalWindowFriendMeans = () => {
+    setModalWindowFriendMeans(false);
+  };
+  //------------------
+
+  const addToListFriendMeans = (data) => {
+    itemData.push(data);
+    getFriendObjectData(itemData);
+  };
+  const rewriteListFriendMeans = (data) => {
+    console.log("rewriteListFriendMeans: ", data);
+  };
+
+  const deleteFriendMeans = (indexLineMeans) => {
+    const before = itemData.slice(0, indexLineMeans);
+    const after = itemData.slice(indexLineMeans + 1);
+    itemData = before.concat(after);
+    getFriendObjectData(itemData);
+  };
+
+  const getDataFriendMeans = (dataMeans, getBtnClicked) => {
+    switch (getBtnClicked) {
+      case "add":
+        addToListFriendMeans(dataMeans);
+        break;
+      case "rewrite":
+        rewriteListFriendMeans(dataMeans);
+        break;
+      case "delete":
+        deleteFriendMeans(indexLineFriendMeans);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handlerClickAddToDB = () => {
+    addFriendObjectToDB();
+    closeModalWindowFriendObject();
+  };
+
+  const [dataFriendMeans, setDataFriendMeans] = useState(null);
+
+  const [indexLineFriendMeans, setIndexLineFriendMeans] = useState(null);
+  const getIndexCommentIconClick = (indexLineMeans) => {
+    setDataFriendMeans(itemData[indexLineMeans]);
+    setIndexLineFriendMeans(indexLineMeans);
+    setModalWindowFriendMeans(true);
+  };
+
+  const [nameObject, setNameObject] = useState(""); // const [nameHostileObject, setNameHostileObject] = useState("");
+  const handleChangeNameObject = (event) => {
+    setNameObject(event.target.value);
+  };
+
   return (
     <div>
       <Modal
@@ -63,8 +146,10 @@ export default function BasicModalFriendObject({
           </Typography>
           <TextField
             id="outlined-textarea"
-            label="Найменування об'єкта розвідки"
+            label="Найменування підрозділу РЕР"
             placeholder="Введіть найменування підрозділу РЕР"
+            value={nameObject}
+            onChange={handleChangeNameObject}
           />
           <TextField
             id="outlined-textarea"
@@ -75,15 +160,24 @@ export default function BasicModalFriendObject({
             } | довгота: ${
               coordinatesSk42 ? Math.trunc(coordinatesSk42.Y_latSk42) : ``
             }`}
-            onChange={handleChange}
+            onChange={handleChangePosition}
           />
-          <TextField
-            id="outlined-multiline-static"
-            label="Завдання підрозділу РЕР"
-            placeholder="Введіть джерела, в яких проявляється об'єкт розвідки"
-            multiline
-            rows={4}
-          />
+          <label className="labelListIntelSource">Наявні засоби РЕР</label>
+          <Container>
+            <ListSigintMeans
+              itemData={itemData}
+              getIndexCommentIconClick={(indexLineMeans) =>
+                getIndexCommentIconClick(indexLineMeans)
+              }
+              nameObject={nameObject}
+            />
+            <Button
+              variant="text"
+              sx={{ marginLeft: 12 }}
+              onClick={addSigintMeans}>
+              <AddCircleIcon fontSize="large" />
+            </Button>
+          </Container>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
               <MobileDatePicker
@@ -96,8 +190,16 @@ export default function BasicModalFriendObject({
             </Stack>
           </LocalizationProvider>
           <Stack alignContent={"center"} marginLeft={1.3} mt={2}>
-            <Button variant="contained">Записати до бази даних</Button>
+            <Button variant="contained" onClick={handlerClickAddToDB}>
+              Записати до бази даних
+            </Button>
           </Stack>
+          <ModalWindowFriendMeansForm
+            openModalWindowFriendMeans={openModalWindowFriendMeans}
+            closeModalWindowFriendMeans={closeModalWindowFriendMeans}
+            getDataFriendMeans={getDataFriendMeans}
+            dataFriendMeans={dataFriendMeans}
+          />
         </Box>
       </Modal>
     </div>

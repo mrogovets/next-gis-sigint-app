@@ -60,15 +60,16 @@ function HomePage() {
 
   const [unitId, setUnitId] = useState("");
   const [hostileSourceArr, setHostileSourceArr] = useState([]);
-  const [nameHostileObject, setNameHostileObject] = useState("");
+  const [nameObject, setNameObject] = useState("");
   const [friendEquipmentsArr, setFriendEquipmentsArr] = useState([]);
 
   const markerObjTmp = {
     idObject: Date.now(),
     coords: center,
     unitId,
-    nameHostileObject,
+    nameObject,
     hostileSourceArr,
+    friendEquipmentsArr,
   };
   const [markerArr, setMarkerArr] = useState([markerObjTmp]);
 
@@ -368,6 +369,7 @@ function HomePage() {
             idObject: Date.now(),
             coords: clickLatLngTmp,
             unitId,
+            nameObject,
             hostileSourceArr: [],
           },
         ]);
@@ -378,6 +380,7 @@ function HomePage() {
             idObject: Date.now(),
             coords: clickLatLngTmp,
             unitId,
+            nameObject,
             friendEquipmentsArr: [],
           },
         ]);
@@ -499,14 +502,35 @@ function HomePage() {
   const getMarkerIDContextMenu = (idMarkerContextMenu) => {
     setIdMarkerContextMenuMap(idMarkerContextMenu);
     try {
-      setHostileSourceArr(
-        fromFirestoreData.markerArr_data[idMarkerContextMenu].hostileSourceArr
-      ); // set the list of THE clicked Hostile Object
+      // setHostileSourceArr(
+      //   fromFirestoreData.markerArr_data[idMarkerContextMenu].hostileSourceArr
+      // ); // set the list of THE clicked Hostile Object
+      if (markerArr[idMarkerContextMenu].unitId.lastIndexOf("hostile") === 0) {
+        setHostileSourceArr(markerArr[idMarkerContextMenu].hostileSourceArr);
+      } else {
+        setFriendEquipmentsArr(
+          markerArr[idMarkerContextMenu].friendEquipmentsArr
+        );
+      }
     } catch (error) {
       try {
-        setHostileSourceArr(markerArr[idMarkerContextMenu].hostileSourceArr);
+        if (
+          markerArr[idMarkerContextMenu].unitId.lastIndexOf("hostile") === 0
+        ) {
+          setHostileSourceArr(markerArr[idMarkerContextMenu].hostileSourceArr);
+        } else {
+          setFriendEquipmentsArr(
+            markerArr[idMarkerContextMenu].friendEquipmentsArr
+          );
+        }
       } catch (error) {
-        setHostileSourceArr([]);
+        if (
+          markerArr[idMarkerContextMenu].unitId.lastIndexOf("hostile") === 0
+        ) {
+          setHostileSourceArr([]);
+        } else {
+          setFriendEquipmentsArr([]);
+        }
       }
     }
   };
@@ -872,43 +896,46 @@ function HomePage() {
 
   const getHostileObjectData = (hostileObjectData) => {
     setHostileSourceArr(hostileObjectData);
-    console.log("hostileObjectData: ", hostileObjectData);
+  };
+  const getFriendObjectData = (friendObjectData) => {
+    setFriendEquipmentsArr(friendObjectData);
   };
 
-  const updateMarkerArr = (listHostileSource) => {
+  const updateMarkerArr = (listData, nameObject) => {
     const tmpMarker = markerArr[idMarkerContextMenuMap];
-
     const idxInMarkerArr = markerArr.findIndex(
       (el, i) => i === idMarkerContextMenuMap
     );
     before = markerArr.slice(0, idxInMarkerArr);
     after = markerArr.slice(idxInMarkerArr + 1);
-    after.unshift({
-      idObject: tmpMarker.idObject,
-      coords: tmpMarker.coords,
-      unitId: tmpMarker.unitId,
-      hostileSourceArr: listHostileSource,
-    });
+    if (markerArr[idMarkerContextMenuMap].unitId.lastIndexOf("hostile") >= 0) {
+      after.unshift({
+        idObject: tmpMarker.idObject,
+        coords: tmpMarker.coords,
+        unitId: tmpMarker.unitId,
+        nameObject,
+        hostileSourceArr: listData,
+      });
+    } else {
+      after.unshift({
+        idObject: tmpMarker.idObject,
+        coords: tmpMarker.coords,
+        unitId: tmpMarker.unitId,
+        nameObject,
+        friendEquipmentsArr: listData,
+      });
+    }
     setMarkerArr([...before, ...after]);
-    console.log(markerArr);
   };
 
   //-------- Update data of Hostile Source List in DB --------------------
   const addHostileObjectToDB = () => {
     UpdateInCloudFirestore(markerArr);
   };
-  //-------- \Update data of Hostile Source List in DB --------------------
-  //-------- Delete hostileSource from Hostile Source List in DB --------------------
-  const deleteHostileSourceFromDB = (listHostileSource) => {
-    const tmpMarker = markerArr[idMarkerContextMenuMap];
-    const idxInMarkerArr = markerArr.findIndex(
-      (el, i) => i === idMarkerContextMenuMap
-    );
-    tmpMarker.hostileSourceArr = listHostileSource;
-
-    console.log("delete & idxInMarkerArr: ", tmpMarker);
+  const addFriendObjectToDB = () => {
+    UpdateInCloudFirestore(markerArr);
   };
-  //-------- \Delete hostileSource from Hostile Source List in DB --------------------
+  //-------- \Update data of Hostile Source List in DB --------------------
 
   return (
     <ContextSBMenu.Provider value={{ isSBMenuOpen }}>
@@ -1123,12 +1150,14 @@ function HomePage() {
               hostileSourceArr={hostileSourceArr}
               getHostileObjectData={getHostileObjectData}
               addHostileObjectToDB={addHostileObjectToDB}
-              deleteHostileSourceFromDB={deleteHostileSourceFromDB}
             />
             <ModalWindowFriendObjectForm
               openModalWindowFriendObject={openModalWindowFriendObject}
               closeModalWindowFriendObject={closeModalWindowFriendObject}
               coordinatesSk42={coordinatesSk42}
+              friendEquipmentsArr={friendEquipmentsArr}
+              getFriendObjectData={getFriendObjectData}
+              addFriendObjectToDB={addFriendObjectToDB}
             />
           </Layout>
         </ContextListHostelSource.Provider>

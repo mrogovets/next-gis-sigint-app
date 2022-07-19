@@ -30,67 +30,58 @@ const style = {
   },
 };
 
-export default function ModalWindowHostileSourceForm({
-  openModalWindowHostileSource,
-  closeModalWindowHostileSource,
-  getDataHostileSource,
-  dataHostileSource,
+export default function ModalWindowFriendMeansForm({
+  openModalWindowFriendMeans,
+  closeModalWindowFriendMeans,
+  getDataFriendMeans,
+  dataFriendMeans,
 }) {
-  const [descriptionHostileSource, setDescribeSource] = useState("");
-  const [nameHostileSource, setNameSource] = useState("");
+  const [descriptionFriendMeans, setDescriptionFriendMeans] = useState("");
+  const [nameFriendMeans, setNameFriendMeans] = useState("");
 
-  const handleChangeDescribeSource = (event) => {
-    setDescribeSource(event.target.value);
+  const handleChangeDescribeMeans = (event) => {
+    setDescriptionFriendMeans(event.target.value);
   };
-  const handleChangeNameSource = (event) => {
-    setNameSource(event.target.value);
+  const handleChangeNameMeans = (event) => {
+    setNameFriendMeans(event.target.value);
   };
-  const onClickHandlerAddHostileSource = () => {
-    setDescribeSource("");
-    setNameSource("");
-    getDataHostileSource(
-      { descriptionHostileSource, nameHostileSource },
-      "add"
-    );
-    closeModalWindowHostileSource();
+  const onClickHandlerAddFriendMeans = () => {
+    setDescriptionFriendMeans("");
+    setNameFriendMeans("");
+    getDataFriendMeans({ descriptionFriendMeans, nameFriendMeans }, "add");
+    closeModalWindowFriendMeans();
   };
-  const onClickHandlerRewriteHostileSource = () => {
-    setDescribeSource("");
-    setNameSource("");
-    getDataHostileSource(
-      { descriptionHostileSource, nameHostileSource },
-      "rewrite"
-    );
-    closeModalWindowHostileSource();
+  const onClickHandlerRewriteFriendMeans = () => {
+    setDescriptionFriendMeans("");
+    setNameFriendMeans("");
+    getDataFriendMeans({ descriptionFriendMeans, nameFriendMeans }, "rewrite");
+    closeModalWindowFriendMeans();
   };
-  const onClickHandlerDeleteHostileSource = () => {
-    setDescribeSource("");
-    setNameSource("");
-    getDataHostileSource(
-      { descriptionHostileSource, nameHostileSource },
-      "delete"
-    );
-    closeModalWindowHostileSource();
+  const onClickHandlerDeleteFriendMeans = () => {
+    setDescriptionFriendMeans("");
+    setNameFriendMeans("");
+    getDataFriendMeans({ descriptionFriendMeans, nameFriendMeans }, "delete");
+    closeModalWindowFriendMeans();
   };
 
   useEffect(() => {
-    if (dataHostileSource) {
-      setNameSource(dataHostileSource.nameHostileSource);
-      setDescribeSource(dataHostileSource.descriptionHostileSource);
+    if (dataFriendMeans) {
+      setNameFriendMeans(dataFriendMeans.nameFriendMeans);
+      setDescriptionFriendMeans(dataFriendMeans.descriptionFriendMeans);
     }
-  }, [dataHostileSource]);
+  }, [dataFriendMeans]);
 
   return (
     <Fragment>
       <Modal
         hideBackdrop
-        open={openModalWindowHostileSource}
-        onClose={closeModalWindowHostileSource}
+        open={openModalWindowFriendMeans}
+        onClose={closeModalWindowFriendMeans}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description">
         <Box sx={{ ...style, width: 350 }}>
           <Stack marginTop={0.8} sx={{ width: ".5rem", ml: "15rem" }}>
-            <Button variant="outlined" onClick={closeModalWindowHostileSource}>
+            <Button variant="outlined" onClick={closeModalWindowFriendMeans}>
               <CloseIcon fontSize="medium" />
             </Button>
           </Stack>
@@ -99,23 +90,23 @@ export default function ModalWindowHostileSourceForm({
             variant="h6"
             component="h2"
             sx={{ textAlign: "center" }}>
-            Формуляр джерела РЕР
+            Опис поста РЕР
           </Typography>
           <TextField
             id="outlined-textarea"
-            label="Найменування джерела РЕР"
-            placeholder="Введіть найменування джерела РЕР"
-            value={nameHostileSource}
-            onChange={handleChangeNameSource}
+            label="Номер поста РЕР"
+            placeholder="Введіть номер поста РЕР"
+            value={nameFriendMeans}
+            onChange={handleChangeNameMeans}
           />
           <TextField
             id="outlined-multiline-flexible"
-            label="Еталонний опис джерела РЕР"
+            label="Склад поста РЕР"
             multiline
             rows={7}
-            placeholder="Введіть еталонний джерела РЕР"
-            value={descriptionHostileSource}
-            onChange={handleChangeDescribeSource}
+            placeholder="Введіть склад поста РЕР"
+            value={descriptionFriendMeans}
+            onChange={handleChangeDescribeMeans}
           />
           <Stack
             direction="row"
@@ -123,12 +114,15 @@ export default function ModalWindowHostileSourceForm({
             mt={0.5}
             justifyContent="center"
             alignItems="center">
-            <Tooltip title="Додати до переліку джерел" placement="top" arrow>
+            <Tooltip
+              title="Додати до складу сил і засобів РЕР"
+              placement="top"
+              arrow>
               <IconButton
                 aria-label="add"
                 color="primary"
                 size="large"
-                onClick={onClickHandlerAddHostileSource}>
+                onClick={onClickHandlerAddFriendMeans}>
                 <AddCircleIcon fontSize="large" />
               </IconButton>
             </Tooltip>
@@ -137,16 +131,16 @@ export default function ModalWindowHostileSourceForm({
                 aria-label="add"
                 color="primary"
                 size="large"
-                onClick={onClickHandlerRewriteHostileSource}>
+                onClick={onClickHandlerRewriteFriendMeans}>
                 <CheckCircleOutlineIcon fontSize="large" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Видалити джерело" placement="top" arrow>
+            <Tooltip title="Видалити пост" placement="top" arrow>
               <IconButton
                 aria-label="delete"
                 color="primary"
                 size="large"
-                onClick={onClickHandlerDeleteHostileSource}>
+                onClick={onClickHandlerDeleteFriendMeans}>
                 <DeleteIcon fontSize="large" />
               </IconButton>
             </Tooltip>

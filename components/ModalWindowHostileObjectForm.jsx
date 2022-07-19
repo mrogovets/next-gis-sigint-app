@@ -46,7 +46,6 @@ export default function ModalWindowHostileObjectForm({
   hostileSourceArr,
   getHostileObjectData,
   addHostileObjectToDB,
-  deleteHostileSourceFromDB,
 }) {
   // computing of hostileSourceArr as itemData
 
@@ -78,24 +77,20 @@ export default function ModalWindowHostileObjectForm({
 
   const addToListHostileSource = (data) => {
     itemData.push(data);
+    getHostileObjectData(itemData);
   };
   const rewriteListHostileSource = (data) => {
     console.log("rewriteListHostileSource: ", data);
   };
 
   const deleteHostileSource = (indexLineSource) => {
-    console.log("old itemData", itemData);
     const before = itemData.slice(0, indexLineSource);
     const after = itemData.slice(indexLineSource + 1);
     itemData = before.concat(after);
-    console.log("new ItemData: ", itemData);
     getHostileObjectData(itemData);
-    deleteHostileSourceFromDB(itemData);
   };
 
   const getDataHostileSource = (dataSource, getBtnClicked) => {
-    console.log("getBtnClicked: ", getBtnClicked);
-
     switch (getBtnClicked) {
       case "add":
         addToListHostileSource(dataSource);
@@ -112,20 +107,22 @@ export default function ModalWindowHostileObjectForm({
   };
 
   const handlerClickAddToDB = () => {
-    getHostileObjectData(itemData);
-    closeModalWindowHostileObject();
     addHostileObjectToDB();
+    closeModalWindowHostileObject();
   };
 
   const [dataHostileSource, setDataHostileSource] = useState(null);
 
   const [indexLineHostelSource, setIndexLineHostelSource] = useState(null);
   const getIndexCommentIconClick = (indexLineSource) => {
-    console.log("Comment Icon Clicked: ", indexLineSource);
-    console.log("itemData: ", itemData[indexLineSource]);
     setDataHostileSource(itemData[indexLineSource]);
     setIndexLineHostelSource(indexLineSource);
     setModalWindowHostileSource(true);
+  };
+
+  const [nameObject, setNameObject] = useState(""); // const [nameHostileObject, setNameHostileObject] = useState("");
+  const handleChangeNameObject = (event) => {
+    setNameObject(event.target.value);
   };
 
   return (
@@ -152,6 +149,8 @@ export default function ModalWindowHostileObjectForm({
             id="outlined-textarea"
             label="Найменування об'єкта розвідки"
             placeholder="Введіть найменування об'єкта розвідки"
+            value={nameObject}
+            onChange={handleChangeNameObject}
           />
           <TextField
             id="outlined-textarea"
@@ -173,6 +172,7 @@ export default function ModalWindowHostileObjectForm({
               getIndexCommentIconClick={(indexLineSource) =>
                 getIndexCommentIconClick(indexLineSource)
               }
+              nameObject={nameObject}
             />
             <Button
               variant="text"
