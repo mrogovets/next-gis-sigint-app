@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
 import { getSvgImgSymbol } from "../components/svgImgBase.js";
@@ -49,6 +49,7 @@ function HomePage() {
 
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
+  const [elevation, setElevation] = useState(null);
 
   const [SBMenuOpen, setSBMenuOpen] = useState(false);
   const [symbolMenuOpen, setSymbolMenuOpen] = useState(false);
@@ -123,8 +124,8 @@ function HomePage() {
 
   const [coordinatesSk42, setCoordinatesSk42] = useState(null);
 
-  const apiKey = null; // for devProc only
-  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  // const apiKey = null; // for devProc only
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   const containerStyle = {
     width: "100%",
@@ -336,6 +337,20 @@ function HomePage() {
       // code for legacy browsers
     }
   };
+
+  //--------------------------------------
+  try {
+    const elevator = new google.maps.ElevationService();
+    const path = [
+      { lat: 36.579, lng: -118.292 },
+      { lat: 36.606, lng: -118.0638 },
+    ];
+    elevator.getElevationAlongPath({ path: path, samples: 300 }).then((res) => {
+      console.log("userLocation: ", res);
+    });
+  } catch (error) {}
+
+  //---------------------------------------
 
   useEffect(() => {
     getUserLocation();
