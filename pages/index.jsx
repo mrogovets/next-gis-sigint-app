@@ -376,7 +376,7 @@ function HomePage() {
   };
 
   useEffect(() => {
-    getElevationPoint(clickLatLng);
+    getElevationPoint(clickLatLng); // geting Elevation of a Point
   });
 
   //-----------\ Get Elevation of a Point & Path on Map ---------------------------
