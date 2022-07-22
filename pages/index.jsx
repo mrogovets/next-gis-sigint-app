@@ -377,7 +377,7 @@ function HomePage() {
 
   useEffect(() => {
     getElevationPoint(clickLatLng);
-  }, [clickLatLng]);
+  });
 
   //-----------\ Get Elevation of a Point & Path on Map ---------------------------
 
@@ -963,6 +963,7 @@ function HomePage() {
       after.unshift({
         idObject: tmpMarker.idObject,
         coords: tmpMarker.coords,
+        elevation: tmpMarker.elevation,
         unitId: tmpMarker.unitId,
         nameObject,
         hostileSourceArr: listData,
@@ -971,6 +972,7 @@ function HomePage() {
       after.unshift({
         idObject: tmpMarker.idObject,
         coords: tmpMarker.coords,
+        elevation: tmpMarker.elevation,
         unitId: tmpMarker.unitId,
         nameObject,
         friendEquipmentsArr: listData,
