@@ -49,7 +49,7 @@ function HomePage() {
 
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
-  const [elevation, setElevation] = useState(null);
+  // const [elevation, setElevation] = useState(null);
 
   const [SBMenuOpen, setSBMenuOpen] = useState(false);
   const [symbolMenuOpen, setSymbolMenuOpen] = useState(false);
@@ -332,25 +332,52 @@ function HomePage() {
         setLat(userLocation.lat);
         setLng(userLocation.lng);
         setClickLatLng(userLocation); // define start marker position
+        // getElevationPoint(userLocation).then((res) => {
+        //   setElevation(res);
+        // });
       });
     } else {
       // code for legacy browsers
     }
   };
 
-  //--------------------------------------
-  try {
-    const elevator = new google.maps.ElevationService();
-    const path = [
-      { lat: 36.579, lng: -118.292 },
-      { lat: 36.606, lng: -118.0638 },
-    ];
-    elevator.getElevationAlongPath({ path: path, samples: 300 }).then((res) => {
-      console.log("userLocation: ", res);
-    });
-  } catch (error) {}
+  //-----------/ Get Elevation of a Point & Path on Map---------------------------
+  const getElevationPath = () => {
+    try {
+      const elevator = new google.maps.ElevationService();
+      const path = [
+        { lat: 36.579, lng: -118.292 },
+        { lat: 36.606, lng: -118.0638 },
+      ];
+      elevator
+        .getElevationAlongPath({ path: path, samples: 100 })
+        .then((res) => {
+          console.log("userLocation: ", res);
+        });
+    } catch (error) {}
+  };
 
-  //---------------------------------------
+  const getElevationPoint = (location) => {
+    try {
+      const elevator = new google.maps.ElevationService();
+      elevator
+        .getElevationForLocations({ locations: [location] })
+        .then((res) => {
+          if (res.results[0].elevation) {
+            console.log("userLocation: ", res.results[0].elevation);
+            return res.results[0].elevation;
+          }
+        })
+        .then((data) => {
+          return data;
+        });
+    } catch (error) {}
+  };
+
+  let elev = getElevationPoint({ lat, lng });
+  console.log("elev: ", elev);
+
+  //-----------\ Get Elevation of a Point & Path on Map ---------------------------
 
   useEffect(() => {
     getUserLocation();
