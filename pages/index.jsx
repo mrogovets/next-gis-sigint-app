@@ -49,6 +49,7 @@ function HomePage() {
 
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
+  const [elevation, setElevation] = useState(null);
   // const [elevation, setElevation] = useState(null);
 
   const [SBMenuOpen, setSBMenuOpen] = useState(false);
@@ -67,6 +68,7 @@ function HomePage() {
   const markerObjTmp = {
     idObject: Date.now(),
     coords: center,
+    elevation: elevation,
     unitId,
     nameObject,
     hostileSourceArr,
@@ -325,9 +327,11 @@ function HomePage() {
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
+        getElevationPoint(position);
         const userLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
+          elevation,
         };
         setLat(userLocation.lat);
         setLng(userLocation.lng);
@@ -360,22 +364,20 @@ function HomePage() {
   const getElevationPoint = (location) => {
     try {
       const elevator = new google.maps.ElevationService();
-      elevator
-        .getElevationForLocations({ locations: [location] })
-        .then((res) => {
-          if (res.results[0].elevation) {
-            console.log("userLocation: ", res.results[0].elevation);
-            return res.results[0].elevation;
+      elevator.getElevationForLocations(
+        { locations: [location] },
+        (results, status) => {
+          if (status === "OK" && results[0].elevation) {
+            setElevation(results[0].elevation);
           }
-        })
-        .then((data) => {
-          return data;
-        });
+        }
+      );
     } catch (error) {}
   };
 
-  let elev = getElevationPoint({ lat, lng });
-  console.log("elev: ", elev);
+  useEffect(() => {
+    getElevationPoint(clickLatLng);
+  }, [clickLatLng]);
 
   //-----------\ Get Elevation of a Point & Path on Map ---------------------------
 
@@ -401,7 +403,12 @@ function HomePage() {
     ) {
       setPolylinePathArr([
         ...polylinePathArr,
-        { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng, id: unitId },
+        {
+          lat: clickLatLngTmp.lat,
+          lng: clickLatLngTmp.lng,
+          elevation,
+          id: unitId,
+        },
       ]);
     } else {
       if (unitId.lastIndexOf("hostile") >= 0) {
@@ -410,6 +417,7 @@ function HomePage() {
           {
             idObject: Date.now(),
             coords: clickLatLngTmp,
+            elevation,
             unitId,
             nameObject,
             hostileSourceArr: [],
@@ -421,6 +429,7 @@ function HomePage() {
           {
             idObject: Date.now(),
             coords: clickLatLngTmp,
+            elevation,
             unitId,
             nameObject,
             friendEquipmentsArr: [],
