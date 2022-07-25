@@ -76,6 +76,13 @@ export const MarkerElement = ({
           }}>
           Видалити об`єкт
         </MenuItem>
+        <MenuItem
+          onClick={() => {
+            getItemMarkerContextMenu("EMD");
+            handleClose();
+          }}>
+          Зона ЕМД
+        </MenuItem>
       </Menu>
     </React.Fragment>
   );

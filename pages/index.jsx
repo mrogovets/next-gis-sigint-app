@@ -24,6 +24,7 @@ import ModalWindowFriendObjectForm from "../components/ModalWindowFriendObjectFo
 import { geoToRectCoord } from "../modules/geoToRectCoord";
 import { sk42ToWGS84 } from "../modules/sk42ToWGS84";
 import { UpdateInCloudFirestore } from "../firebase/updateFirestore";
+import { EMDZone } from "../components/EMDZone";
 function HomePage() {
   //-----------------Log-in--------------
   const [userName, setUserName] = useState("");
@@ -346,20 +347,38 @@ function HomePage() {
   };
 
   //-----------/ Get Elevation of a Point & Path on Map---------------------------
-  const getElevationPath = () => {
+  const [elevationPath, setElevationPath] = useState([]);
+  const getElevationPath = (idMarkerContextMenuMap) => {
     try {
       const elevator = new google.maps.ElevationService();
       const path = [
-        { lat: 36.579, lng: -118.292 },
-        { lat: 36.606, lng: -118.0638 },
+        {
+          lat: fromFirestoreData.markerArr_data[idMarkerContextMenuMap].coords
+            .lat,
+          lng: fromFirestoreData.markerArr_data[idMarkerContextMenuMap].coords
+            .lng,
+        },
+        {
+          lat: fromFirestoreData.markerArr_data[idMarkerContextMenuMap + 1]
+            .coords.lat,
+          lng: fromFirestoreData.markerArr_data[idMarkerContextMenuMap + 1]
+            .coords.lng,
+        },
       ];
-      elevator
-        .getElevationAlongPath({ path: path, samples: 100 })
-        .then((res) => {
-          console.log("userLocation: ", res);
-        });
+      elevator.getElevationAlongPath(
+        { path: path, samples: 256 },
+        (results, status) => {
+          if (status === "OK" && results.length > 0) {
+            setElevationPath(results);
+          }
+        }
+      );
     } catch (error) {}
   };
+
+  // useEffect(() => {
+  //   getElevationPath(idMarkerContextMenuMap);
+  // });
 
   const getElevationPoint = (location) => {
     try {
@@ -626,6 +645,17 @@ function HomePage() {
       case "DELETE":
         // deleteMarkerFromMap(idMarkerContextMenuMap, comandFromContextMenuMap);
         deleteMarkerFromMap(idMarkerContextMenuMap);
+        break;
+      case "EMD":
+        // Calculating of the EMD zone;
+        console.log("EMD: ", idMarkerContextMenuMap);
+        getElevationPath(idMarkerContextMenuMap);
+        // console.log(
+        //   "elevationPath: ",
+        //   elevationPath.map((elem) => elem.location.lat())
+        // );
+        break;
+      default:
         break;
     }
   };
@@ -1194,6 +1224,7 @@ function HomePage() {
                   ))
                 )}
                 {/* ----- end of collection of Polylines ------- */}
+                <EMDZone elevationPath={elevationPath} />
               </GoogleMap>
             </LoadScript>
             <ModalWindowHostileObjectForm
