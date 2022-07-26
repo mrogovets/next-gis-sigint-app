@@ -127,8 +127,8 @@ function HomePage() {
 
   const [coordinatesSk42, setCoordinatesSk42] = useState(null);
 
-  // const apiKey = null; // for devProc only
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const apiKey = null; // for devProc only
+  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   const containerStyle = {
     width: "100%",
