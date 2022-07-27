@@ -1,9 +1,9 @@
-import { Polyline } from "@react-google-maps/api";
+import { Circle, Polyline } from "@react-google-maps/api";
 import React from "react";
 import { geoToRectCoord } from "../modules/geoToRectCoord";
 import { sk42ToWGS84 } from "../modules/sk42ToWGS84";
 
-export const EMDZone = ({ elevationPath }) => {
+export const EMDZone = ({ elevationPath, centerEMDZone }) => {
   const path = elevationPath.map((elem) => {
     return {
       lat: elem.location.lat(),
@@ -12,11 +12,13 @@ export const EMDZone = ({ elevationPath }) => {
     };
   });
 
-  console.log(elevationPath[0]);
-
   const center = {
-    lat: 50.34676,
-    lng: 29.93381,
+    lat: parseFloat(
+      `${typeof centerEMDZone.lat != "undefined" ? centerEMDZone.lat : 0}`
+    ),
+    lng: parseFloat(
+      `${typeof centerEMDZone.lng != "undefined" ? centerEMDZone.lng : 0}`
+    ),
   };
 
   const options = {
@@ -59,7 +61,7 @@ export const EMDZone = ({ elevationPath }) => {
   return (
     <React.Fragment>
       <Polyline path={pathCirc} options={options} />
-      {/* <Circle center={center} options={options} /> */}
+      <Circle center={center} options={options} />
     </React.Fragment>
   );
 };
