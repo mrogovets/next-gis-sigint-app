@@ -43,8 +43,10 @@ export const EMDZone = ({ elevationPath, centerEMDZone }) => {
   let pathCirc = [];
   const getCirclePath = () => {
     for (let i = 0; i < 360; i++) {
-      const x = r * Math.cos(2 * Math.PI * (i / 360)) + centerPoint.X_lngSk42;
-      const y = r * Math.sin(2 * Math.PI * (i / 360)) + centerPoint.Y_latSk42;
+      const x =
+        1.6 * r * Math.cos(2 * Math.PI * (i / 360)) + centerPoint.X_lngSk42;
+      const y =
+        0.85 * r * Math.sin(2 * Math.PI * (i / 360)) + centerPoint.Y_latSk42;
       pathCirc[i] = { lat: y, lng: x };
     }
     // console.log(pathCirc);
@@ -61,7 +63,7 @@ export const EMDZone = ({ elevationPath, centerEMDZone }) => {
   return (
     <React.Fragment>
       <Polyline path={pathCirc} options={options} />
-      <Circle center={center} options={options} />
+      {/* <Circle center={center} options={options} /> */}
     </React.Fragment>
   );
 };
