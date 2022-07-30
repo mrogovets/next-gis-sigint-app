@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MarkerElement } from "../components/MarkerElement";
 import { getSvgImgSymbol } from "../components/svgImgBase.js";
@@ -24,6 +24,7 @@ import ModalWindowFriendObjectForm from "../components/ModalWindowFriendObjectFo
 import { geoToRectCoord } from "../modules/geoToRectCoord";
 import { sk42ToWGS84 } from "../modules/sk42ToWGS84";
 import { UpdateInCloudFirestore } from "../firebase/updateFirestore";
+import { EMDZone } from "../components/EMDZone";
 function HomePage() {
   //-----------------Log-in--------------
   const [userName, setUserName] = useState("");
@@ -49,6 +50,8 @@ function HomePage() {
 
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
+  const [elevation, setElevation] = useState(null);
+  // const [elevation, setElevation] = useState(null);
 
   const [SBMenuOpen, setSBMenuOpen] = useState(false);
   const [symbolMenuOpen, setSymbolMenuOpen] = useState(false);
@@ -66,6 +69,7 @@ function HomePage() {
   const markerObjTmp = {
     idObject: Date.now(),
     coords: center,
+    elevation: elevation,
     unitId,
     nameObject,
     hostileSourceArr,
@@ -123,8 +127,8 @@ function HomePage() {
 
   const [coordinatesSk42, setCoordinatesSk42] = useState(null);
 
-  const apiKey = null; // for devProc only
-  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  // const apiKey = null; // for devProc only
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   const containerStyle = {
     width: "100%",
@@ -324,18 +328,51 @@ function HomePage() {
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
+        getElevationPoint(position);
         const userLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
+          elevation,
         };
         setLat(userLocation.lat);
         setLng(userLocation.lng);
         setClickLatLng(userLocation); // define start marker position
+        // getElevationPoint(userLocation).then((res) => {
+        //   setElevation(res);
+        // });
       });
     } else {
       // code for legacy browsers
     }
   };
+
+  //-----------/ Get Elevation of a Point & Path on Map---------------------------
+
+  const [centerEMDZone, setCenterEMDZone] = useState({});
+
+  // useEffect(() => {
+  //   getElevationPath(idMarkerContextMenuMap);
+  // });
+
+  const getElevationPoint = (location) => {
+    try {
+      const elevator = new google.maps.ElevationService();
+      elevator.getElevationForLocations(
+        { locations: [location] },
+        (results, status) => {
+          if (status === "OK" && results[0].elevation) {
+            setElevation(results[0].elevation);
+          }
+        }
+      );
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getElevationPoint(clickLatLng); // geting Elevation of a Point
+  });
+
+  //-----------\ Get Elevation of a Point & Path on Map ---------------------------
 
   useEffect(() => {
     getUserLocation();
@@ -359,7 +396,12 @@ function HomePage() {
     ) {
       setPolylinePathArr([
         ...polylinePathArr,
-        { lat: clickLatLngTmp.lat, lng: clickLatLngTmp.lng, id: unitId },
+        {
+          lat: clickLatLngTmp.lat,
+          lng: clickLatLngTmp.lng,
+          elevation,
+          id: unitId,
+        },
       ]);
     } else {
       if (unitId.lastIndexOf("hostile") >= 0) {
@@ -368,6 +410,7 @@ function HomePage() {
           {
             idObject: Date.now(),
             coords: clickLatLngTmp,
+            elevation,
             unitId,
             nameObject,
             hostileSourceArr: [],
@@ -379,6 +422,7 @@ function HomePage() {
           {
             idObject: Date.now(),
             coords: clickLatLngTmp,
+            elevation,
             unitId,
             nameObject,
             friendEquipmentsArr: [],
@@ -575,6 +619,19 @@ function HomePage() {
       case "DELETE":
         // deleteMarkerFromMap(idMarkerContextMenuMap, comandFromContextMenuMap);
         deleteMarkerFromMap(idMarkerContextMenuMap);
+        break;
+      case "EMD":
+        // Calculating of the EMD zone;
+        console.log("EMD: ", idMarkerContextMenuMap);
+        setCenterEMDZone({
+          lat: fromFirestoreData.markerArr_data[idMarkerContextMenuMap].coords
+            .lat,
+          lng: fromFirestoreData.markerArr_data[idMarkerContextMenuMap].coords
+            .lng,
+        });
+        // getElevationPath(idMarkerContextMenuMap);
+        break;
+      default:
         break;
     }
   };
@@ -912,6 +969,7 @@ function HomePage() {
       after.unshift({
         idObject: tmpMarker.idObject,
         coords: tmpMarker.coords,
+        elevation: tmpMarker.elevation,
         unitId: tmpMarker.unitId,
         nameObject,
         hostileSourceArr: listData,
@@ -920,6 +978,7 @@ function HomePage() {
       after.unshift({
         idObject: tmpMarker.idObject,
         coords: tmpMarker.coords,
+        elevation: tmpMarker.elevation,
         unitId: tmpMarker.unitId,
         nameObject,
         friendEquipmentsArr: listData,
@@ -1141,6 +1200,7 @@ function HomePage() {
                   ))
                 )}
                 {/* ----- end of collection of Polylines ------- */}
+                <EMDZone centerEMDZone={centerEMDZone} />
               </GoogleMap>
             </LoadScript>
             <ModalWindowHostileObjectForm
