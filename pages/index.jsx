@@ -127,8 +127,8 @@ function HomePage() {
 
   const [coordinatesSk42, setCoordinatesSk42] = useState(null);
 
-  // const apiKey = null; // for devProc only
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const apiKey = null; // for devProc only
+  // const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   const containerStyle = {
     width: "100%",
@@ -349,6 +349,7 @@ function HomePage() {
   //-----------/ Get Elevation of a Point & Path on Map---------------------------
 
   const [centerEMDZone, setCenterEMDZone] = useState({});
+  const [openEMDZone, setOpenEMDZone] = useState(false);
 
   // useEffect(() => {
   //   getElevationPath(idMarkerContextMenuMap);
@@ -628,7 +629,10 @@ function HomePage() {
             .lat,
           lng: fromFirestoreData.markerArr_data[idMarkerContextMenuMap].coords
             .lng,
+          elevation:
+            fromFirestoreData.markerArr_data[idMarkerContextMenuMap].elevation,
         });
+        openEMDZone ? setOpenEMDZone(false) : setOpenEMDZone(true);
         // getElevationPath(idMarkerContextMenuMap);
         break;
       default:
@@ -1200,7 +1204,10 @@ function HomePage() {
                   ))
                 )}
                 {/* ----- end of collection of Polylines ------- */}
-                <EMDZone centerEMDZone={centerEMDZone} />
+                <EMDZone
+                  centerEMDZone={centerEMDZone}
+                  openEMDZone={openEMDZone}
+                />
               </GoogleMap>
             </LoadScript>
             <ModalWindowHostileObjectForm

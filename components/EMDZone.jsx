@@ -3,29 +3,23 @@ import React, { useEffect, useState, useCallback } from "react";
 import { geoToRectCoord } from "../modules/geoToRectCoord";
 import { sk42ToWGS84 } from "../modules/sk42ToWGS84";
 
-export const EMDZone = ({ centerEMDZone }) => {
+export const EMDZone = ({ centerEMDZone, openEMDZone }) => {
+  // centerEMDZone = {lat: 50.346759021087436, lng: 29.93380567309637, elevation: 173.8163604736328}
+
   const options = {
     strokeColor: "#FF0000",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
+    strokeOpacity: 0.35,
+    strokeWeight: 1,
     fillColor: "#FF0000",
     fillOpacity: 0.35,
     clickable: false,
     draggable: false,
     editable: false,
-    visible: true,
+    visible: openEMDZone,
     zIndex: 1,
   };
 
   const [elevationPath, setElevationPath] = useState([]);
-
-  // const path = elevationPath.map((elem) => {
-  //   return {
-  //     lat: elem.location.lat(),
-  //     lng: elem.location.lng(),
-  //     elevation: elem.elevation,
-  //   };
-  // });
 
   const center = {
     lat: parseFloat(
@@ -60,54 +54,32 @@ export const EMDZone = ({ centerEMDZone }) => {
 
   getCirclePath();
 
-  // ------------------------------------------
-  const getElevationPath = (startPoint, stopPoint) => {
-    try {
-      const elevator = new google.maps.ElevationService();
-      const path = [startPoint, stopPoint];
-      elevator.getElevationAlongPath(
-        { path: path, samples: 256 },
-        (results, status) => {
-          if (status === "OK" && results.length > 0) {
-            setElevationPath(results);
-          } else {
-          }
-        }
-      );
-    } catch (error) {}
-  };
-
-  const elevationPathArr = (startPoint, endPoint) => {
-    getElevationPath(startPoint, endPoint);
-    return elevationPath;
-  };
-
-  useEffect(() => {
-    const elevationArr = elevationPathArr(center, pathCirc[0]);
-    console.log(elevationArr);
-  }, [centerEMDZone]);
-
-  // ------------------------------------------
+  const [resultsArr, setResultsArr] = useState([]);
 
   return (
     <React.Fragment>
       <Polyline path={pathCirc} options={options} />
-      {/* {pathCirc.map((elem, idx) => {
-        return <Polyline key={idx} path={[center, elem]} options={options} />;
-      })} */}
-      {/* {elevationPath.map((elem, idx) => {
+      {pathCirc.map((element, idx) => {
+        const elevator = new google.maps.ElevationService();
+        const path = [center, element];
+        // elevator.getElevationAlongPath(
+        //   { path: path, samples: 10 }, //{ path: path, samples: 256 }
+        //   (results, status) => {
+        //     if (status === "OK" && results.length > 0) {
+        //       results.map((el, i) => {
+        //         // console.log("element: ", {
+        //         //   lat: el.location.lat(),
+        //         //   lng: el.location.lng(),
+        //         // });
+        //       });
+        //       console.log("results: ", results);
+        //     }
+        //   }
+        // );
         return (
-          <Polyline
-            key={idx}
-            path={[
-              center,
-              { lat: elem.location.lat(), lng: elem.location.lng() },
-            ]}
-            options={options}
-          />
+          <Polyline key={idx} path={[center, element]} options={options} />
         );
-      })} */}
-      {/* <Circle center={center} options={options} /> */}
+      })}
     </React.Fragment>
   );
 };
