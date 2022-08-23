@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Avatar,
@@ -20,10 +20,14 @@ function SitRepPage() {
   };
 
   //-------- Read situation from DB --------------------
+  const [firestoreData, setFirestoreData] = useState(null);
   const fromFirestoreData = ReadFromCloudFirestore();
-  if (fromFirestoreData) {
-    console.log("fromFirestoreData: ", fromFirestoreData);
-  }
+  useEffect(() => {
+    if (fromFirestoreData) {
+      console.log("fromFirestoreData: ", fromFirestoreData);
+      setFirestoreData(fromFirestoreData);
+    }
+  }, [fromFirestoreData]);
   //-------- \Read situation from DB --------------------
 
   return (
@@ -70,6 +74,7 @@ function SitRepPage() {
       </Box>
       <Box sx={{ marginTop: "64px" }}>
         <h1>Situation Report Page</h1>
+        {JSON.stringify(firestoreData)}
       </Box>
     </React.Fragment>
   );
